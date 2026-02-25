@@ -513,20 +513,8 @@ function App() {
         sessionStorage.setItem('sadlibs_exit_stage', '2'); // stop bugging them if they share
         setHasSharedInExitModal(true); // unlock email feature for exit modal
 
-        // Encode the current state if a story is active
-        let shareUrl = 'https://sadlibs.vercel.app';
-        if (isRevealed && selectedStoryId !== null) {
-            try {
-                const payloadData = JSON.stringify({
-                    s: selectedStoryId,
-                    i: inputs
-                });
-                const encodedPayload = encodeURIComponent(btoa(payloadData));
-                shareUrl = `${shareUrl}/?payload=${encodedPayload}`;
-            } catch (err) {
-                console.error("Failed to encode payload", err);
-            }
-        }
+        // Hardcode the share URL to specifically be the live Vercel domain
+        const shareUrl = 'https://sadlibs.vercel.app';
 
         const url = encodeURIComponent(shareUrl);
         const text = encodeURIComponent("Hey everyone I found a fun new game starring Jeffrey Epstein I want you to try, it's free and fun!");
