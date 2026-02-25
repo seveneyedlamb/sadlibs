@@ -86,17 +86,16 @@ body::after {
 .logo-banner-wrapper {
     width: 100vw;
     margin-left: calc(-50vw + 50%);
-    background: linear-gradient(90deg, #091a38, #1e40af, #091a38);
+    background: #5dbced;
+    /* Hex code from new logo edges */
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: -4rem;
     /* Pull up to negate app-container padding */
     margin-bottom: 2.5rem;
-    border-top: 1px solid #3b82f6;
-    border-bottom: 2px solid #60a5fa;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 40px rgba(37, 99, 235, 0.3);
     position: relative;
+    padding: 1rem 0;
 }
 
 .logo {
