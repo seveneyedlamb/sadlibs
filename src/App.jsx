@@ -223,6 +223,24 @@ function App() {
         return () => document.removeEventListener('keydown', handleKeyDownKonami);
     }, []);
 
+    // Strip tracking parameters from the URL on load so users don't accidentally copy and share them
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        let hasTracking = false;
+
+        ['fbclid', 'gclid', 'utm_source', 'utm_medium', 'utm_campaign'].forEach(param => {
+            if (urlParams.has(param)) {
+                urlParams.delete(param);
+                hasTracking = true;
+            }
+        });
+
+        if (hasTracking) {
+            const newUrl = window.location.pathname + (urlParams.toString() ? '?' + urlParams.toString() : '') + window.location.hash;
+            window.history.replaceState({}, document.title, newUrl);
+        }
+    }, []);
+
     useEffect(() => {
         const handleInteraction = () => {
             const currentStage = parseInt(sessionStorage.getItem('sadlibs_exit_stage')) || 1;
