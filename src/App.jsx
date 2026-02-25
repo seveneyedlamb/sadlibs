@@ -864,7 +864,7 @@ function App() {
                                         </div>
 
                                         <div className="export-watermark cta-watermark">
-                                            🔥 <span>CREATE YOUR OWN EPSTEIN LEAK</span> AT <span className="highlight">WWW.SADLIBS.ONLINE</span> 🔥
+                                            🔥 <span>CREATE YOUR OWN EPSTEIN LEAK</span> AT <span className="highlight">SADLIBS.VERCEL.APP</span> 🔥
                                         </div>
 
                                         <div className="action-buttons-row export-ignore">
@@ -1003,7 +1003,7 @@ function App() {
                                                 disabled={!hasSharedInExitModal}
                                                 className="prize-input"
                                             />
-                                            <input type="hidden" name="_next" value="https://sadlibs.online"></input>
+                                            <input type="hidden" name="_next" value="https://sadlibs.vercel.app/"></input>
                                             <input type="hidden" name="_subject" value="New VIP Claim!" />
                                             <input type="hidden" name="_captcha" value="false" />
                                             <button
@@ -1065,7 +1065,7 @@ function App() {
                                                         required
                                                         className="prize-input"
                                                     />
-                                                    <input type="hidden" name="_next" value="https://sadlibs.online"></input>
+                                                    <input type="hidden" name="_next" value="https://sadlibs.vercel.app/"></input>
                                                     <input type="hidden" name="_subject" value="New VIP Claim!" />
                                                     <input type="hidden" name="_captcha" value="false" />
                                                     <button
