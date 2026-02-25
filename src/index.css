@@ -83,33 +83,35 @@ body::after {
     align-items: center;
 }
 
-.logo {
-    max-height: 280px;
-    height: auto;
-    width: auto;
+.logo-banner-wrapper {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    background: linear-gradient(90deg, #091a38, #1e40af, #091a38);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -4rem;
+    /* Pull up to negate app-container padding */
     margin-bottom: 2.5rem;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    filter: drop-shadow(0 0 30px rgba(59, 130, 246, 0.4));
-    transition: transform 0.4s ease;
-    animation: float 6s ease-in-out infinite;
+    border-top: 1px solid #3b82f6;
+    border-bottom: 2px solid #60a5fa;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 40px rgba(37, 99, 235, 0.3);
+    position: relative;
 }
 
-@keyframes float {
-
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-15px);
-    }
+.logo {
+    max-height: 200px;
+    height: auto;
+    width: auto;
+    display: block;
+    margin: 0;
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.15));
+    transition: transform 0.4s ease, filter 0.4s ease;
 }
 
 .logo:hover {
-    transform: scale(1.03) translateY(-5px);
+    transform: scale(1.02);
+    filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.3));
 }
 
 .hero-card {

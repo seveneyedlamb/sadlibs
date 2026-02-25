@@ -706,7 +706,9 @@ function App() {
         <div className={`app-container ${isDeclassified ? 'declassified-mode' : ''}`}>
             <header className="header" onClick={clearSelection} style={{ cursor: 'pointer' }}>
 
-                <img src={logo} alt="SadLibs logo" className={`logo ${isGlitching ? 'glitch-effect' : ''}`} onClick={(e) => { e.stopPropagation(); handleLogoClick(); }} />
+                <div className="logo-banner-wrapper">
+                    <img src={logo} alt="SadLibs logo" className={`logo ${isGlitching ? 'glitch-effect' : ''}`} onClick={(e) => { e.stopPropagation(); handleLogoClick(); }} />
+                </div>
                 <img src={heroCard} alt="Welcome to SadLibs" className="hero-card" />
                 <div className="header-links">
                     <button className="link-btn" onClick={() => setShowNamesModal(true)}>Read The Names on the File!</button>
