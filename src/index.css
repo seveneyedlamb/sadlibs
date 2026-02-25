@@ -126,8 +126,7 @@ body::after {
 /* Corner Decals */
 .corner-decal {
     position: fixed;
-    top: 45px;
-    bottom: auto;
+    bottom: 2rem;
     max-width: 450px;
     width: 35vw;
     height: auto;
@@ -135,6 +134,8 @@ body::after {
     pointer-events: none;
     animation: fadeIn 1s ease-out forwards;
     filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.6));
+    transform: translateY(10%);
+    transition: opacity 0.5s ease;
 }
 
 .corner-decal.left {
@@ -1319,8 +1320,7 @@ body::after {
 /* --- Mobile Layout Responsiveness --- */
 @media (max-width: 768px) {
     .corner-decal {
-        top: 45px;
-        bottom: auto;
+        bottom: 1rem;
         max-width: 180px;
         width: 40vw;
     }
@@ -1440,8 +1440,7 @@ body::after {
 /* --- Unified Audio Player --- */
 .audio-player-panel {
     position: fixed;
-    bottom: 20px;
-    top: auto;
+    top: 20px;
     right: 20px;
     z-index: 1000;
     background: rgba(15, 23, 42, 0.7);
