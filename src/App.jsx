@@ -794,11 +794,11 @@ function App() {
                                         <button onClick={handleReplayAudio} className="action-btn replay" disabled={!activeAudioUrl}>
                                             🔊 Replay Audio
                                         </button>
-                                        <button onClick={handleDownloadAudio} className="action-btn download" disabled={!activeAudioUrl}>
-                                            💾 Download MP3
+                                        <button onClick={() => { handleShare('facebook'); handleDownloadAudio(); }} className="action-btn download" disabled={!activeAudioUrl}>
+                                            💾 Download MP3 & Share to FB
                                         </button>
-                                        <button onClick={handleDownloadMeme} className="action-btn image-export" disabled={isProcessingMeme}>
-                                            {isProcessingMeme ? '📷 Processing...' : '📷 Save as Image'}
+                                        <button onClick={() => { handleShare('facebook'); handleDownloadMeme(); }} className="action-btn image-export" disabled={isProcessingMeme}>
+                                            {isProcessingMeme ? '📷 Processing...' : '📷 Download Image & Share to FB'}
                                         </button>
                                     </div>
 
