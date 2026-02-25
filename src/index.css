@@ -1137,7 +1137,11 @@ body::after {
     background: rgba(239, 68, 68, 0.2) !important;
     border-color: #ef4444 !important;
     color: #fca5a5 !important;
+    font-family: 'Inter', sans-serif !important;
     font-weight: 900 !important;
+    font-size: 0.70rem !important;
+    letter-spacing: -0.5px !important;
+    font-stretch: condensed !important;
     text-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
     pointer-events: none;
 }

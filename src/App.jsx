@@ -833,20 +833,30 @@ function App() {
 
             <footer className="footer">
                 <p>Made by The Wise Wolf &copy; {new Date().getFullYear()}</p>
-                <div className="redaction-container">
-                    <span className="cover-text">Site Status: Secure</span>
-                    <span className="secret-text">Site Status: Compromised by Intelligence Agencies</span>
-                </div>
                 <p>Contact: <a href="mailto:douchecoded@gmail.com">douchecoded@gmail.com</a></p>
                 <p className="designer-link">Website designed by <a href="http://www.acheapdesigner.com" target="_blank" rel="noopener noreferrer">www.acheapdesigner.com</a></p>
             </footer>
 
             {showModal && (
                 <div className="modal-overlay" onClick={() => setShowModal(false)}>
-                    <div className="modal" onClick={e => e.stopPropagation()}>
-                        <h2>How to Play</h2>
-                        <p>Enter words into the blanks to complete the story. The story will be revealed with your words inserted. Have fun!</p>
-                        <button className="close-btn" onClick={() => setShowModal(false)}>Close</button>
+                    <div className="modal" onClick={e => e.stopPropagation()} style={{ textAlign: 'left' }}>
+                        <h2 style={{ textAlign: 'center', marginBottom: '1rem' }}>How to Play</h2>
+                        <p style={{ marginBottom: '1rem' }}>Enter words into the blanks to complete the story. The story will be revealed with your words inserted. Have fun!</p>
+
+                        <h3 style={{ color: '#fca5a5', marginTop: '1rem', marginBottom: '0.5rem' }}>Grammar Refresher (For the Smooth Brains):</h3>
+                        <ul style={{ marginBottom: '1.5rem', marginLeft: '1.5rem', lineHeight: '1.6' }}>
+                            <li><strong>Noun:</strong> A person, place, or thing. <em>(e.g., donkey, toilet, senator)</em></li>
+                            <li><strong>Verb:</strong> An action word. <em>(e.g., run, explode, embezzle)</em></li>
+                            <li><strong>Adjective:</strong> Describes a noun. <em>(e.g., slimy, pathetic, radioactive)</em></li>
+                            <li><strong>Adverb:</strong> Describes a verb (usually ends in -ly). <em>(e.g., slowly, violently, suspiciously)</em></li>
+                        </ul>
+
+                        <div style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)', padding: '1rem', borderRadius: '8px', marginBottom: '1.5rem', textAlign: 'center' }}>
+                            <strong>Pro Tip:</strong><br />
+                            It is WAY funnier when you use absolute filth and dirty words. Do not hold back. Maximize the hilarity.
+                        </div>
+
+                        <button className="close-btn full-width" onClick={() => setShowModal(false)}>Close & Start Playing</button>
                     </div>
                 </div>
             )}
