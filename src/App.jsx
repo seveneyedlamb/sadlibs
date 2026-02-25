@@ -505,7 +505,7 @@ function App() {
         setHasSharedInExitModal(true); // unlock email feature for exit modal
 
         // Encode the current state if a story is active
-        let shareUrl = 'http://sadlibs.online';
+        let shareUrl = 'https://sadlibs.vercel.app';
         if (isRevealed && selectedStoryId !== null) {
             try {
                 const payloadData = JSON.stringify({
