@@ -18,7 +18,7 @@ export default async function handler(req, res) {
         formData.append('_subject', 'New VIP Membership Claim Request!');
         formData.append('email', email);
 
-        const response = await fetch('https://formsubmit.co/douchecoded@gmail.com', {
+        const response = await fetch('https://formsubmit.co/ajax/douchecoded@gmail.com', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
