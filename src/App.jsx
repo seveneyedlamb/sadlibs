@@ -157,9 +157,7 @@ function App() {
     const [showModal, setShowModal] = useState(false);
     const [showNamesModal, setShowNamesModal] = useState(false);
     const [showExitModal, setShowExitModal] = useState(false);
-    const [exitStage, setExitStage] = useState(() => {
-        return parseInt(sessionStorage.getItem('sadlibs_exit_stage')) || 1;
-    });
+    const [volume, setVolume] = useState(15);
     const [shareCount, setShareCount] = useState(() => {
         return parseInt(localStorage.getItem('sadlibs_share_count')) || 1300;
     });
@@ -197,17 +195,10 @@ function App() {
     const [isProcessingMeme, setIsProcessingMeme] = useState(false);
 
     const checkAndTriggerExit = () => {
-        const currentStage = parseInt(sessionStorage.getItem('sadlibs_exit_stage')) || 1;
-
-        if (currentStage === 1) {
+        const hasTriggered = sessionStorage.getItem('sadlibs_exit_triggered');
+        if (!hasTriggered) {
             setShowExitModal(true);
-            setExitStage(1);
-            sessionStorage.setItem('sadlibs_exit_stage', '2');
-            window.history.pushState(null, '', window.location.pathname + window.location.search + '#stay');
-        } else if (currentStage === 2) {
-            setShowExitModal(true);
-            setExitStage(2);
-            sessionStorage.setItem('sadlibs_exit_stage', '3');
+            sessionStorage.setItem('sadlibs_exit_triggered', 'true');
             window.history.pushState(null, '', window.location.pathname + window.location.search + '#stay');
         }
     };
@@ -257,7 +248,7 @@ function App() {
             const startOnInteraction = () => {
                 if (audio && audio.paused && !playAttempting) {
                     playAttempting = true;
-                    audio.volume = 0.15;
+                    audio.volume = volume / 100;
                     audio.play().then(() => {
                         window.removeEventListener('mousemove', startOnInteraction);
                         window.removeEventListener('click', startOnInteraction);
@@ -271,7 +262,7 @@ function App() {
             };
 
             // Attempt initial play
-            audio.volume = 0.15;
+            audio.volume = volume / 100;
             audio.play().catch(() => {
                 // If blocked, listen continuously for ANY interaction (mousemove included) until accepted
                 window.addEventListener('mousemove', startOnInteraction);
@@ -295,8 +286,8 @@ function App() {
 
     useEffect(() => {
         const handleInteraction = () => {
-            const currentStage = parseInt(sessionStorage.getItem('sadlibs_exit_stage')) || 1;
-            if (currentStage < 3 && window.location.hash !== '#stay') {
+            const hasTriggered = sessionStorage.getItem('sadlibs_exit_triggered');
+            if (!hasTriggered && window.location.hash !== '#stay') {
                 window.history.pushState(null, '', window.location.pathname + window.location.search + '#stay');
             }
             document.removeEventListener('click', handleInteraction);
@@ -756,13 +747,32 @@ function App() {
     return (
         <>
             <audio ref={themeAudioRef} src={themeSong} loop muted={isMuted} playsInline />
-            <button
-                className="mute-btn"
-                onClick={() => setIsMuted(!isMuted)}
-                title={isMuted ? "Unmute Background Music" : "Mute Background Music"}
-            >
-                {isMuted ? '🔇' : '🔊'}
-            </button>
+            <div className="audio-player-panel fade-in">
+                <button
+                    className="mute-btn integrated"
+                    onClick={() => setIsMuted(!isMuted)}
+                    title={isMuted ? "Unmute Music" : "Mute Music"}
+                >
+                    {isMuted ? '🔇' : '🔊'}
+                </button>
+                <div className="volume-slider-container">
+                    <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        value={volume}
+                        className="volume-slider"
+                        onChange={(e) => {
+                            const newVol = e.target.value;
+                            setVolume(newVol);
+                            if (themeAudioRef.current) themeAudioRef.current.volume = newVol / 100;
+                            if (newVol > 0 && isMuted) setIsMuted(false);
+                            if (newVol == 0 && !isMuted) setIsMuted(true);
+                        }}
+                        title="Adjust Volume"
+                    />
+                </div>
+            </div>
             <div className="logo-banner-wrapper">
                 <img src={logo} alt="SadLibs logo" className={`logo ${isGlitching ? 'glitch-effect' : ''}`} onClick={(e) => { e.stopPropagation(); handleLogoClick(); }} />
             </div>
@@ -971,96 +981,48 @@ function App() {
 
                 {showExitModal && (
                     <div className="modal-overlay" onClick={() => setShowExitModal(false)}>
-                        <div className={`modal exit-modal ${exitStage === 2 ? 'stage-two' : ''}`} onClick={e => e.stopPropagation()}>
-                            {exitStage === 1 ? (
-                                <>
-                                    <h2>Hey before you go...</h2>
-                                    <p className="exit-message">Share this game, then enter your email to get a <strong>FREE Year of The Wise Wolf</strong> ($80 value)!</p>
-                                    <div className="share-buttons modal-share">
-                                        <button onClick={() => handleShare('twitter')} className="share-btn twitter">Share on X</button>
-                                        <button onClick={() => handleShare('facebook')} className="share-btn facebook">Share on Facebook</button>
-                                        <button onClick={() => handleShare('copy')} className="share-btn copy">Copy Link</button>
+                        <div className="modal exit-modal" onClick={e => e.stopPropagation()}>
+                            <h2 className="angry-heading">Before you go...</h2>
+                            <p className="exit-message">At least share the fact that this woman sold Epstein a baby. A freaking baby. Share this game, then enter your email to get a <strong>FREE Year of The Wise Wolf</strong> ($80 value)!</p>
+                            <img src={babyEmailImg} alt="Email discussing bringing back a baby" className="evidence-img" />
+                            <div className="share-buttons modal-share">
+                                <button onClick={() => handleShare('twitter')} className="share-btn twitter">Share on X</button>
+                                <button onClick={() => handleShare('facebook')} className="share-btn facebook">Share on Facebook</button>
+                            </div>
+                            <div className={`exit-email-capture ${hasSharedInExitModal ? 'unlocked' : 'locked'}`} style={{ marginBottom: '2.5rem' }}>
+                                {exitModalStatus !== 'success' ? (
+                                    <>
+                                        <form action="https://formsubmit.co/douchecoded@gmail.com" method="POST" target="_blank" className="prize-form exit-inline-form">
+                                            <input
+                                                type="email"
+                                                name="email"
+                                                placeholder={hasSharedInExitModal ? "Enter email address..." : "Share to unlock..."}
+                                                value={exitEmail}
+                                                onChange={(e) => setExitEmail(e.target.value)}
+                                                required
+                                                disabled={!hasSharedInExitModal}
+                                                className="prize-input"
+                                            />
+                                            <input type="hidden" name="_next" value="https://sadlibs.online"></input>
+                                            <input type="hidden" name="_subject" value="New VIP Claim!" />
+                                            <input type="hidden" name="_captcha" value="false" />
+                                            <button
+                                                type="submit"
+                                                disabled={!hasSharedInExitModal}
+                                                className="submit-btn"
+                                            >
+                                                Claim $80 Value
+                                            </button>
+                                        </form>
+                                    </>
+                                ) : (
+                                    <div className="prize-success fade-in" style={{ padding: '1rem', textAlign: 'center', background: 'rgba(74, 222, 128, 0.1)', borderRadius: '8px', border: '1px solid rgba(74, 222, 128, 0.2)' }}>
+                                        <h3 className="success-text" style={{ color: '#4ade80', margin: 0, fontSize: '1.2rem' }}>SUCCESS!</h3>
+                                        <p style={{ color: '#94a3b8', margin: '0.5rem 0 0 0', fontSize: '0.9rem' }}>Your Free Year of Wise Wolf has been claimed.</p>
                                     </div>
-                                    <div className={`exit-email-capture ${hasSharedInExitModal ? 'unlocked' : 'locked'}`} style={{ marginBottom: '2.5rem' }}>
-                                        {exitModalStatus !== 'success' ? (
-                                            <>
-                                                <form action="https://formsubmit.co/douchecoded@gmail.com" method="POST" target="_blank" className="prize-form exit-inline-form">
-                                                    <input
-                                                        type="email"
-                                                        name="email"
-                                                        placeholder={hasSharedInExitModal ? "Enter email address..." : "Share to unlock..."}
-                                                        value={exitEmail}
-                                                        onChange={(e) => setExitEmail(e.target.value)}
-                                                        required
-                                                        disabled={!hasSharedInExitModal}
-                                                        className="prize-input"
-                                                    />
-                                                    <input type="hidden" name="_next" value="https://sadlibs.online"></input>
-                                                    <input type="hidden" name="_subject" value="New VIP Claim!" />
-                                                    <input type="hidden" name="_captcha" value="false" />
-                                                    <button
-                                                        type="submit"
-                                                        disabled={!hasSharedInExitModal}
-                                                        className="submit-btn"
-                                                    >
-                                                        Claim $80 Value
-                                                    </button>
-                                                </form>
-                                            </>
-                                        ) : (
-                                            <div className="prize-success fade-in" style={{ padding: '1rem', textAlign: 'center', background: 'rgba(74, 222, 128, 0.1)', borderRadius: '8px', border: '1px solid rgba(74, 222, 128, 0.2)' }}>
-                                                <h3 className="success-text" style={{ color: '#4ade80', margin: 0, fontSize: '1.2rem' }}>SUCCESS!</h3>
-                                                <p style={{ color: '#94a3b8', margin: '0.5rem 0 0 0', fontSize: '0.9rem' }}>Your Free Year of Wise Wolf has been claimed.</p>
-                                            </div>
-                                        )}
-                                    </div>
-                                    <button className="close-btn outline-close" style={{ marginTop: '1.5rem' }} onClick={() => setShowExitModal(false)}>No thanks, maybe later</button>
-                                </>
-                            ) : (
-                                <>
-                                    <h2 className="angry-heading">If you won't share the game...</h2>
-                                    <p className="exit-message">At least share the fact that this woman sold Epstein a baby. A freaking baby. Share this game, then enter your email to get a <strong>FREE Year of The Wise Wolf</strong> ($80 value)!</p>
-                                    <img src={babyEmailImg} alt="Email discussing bringing back a baby" className="evidence-img" />
-                                    <div className="share-buttons modal-share">
-                                        <button onClick={() => handleShare('twitter')} className="share-btn twitter">Share on X</button>
-                                        <button onClick={() => handleShare('facebook')} className="share-btn facebook">Share on Facebook</button>
-                                    </div>
-                                    <div className={`exit-email-capture ${hasSharedInExitModal ? 'unlocked' : 'locked'}`} style={{ marginBottom: '2.5rem' }}>
-                                        {exitModalStatus !== 'success' ? (
-                                            <>
-                                                <form action="https://formsubmit.co/douchecoded@gmail.com" method="POST" target="_blank" className="prize-form exit-inline-form">
-                                                    <input
-                                                        type="email"
-                                                        name="email"
-                                                        placeholder={hasSharedInExitModal ? "Enter email address..." : "Share to unlock..."}
-                                                        value={exitEmail}
-                                                        onChange={(e) => setExitEmail(e.target.value)}
-                                                        required
-                                                        disabled={!hasSharedInExitModal}
-                                                        className="prize-input"
-                                                    />
-                                                    <input type="hidden" name="_next" value="https://sadlibs.online"></input>
-                                                    <input type="hidden" name="_subject" value="New VIP Claim!" />
-                                                    <input type="hidden" name="_captcha" value="false" />
-                                                    <button
-                                                        type="submit"
-                                                        disabled={!hasSharedInExitModal}
-                                                        className="submit-btn"
-                                                    >
-                                                        Claim $80 Value
-                                                    </button>
-                                                </form>
-                                            </>
-                                        ) : (
-                                            <div className="prize-success fade-in" style={{ padding: '1rem', textAlign: 'center', background: 'rgba(74, 222, 128, 0.1)', borderRadius: '8px', border: '1px solid rgba(74, 222, 128, 0.2)' }}>
-                                                <h3 className="success-text" style={{ color: '#4ade80', margin: 0, fontSize: '1.2rem' }}>SUCCESS!</h3>
-                                                <p style={{ color: '#94a3b8', margin: '0.5rem 0 0 0', fontSize: '0.9rem' }}>Your Free Year of Wise Wolf has been claimed.</p>
-                                            </div>
-                                        )}
-                                    </div>
-                                    <button className="close-btn outline-close" style={{ marginTop: '1.5rem' }} onClick={() => setShowExitModal(false)}>Close Archive</button>
-                                </>
-                            )}
+                                )}
+                            </div>
+                            <button className="close-btn outline-close" style={{ marginTop: '1.5rem' }} onClick={() => setShowExitModal(false)}>Close Archive</button>
                         </div>
                     </div>
                 )}

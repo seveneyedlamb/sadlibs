@@ -1437,30 +1437,84 @@ body::after {
     }
 }
 
-.mute-btn {
+/* --- Unified Audio Player --- */
+.audio-player-panel {
     position: fixed;
     top: 20px;
     right: 20px;
     z-index: 1000;
     background: rgba(15, 23, 42, 0.7);
-    border: 1px solid var(--panel-border);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0.4rem;
+    gap: 0.6rem;
+    backdrop-filter: blur(12px);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.mute-btn.integrated {
+    background: rgba(30, 41, 59, 0.8);
+    border: 1px solid transparent;
     border-radius: 50%;
-    width: 45px;
-    height: 45px;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     cursor: pointer;
     transition: all 0.3s ease;
     color: white;
-    backdrop-filter: blur(5px);
 }
 
-.mute-btn:hover {
+.mute-btn.integrated:hover {
     transform: scale(1.1);
-    background: rgba(30, 41, 59, 0.9);
-    border-color: var(--accent-glow);
+    background: rgba(59, 130, 246, 0.3);
+    border-color: rgba(96, 165, 250, 0.3);
+}
+
+.volume-slider-container {
+    display: flex;
+    align-items: center;
+    width: 80px;
+    margin-right: 0.8rem;
+}
+
+.volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.volume-slider:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #60a5fa;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 10px rgba(96, 165, 250, 0.4);
+}
+
+.volume-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.3);
+    background: #93c5fd;
+    box-shadow: 0 0 15px rgba(147, 197, 253, 0.8);
 }
 
 /* --- How to Play Compressed Modal --- */
