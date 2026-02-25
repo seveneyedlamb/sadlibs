@@ -86,16 +86,13 @@ body::after {
 .logo-banner-wrapper {
     width: 100vw;
     margin-left: calc(-50vw + 50%);
-    background: #5dbced;
-    /* Hex code from new logo edges */
+    background: #abd0fe;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: -4rem;
-    /* Pull up to negate app-container padding */
     margin-bottom: 2.5rem;
     position: relative;
-    padding: 1rem 0;
 }
 
 .logo {
