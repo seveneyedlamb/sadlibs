@@ -351,7 +351,7 @@ function App() {
     const handleInputChange = (id, value) => {
         const lowerVal = value.toLowerCase();
         if (lowerVal.includes('epstein') || lowerVal.includes('jeffrey')) {
-            setInputs(prev => ({ ...prev, [id]: 'DID NOT KILL HIMSELF' }));
+            setInputs(prev => ({ ...prev, [id]: value }));
             setEasterEggInputs(prev => ({ ...prev, [id]: true }));
         } else {
             setInputs(prev => ({ ...prev, [id]: value }));
@@ -750,7 +750,7 @@ function App() {
                                                 <input
                                                     type="text"
                                                     placeholder={`Enter ${p.type}...`}
-                                                    value={inputs[p.id] || ''}
+                                                    value={easterEggInputs[p.id] ? 'DID NOT KILL HIMSELF' : (inputs[p.id] || '')}
                                                     onChange={(e) => handleInputChange(p.id, e.target.value)}
                                                     className={easterEggInputs[p.id] ? 'easter-egg-shake' : ''}
                                                     readOnly={easterEggInputs[p.id]}
@@ -984,58 +984,59 @@ function App() {
             {showPrizeModal && (
                 <div className="modal-overlay">
                     <div className="modal prize-modal">
-                        <div className="decipher-container">
-                            <h2 className={`decipher-text ${isDeciphered ? 'locked' : ''}`}>
-                                {decipherText}
-                            </h2>
-                        </div>
-
                         {isDeciphered && prizeModalStatus !== 'success' && (
-                            <div className="prize-form-container fade-in">
-                                {!hasSharedInExitModal ? (
-                                    <>
-                                        <p className="prize-desc" style={{ marginBottom: '1rem', color: '#fff' }}>Share this leaked document to receive your FREE Year of The Wise Wolf ($80 value)!</p>
-                                        <button className="share-btn twitter full-width" onClick={() => handleShare('x')} style={{ marginBottom: '0.5rem' }}>
-                                            SHARE ON X
-                                        </button>
-                                        <button className="share-btn facebook full-width" onClick={() => handleShare('facebook')} style={{ marginBottom: '0.5rem' }}>
-                                            SHARE ON FACEBOOK
-                                        </button>
-                                        <button className="share-btn copy full-width" onClick={() => handleShare('copy')}>
-                                            COPY LINK
-                                        </button>
-                                    </>
-                                ) : (
-                                    <>
-                                        <p className="prize-desc">Enter your secure terminal address below to claim your prize.</p>
-                                        <form onSubmit={handlePrizeEmailSubmit} className="prize-form">
-                                            <input
-                                                type="email"
-                                                placeholder="Enter email address..."
-                                                value={prizeEmail}
-                                                onChange={(e) => setPrizeEmail(e.target.value)}
-                                                required
-                                                className="prize-input"
-                                                disabled={prizeModalStatus === 'loading'}
-                                            />
-                                            <button
-                                                type="submit"
-                                                className="share-btn twitter full-width"
-                                                disabled={prizeModalStatus === 'loading'}
-                                            >
-                                                {prizeModalStatus === 'loading' ? 'Encrypting...' : 'CLAIM MEMBERSHIP'}
+                            <>
+                                <div className="decipher-container">
+                                    <h2 className="decipher-text locked">
+                                        {decipherText}
+                                    </h2>
+                                </div>
+                                <div className="prize-form-container fade-in">
+                                    {!hasSharedInExitModal ? (
+                                        <>
+                                            <p className="prize-desc" style={{ marginBottom: '1rem', color: '#fff' }}>Share this leaked document to receive your FREE Year of The Wise Wolf ($80 value)!</p>
+                                            <button className="share-btn twitter full-width" onClick={() => handleShare('x')} style={{ marginBottom: '0.5rem' }}>
+                                                SHARE ON X
                                             </button>
-                                        </form>
-                                        {prizeModalStatus === 'error' && <p className="error-text">Decryption failed. Try another address.</p>}
-                                    </>
-                                )}
-                            </div>
+                                            <button className="share-btn facebook full-width" onClick={() => handleShare('facebook')} style={{ marginBottom: '0.5rem' }}>
+                                                SHARE ON FACEBOOK
+                                            </button>
+                                            <button className="share-btn copy full-width" onClick={() => handleShare('copy')}>
+                                                COPY LINK
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <p className="prize-desc">Enter your secure terminal address below to claim your prize.</p>
+                                            <form onSubmit={handlePrizeEmailSubmit} className="prize-form">
+                                                <input
+                                                    type="email"
+                                                    placeholder="Enter email address..."
+                                                    value={prizeEmail}
+                                                    onChange={(e) => setPrizeEmail(e.target.value)}
+                                                    required
+                                                    className="prize-input"
+                                                    disabled={prizeModalStatus === 'loading'}
+                                                />
+                                                <button
+                                                    type="submit"
+                                                    className="share-btn twitter full-width"
+                                                    disabled={prizeModalStatus === 'loading'}
+                                                >
+                                                    {prizeModalStatus === 'loading' ? 'Encrypting...' : 'CLAIM MEMBERSHIP'}
+                                                </button>
+                                            </form>
+                                            {prizeModalStatus === 'error' && <p className="error-text" style={{ marginTop: '1rem', color: '#ef4444' }}>Decryption failed. Try another address.</p>}
+                                        </>
+                                    )}
+                                </div>
+                            </>
                         )}
 
                         {prizeModalStatus === 'success' && (
-                            <div className="prize-success fade-in">
-                                <h3 className="success-text">ACCESS GRANTED</h3>
-                                <p>Membership credentials will be transmitted shortly.</p>
+                            <div className="prize-success fade-in" style={{ padding: '2rem', textAlign: 'center' }}>
+                                <h3 className="success-text" style={{ color: '#4ade80', marginBottom: '1rem', fontSize: '1.5rem' }}>ACCESS GRANTED</h3>
+                                <p style={{ color: '#94a3b8' }}>Membership credentials will be transmitted shortly.</p>
                             </div>
                         )}
 
