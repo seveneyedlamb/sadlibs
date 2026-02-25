@@ -964,26 +964,43 @@ function App() {
 
                         {isDeciphered && prizeModalStatus !== 'success' && (
                             <div className="prize-form-container fade-in">
-                                <p className="prize-desc">Enter your secure terminal address below to claim your prize.</p>
-                                <form onSubmit={handlePrizeEmailSubmit} className="prize-form">
-                                    <input
-                                        type="email"
-                                        placeholder="Enter email address..."
-                                        value={prizeEmail}
-                                        onChange={(e) => setPrizeEmail(e.target.value)}
-                                        required
-                                        className="prize-input"
-                                        disabled={prizeModalStatus === 'loading'}
-                                    />
-                                    <button
-                                        type="submit"
-                                        className="share-btn twitter full-width"
-                                        disabled={prizeModalStatus === 'loading'}
-                                    >
-                                        {prizeModalStatus === 'loading' ? 'Encrypting...' : 'CLAIM MEMBERSHIP'}
-                                    </button>
-                                </form>
-                                {prizeModalStatus === 'error' && <p className="error-text">Decryption failed. Try another address.</p>}
+                                {!hasSharedInExitModal ? (
+                                    <>
+                                        <p className="prize-desc" style={{ marginBottom: '1rem', color: '#fff' }}>Share this leaked document to receive your FREE Year of The Wise Wolf ($80 value)!</p>
+                                        <button className="share-btn twitter full-width" onClick={() => handleShare('x')} style={{ marginBottom: '0.5rem' }}>
+                                            SHARE ON X
+                                        </button>
+                                        <button className="share-btn facebook full-width" onClick={() => handleShare('facebook')} style={{ marginBottom: '0.5rem' }}>
+                                            SHARE ON FACEBOOK
+                                        </button>
+                                        <button className="share-btn copy full-width" onClick={() => handleShare('copy')}>
+                                            COPY LINK
+                                        </button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <p className="prize-desc">Enter your secure terminal address below to claim your prize.</p>
+                                        <form onSubmit={handlePrizeEmailSubmit} className="prize-form">
+                                            <input
+                                                type="email"
+                                                placeholder="Enter email address..."
+                                                value={prizeEmail}
+                                                onChange={(e) => setPrizeEmail(e.target.value)}
+                                                required
+                                                className="prize-input"
+                                                disabled={prizeModalStatus === 'loading'}
+                                            />
+                                            <button
+                                                type="submit"
+                                                className="share-btn twitter full-width"
+                                                disabled={prizeModalStatus === 'loading'}
+                                            >
+                                                {prizeModalStatus === 'loading' ? 'Encrypting...' : 'CLAIM MEMBERSHIP'}
+                                            </button>
+                                        </form>
+                                        {prizeModalStatus === 'error' && <p className="error-text">Decryption failed. Try another address.</p>}
+                                    </>
+                                )}
                             </div>
                         )}
 
