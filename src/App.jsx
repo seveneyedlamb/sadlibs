@@ -572,17 +572,12 @@ function App() {
         e.preventDefault();
         setPrizeModalStatus('loading');
         try {
-            const response = await fetch('https://formsubmit.co/ajax/douchecoded@gmail.com', {
+            const response = await fetch('/api/save-email', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    email: prizeEmail,
-                    _subject: "New VIP Claim!",
-                    _captcha: "false"
-                })
+                body: JSON.stringify({ email: prizeEmail })
             });
             if (response.ok) {
                 setPrizeModalStatus('success');
@@ -599,17 +594,12 @@ function App() {
         e.preventDefault();
         setExitModalStatus('loading');
         try {
-            const response = await fetch('https://formsubmit.co/ajax/douchecoded@gmail.com', {
+            const response = await fetch('/api/save-email', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    email: exitEmail,
-                    _subject: "New VIP Claim!",
-                    _captcha: "false"
-                })
+                body: JSON.stringify({ email: exitEmail })
             });
             if (response.ok) {
                 setExitModalStatus('success');
