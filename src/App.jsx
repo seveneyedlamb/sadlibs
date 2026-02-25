@@ -252,23 +252,20 @@ function App() {
     useEffect(() => {
         const audio = themeAudioRef.current;
         if (audio) {
-            audio.volume = 0.15;
             const playAudio = async () => {
                 try {
+                    audio.volume = 0.15; // Enforce volume here
                     await audio.play();
                 } catch (err) {
-                    // Autoplay blocked, wait for interaction
+                    // Autoplay blocked, wait specifically for mousemove as requested
                     const startOnInteraction = () => {
-                        audio.play().catch(e => console.error("Audio playback failed", e));
+                        if (audio) {
+                            audio.volume = 0.15; // Enforce volume again
+                            audio.play().catch(e => console.error("Audio playback failed", e));
+                        }
                         window.removeEventListener('mousemove', startOnInteraction);
-                        window.removeEventListener('click', startOnInteraction);
-                        window.removeEventListener('scroll', startOnInteraction);
-                        window.removeEventListener('keydown', startOnInteraction);
                     };
-                    window.addEventListener('mousemove', startOnInteraction);
-                    window.addEventListener('click', startOnInteraction);
-                    window.addEventListener('scroll', startOnInteraction);
-                    window.addEventListener('keydown', startOnInteraction);
+                    window.addEventListener('mousemove', startOnInteraction, { once: true });
                 }
             };
             playAudio();
@@ -383,9 +380,6 @@ function App() {
         setSelectedStoryId(id);
         setInputs({});
         setIsRevealed(false);
-        if (themeAudioRef.current) {
-            themeAudioRef.current.play().catch(e => console.log("Audio play blocked:", e));
-        }
     };
 
     const clearSelection = () => {
@@ -774,9 +768,6 @@ function App() {
                         <button className="how-to-play-btn" onClick={(e) => {
                             e.stopPropagation();
                             setShowModal(true);
-                            if (themeAudioRef.current) {
-                                themeAudioRef.current.play().catch(err => console.log("Audio play blocked:", err));
-                            }
                         }}>How to Play</button>
                     </div>
 
