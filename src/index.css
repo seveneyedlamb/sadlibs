@@ -126,11 +126,10 @@ body::after {
 /* Corner Decals */
 .corner-decal {
     position: fixed;
-    bottom: 2rem;
+    top: 45px;
+    bottom: auto;
     max-width: 450px;
-    /* Much larger max-width */
     width: 35vw;
-    /* Scales with screen size, larger percentage */
     height: auto;
     z-index: 50;
     pointer-events: none;
@@ -1320,7 +1319,8 @@ body::after {
 /* --- Mobile Layout Responsiveness --- */
 @media (max-width: 768px) {
     .corner-decal {
-        bottom: 1rem;
+        top: 45px;
+        bottom: auto;
         max-width: 180px;
         width: 40vw;
     }
@@ -1440,7 +1440,8 @@ body::after {
 /* --- Unified Audio Player --- */
 .audio-player-panel {
     position: fixed;
-    top: 20px;
+    bottom: 20px;
+    top: auto;
     right: 20px;
     z-index: 1000;
     background: rgba(15, 23, 42, 0.7);
