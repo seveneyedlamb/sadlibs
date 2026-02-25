@@ -184,6 +184,7 @@ function App() {
     // Audio Background State
     const [isMuted, setIsMuted] = useState(false);
     const themeAudioRef = useRef(null);
+    const storyContainerRef = useRef(null);
 
     // Generation Animation State
     const [isGenerating, setIsGenerating] = useState(false);
@@ -273,6 +274,16 @@ function App() {
             playAudio();
         }
     }, []);
+
+    // Auto-scroll to top of story container when selecting a file or revealing the story
+    useEffect(() => {
+        if ((selectedStoryId || isRevealed) && storyContainerRef.current) {
+            // Slight delay ensures the DOM has updated before scrolling
+            setTimeout(() => {
+                storyContainerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+    }, [selectedStoryId, isRevealed]);
 
     useEffect(() => {
         const handleInteraction = () => {
@@ -780,7 +791,7 @@ function App() {
                             </div>
                         </div>
                     ) : (
-                        <div className="story-container">
+                        <div className="story-container" ref={storyContainerRef} style={{ scrollMarginTop: '20px' }}>
                             <button className="back-btn" onClick={clearSelection}>← Back to Files</button>
 
                             <div className={`glass-panel ${isRevealed ? 'revealed' : ''}`}>
