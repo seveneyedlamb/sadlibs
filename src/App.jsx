@@ -1026,7 +1026,7 @@ function App() {
                                                     {prizeModalStatus === 'loading' ? 'Encrypting...' : 'CLAIM MEMBERSHIP'}
                                                 </button>
                                             </form>
-                                            {prizeModalStatus === 'error' && <p className="error-text" style={{ marginTop: '1rem', color: '#ef4444' }}>Decryption failed. Try another address.</p>}
+                                            {prizeModalStatus === 'error' && <p className="error-text" style={{ marginTop: '1rem', color: '#ef4444' }}>Transmission failed. Try another address.</p>}
                                         </>
                                     )}
                                 </div>
