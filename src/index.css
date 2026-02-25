@@ -393,12 +393,13 @@ body::after {
     position: absolute;
     bottom: 20px;
     right: 20px;
-    font-size: 0.6rem;
-    font-weight: 800;
-    opacity: 0.2;
+    font-size: 0.7rem;
+    font-weight: 900;
+    color: #ef4444;
+    border: 2px solid #ef4444;
+    opacity: 0.4;
     transform: rotate(-15deg);
-    border: 1px solid #fff;
-    padding: 2px 5px;
+    padding: 4px 8px;
 }
 
 .story-card-btn::before {
