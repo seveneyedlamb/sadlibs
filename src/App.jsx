@@ -703,373 +703,374 @@ function App() {
     };
 
     return (
-        <div className={`app-container ${isDeclassified ? 'declassified-mode' : ''}`}>
-            <header className="header" onClick={clearSelection} style={{ cursor: 'pointer' }}>
+        <>
+            <div className="logo-banner-wrapper">
+                <img src={logo} alt="SadLibs logo" className={`logo ${isGlitching ? 'glitch-effect' : ''}`} onClick={(e) => { e.stopPropagation(); handleLogoClick(); }} />
+            </div>
+            <div className={`app-container ${isDeclassified ? 'declassified-mode' : ''}`}>
+                <header className="header" onClick={clearSelection} style={{ cursor: 'pointer' }}>
 
-                <div className="logo-banner-wrapper">
-                    <img src={logo} alt="SadLibs logo" className={`logo ${isGlitching ? 'glitch-effect' : ''}`} onClick={(e) => { e.stopPropagation(); handleLogoClick(); }} />
+                    <img src={heroCard} alt="Welcome to SadLibs" className="hero-card" />
+                    <div className="header-links">
+                        <button className="link-btn" onClick={() => setShowNamesModal(true)}>Read The Names on the File!</button>
+                        <a href="https://www.thewisewolf.club" target="_blank" rel="noopener noreferrer" className="link-btn outline">The Wise Wolf on Substack</a>
+                    </div>
+
+                    <div className="action-row">
+                        <button className="how-to-play-btn" onClick={(e) => { e.stopPropagation(); setShowModal(true); }}>How to Play</button>
+                    </div>
+
+                </header>
+                <main className="main-content">
+
+
+                    {!selectedStoryId ? (
+                        <div className="story-selection">
+                            <h2 className="selection-title">Select a File to Decrypt:</h2>
+                            <div className="story-grid">
+                                {stories.map(story => (
+                                    <button
+                                        key={story.id}
+                                        className="story-card-btn"
+                                        onClick={() => startStory(story.id)}
+                                    >
+                                        {story.title}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="story-container">
+                            <button className="back-btn" onClick={clearSelection}>← Back to Files</button>
+
+                            <div className={`glass-panel ${isRevealed ? 'revealed' : ''}`}>
+                                <h2>{activeStory.title}</h2>
+
+                                {!isRevealed && !isGenerating ? (
+                                    <form onSubmit={revealStory} className="input-form">
+                                        <div className="inputs-grid">
+                                            {placeholders.map((p) => (
+                                                <div key={p.id} className="input-group">
+                                                    <label>{p.type}</label>
+                                                    <input
+                                                        type="text"
+                                                        placeholder={`Enter ${p.type}...`}
+                                                        value={easterEggInputs[p.id] ? 'DID NOT KILL HIMSELF' : (inputs[p.id] || '')}
+                                                        onChange={(e) => handleInputChange(p.id, e.target.value)}
+                                                        className={easterEggInputs[p.id] ? 'easter-egg-shake' : ''}
+                                                        readOnly={easterEggInputs[p.id]}
+                                                        required
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <button
+                                            type="submit"
+                                            className="submit-btn"
+                                            disabled={!allFilled}
+                                        >
+                                            Reveal Story
+                                        </button>
+                                    </form>
+                                ) : isGenerating ? (
+                                    <div className="generating-container fade-in">
+                                        <div className="spinner"></div>
+                                        <h3 className="loading-message">{loadingMessage}</h3>
+                                        <div className="progress-bar-container">
+                                            <div className="progress-bar-fill"></div>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="story-reveal" ref={storyRevealRef}>
+                                        <div className="joke-section">
+                                            <h3>The "Redacted" Version:</h3>
+                                            {renderFinalStory()}
+                                        </div>
+
+                                        <div className="avatar-container">
+                                            <img src={trumpAvatar} alt="Donald Trump reading the story" className="trump-avatar" />
+                                        </div>
+
+                                        <div className="export-watermark cta-watermark">
+                                            🔥 <span>CREATE YOUR OWN EPSTEIN LEAK</span> AT <span className="highlight">WWW.SADLIBS.ONLINE</span> 🔥
+                                        </div>
+
+                                        <div className="action-buttons-row export-ignore">
+                                            <button onClick={handleReplayAudio} className="action-btn replay" disabled={!activeAudioUrl}>
+                                                🔊 Replay Audio
+                                            </button>
+                                            <button onClick={() => { handleShare('facebook'); handleDownloadAudio(); }} className="action-btn download" disabled={!activeAudioUrl}>
+                                                💾 Download MP3 & Share to FB
+                                            </button>
+                                            <button onClick={() => { handleShare('facebook'); handleDownloadMeme(); }} className="action-btn image-export" disabled={isProcessingMeme}>
+                                                {isProcessingMeme ? '📷 Processing...' : '📷 Download Image & Share to FB'}
+                                            </button>
+                                        </div>
+
+                                        <hr className="divider export-ignore" />
+
+                                        <div className="truth-section">
+                                            <h3>The Ugly Truth:</h3>
+                                            <div className="real-quote-box">
+                                                <p>{activeStory.realQuote}</p>
+                                            </div>
+                                            <div className="sources-box">
+                                                <h4>Sources:</h4>
+                                                <ul>
+                                                    {activeStory.sources.map((src, i) => (
+                                                        <li key={i}>
+                                                            <a href={src.url} target="_blank" rel="noopener noreferrer">
+                                                                {src.name}
+                                                            </a>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <button onClick={clearSelection} className="submit-btn outline full-width">
+                                            Select Another File
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    )}
+
+                </main>
+
+                <div className="social-share-section">
+                    <h3>{shareCount.toLocaleString()} people shared this game, will you?</h3>
+                    <div className="share-buttons">
+                        <button onClick={() => handleShare('twitter')} className="share-btn twitter">Share on X</button>
+                        <button onClick={() => handleShare('facebook')} className="share-btn facebook">Share on Facebook</button>
+                        <button onClick={() => handleShare('copy')} className="share-btn copy">Copy Link</button>
+                    </div>
                 </div>
-                <img src={heroCard} alt="Welcome to SadLibs" className="hero-card" />
-                <div className="header-links">
-                    <button className="link-btn" onClick={() => setShowNamesModal(true)}>Read The Names on the File!</button>
-                    <a href="https://www.thewisewolf.club" target="_blank" rel="noopener noreferrer" className="link-btn outline">The Wise Wolf on Substack</a>
+
+                <div className="merch-ad-container">
+                    <a href="https://www.bonfire.com/store/the-wise-wolf-merch/" target="_blank" rel="noopener noreferrer">
+                        <img src={merchImg} alt="Buy an Epstein Island Meme T-Shirt" className="merch-ad-img" />
+                    </a>
                 </div>
 
-                <div className="action-row">
-                    <button className="how-to-play-btn" onClick={(e) => { e.stopPropagation(); setShowModal(true); }}>How to Play</button>
-                </div>
+                <footer className="footer">
+                    <p>Made by The Wise Wolf &copy; {new Date().getFullYear()}</p>
+                    <p>Contact: <a href="mailto:douchecoded@gmail.com">douchecoded@gmail.com</a></p>
+                    <p className="designer-link">Website designed by <a href="http://www.acheapdesigner.com" target="_blank" rel="noopener noreferrer">www.acheapdesigner.com</a></p>
+                </footer>
 
-            </header>
-            <main className="main-content">
+                {showModal && (
+                    <div className="modal-overlay" onClick={() => setShowModal(false)}>
+                        <div className="modal" onClick={e => e.stopPropagation()} style={{ textAlign: 'left' }}>
+                            <h2 style={{ textAlign: 'center', marginBottom: '1rem' }}>How to Play</h2>
+                            <p style={{ marginBottom: '1rem' }}>Enter words into the blanks to complete the story. The story will be revealed with your words inserted. Have fun!</p>
 
+                            <h3 style={{ color: '#fca5a5', marginTop: '1rem', marginBottom: '0.5rem' }}>Grammar Refresher (For the Smooth Brains):</h3>
+                            <ul style={{ marginBottom: '1.5rem', marginLeft: '1.5rem', lineHeight: '1.6' }}>
+                                <li><strong>Noun:</strong> A person, place, or thing. <em>(e.g., donkey, toilet, senator)</em></li>
+                                <li><strong>Verb:</strong> An action word. <em>(e.g., run, explode, embezzle)</em></li>
+                                <li><strong>Adjective:</strong> Describes a noun. <em>(e.g., slimy, pathetic, radioactive)</em></li>
+                                <li><strong>Adverb:</strong> Describes a verb (usually ends in -ly). <em>(e.g., slowly, violently, suspiciously)</em></li>
+                            </ul>
 
-                {!selectedStoryId ? (
-                    <div className="story-selection">
-                        <h2 className="selection-title">Select a File to Decrypt:</h2>
-                        <div className="story-grid">
-                            {stories.map(story => (
-                                <button
-                                    key={story.id}
-                                    className="story-card-btn"
-                                    onClick={() => startStory(story.id)}
-                                >
-                                    {story.title}
-                                </button>
-                            ))}
+                            <div style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)', padding: '1rem', borderRadius: '8px', marginBottom: '1.5rem', textAlign: 'center' }}>
+                                <strong>Pro Tip:</strong><br />
+                                It is WAY funnier when you use absolute filth and dirty words. Do not hold back. Maximize the hilarity.
+                            </div>
+
+                            <button className="close-btn full-width" onClick={() => setShowModal(false)}>Close & Start Playing</button>
                         </div>
                     </div>
-                ) : (
-                    <div className="story-container">
-                        <button className="back-btn" onClick={clearSelection}>← Back to Files</button>
+                )}
 
-                        <div className={`glass-panel ${isRevealed ? 'revealed' : ''}`}>
-                            <h2>{activeStory.title}</h2>
+                {showNamesModal && (
+                    <div className="modal-overlay" onClick={() => setShowNamesModal(false)}>
+                        <div className="modal names-modal" onClick={e => e.stopPropagation()}>
+                            <h2>The High-Profile Names</h2>
+                            <div className="names-list">
+                                <span className="name-tag">Bill Clinton</span>
+                                <span className="name-tag">Prince Andrew</span>
+                                <span className="name-tag">Stephen Hawking</span>
+                                <span className="name-tag">David Copperfield</span>
+                                <span className="name-tag">Ehud Barak</span>
+                                <span className="name-tag">Jean-Luc Brunel</span>
+                                <span className="name-tag">Bill Gates</span>
+                                <span className="name-tag">Leslie Wexner</span>
+                                <span className="name-tag">Alan Dershowitz</span>
+                                <span className="name-tag">Al Gore</span>
+                                <span className="name-tag">Kevin Spacey</span>
+                            </div>
+                            <p className="names-disclaimer">Note: Appearance in the unsealed documents does not necessarily imply criminal wrongdoing.</p>
+                            <button className="close-btn" onClick={() => setShowNamesModal(false)}>Close Archive</button>
+                        </div>
+                    </div>
+                )}
 
-                            {!isRevealed && !isGenerating ? (
-                                <form onSubmit={revealStory} className="input-form">
-                                    <div className="inputs-grid">
-                                        {placeholders.map((p) => (
-                                            <div key={p.id} className="input-group">
-                                                <label>{p.type}</label>
-                                                <input
-                                                    type="text"
-                                                    placeholder={`Enter ${p.type}...`}
-                                                    value={easterEggInputs[p.id] ? 'DID NOT KILL HIMSELF' : (inputs[p.id] || '')}
-                                                    onChange={(e) => handleInputChange(p.id, e.target.value)}
-                                                    className={easterEggInputs[p.id] ? 'easter-egg-shake' : ''}
-                                                    readOnly={easterEggInputs[p.id]}
-                                                    required
-                                                />
+                {showExitModal && (
+                    <div className="modal-overlay" onClick={() => setShowExitModal(false)}>
+                        <div className={`modal exit-modal ${exitStage === 2 ? 'stage-two' : ''}`} onClick={e => e.stopPropagation()}>
+                            {exitStage === 1 ? (
+                                <>
+                                    <h2>Hey before you go...</h2>
+                                    <p className="exit-message">Share this game, then enter your email to get a <strong>FREE Year of The Wise Wolf</strong> ($80 value)!</p>
+                                    <div className="share-buttons modal-share">
+                                        <button onClick={() => handleShare('twitter')} className="share-btn twitter">Share on X</button>
+                                        <button onClick={() => handleShare('facebook')} className="share-btn facebook">Share on Facebook</button>
+                                        <button onClick={() => handleShare('copy')} className="share-btn copy">Copy Link</button>
+                                    </div>
+                                    <div className={`exit-email-capture ${hasSharedInExitModal ? 'unlocked' : 'locked'}`} style={{ marginBottom: '2.5rem' }}>
+                                        {exitModalStatus !== 'success' ? (
+                                            <>
+                                                <form onSubmit={handleExitEmailSubmit} className="prize-form exit-inline-form">
+                                                    <input
+                                                        type="email"
+                                                        placeholder={hasSharedInExitModal ? "Enter email address..." : "Share to unlock..."}
+                                                        value={exitEmail}
+                                                        onChange={(e) => setExitEmail(e.target.value)}
+                                                        required
+                                                        disabled={!hasSharedInExitModal || exitModalStatus === 'loading'}
+                                                        className="prize-input"
+                                                    />
+                                                    <button
+                                                        type="submit"
+                                                        disabled={!hasSharedInExitModal || exitModalStatus === 'loading'}
+                                                        className="submit-btn"
+                                                    >
+                                                        {exitModalStatus === 'loading' ? 'Sending...' : 'Claim $80 Value'}
+                                                    </button>
+                                                </form>
+                                                {exitModalStatus === 'error' && <p className="error-text" style={{ marginTop: '0.5rem', color: '#ef4444' }}>Transmission failed. Try another address.</p>}
+                                            </>
+                                        ) : (
+                                            <div className="prize-success fade-in" style={{ padding: '1rem', textAlign: 'center', background: 'rgba(74, 222, 128, 0.1)', borderRadius: '8px', border: '1px solid rgba(74, 222, 128, 0.2)' }}>
+                                                <h3 className="success-text" style={{ color: '#4ade80', margin: 0, fontSize: '1.2rem' }}>SUCCESS!</h3>
+                                                <p style={{ color: '#94a3b8', margin: '0.5rem 0 0 0', fontSize: '0.9rem' }}>Your Free Year of Wise Wolf has been claimed.</p>
                                             </div>
-                                        ))}
+                                        )}
                                     </div>
-                                    <button
-                                        type="submit"
-                                        className="submit-btn"
-                                        disabled={!allFilled}
-                                    >
-                                        Reveal Story
-                                    </button>
-                                </form>
-                            ) : isGenerating ? (
-                                <div className="generating-container fade-in">
-                                    <div className="spinner"></div>
-                                    <h3 className="loading-message">{loadingMessage}</h3>
-                                    <div className="progress-bar-container">
-                                        <div className="progress-bar-fill"></div>
-                                    </div>
-                                </div>
+                                    <button className="close-btn outline-close" style={{ marginTop: '1.5rem' }} onClick={() => setShowExitModal(false)}>No thanks, maybe later</button>
+                                </>
                             ) : (
-                                <div className="story-reveal" ref={storyRevealRef}>
-                                    <div className="joke-section">
-                                        <h3>The "Redacted" Version:</h3>
-                                        {renderFinalStory()}
+                                <>
+                                    <h2 className="angry-heading">If you won't share the game...</h2>
+                                    <p className="exit-message">At least share the fact that this woman sold Epstein a baby. A freaking baby. Share this game, then enter your email to get a <strong>FREE Year of The Wise Wolf</strong> ($80 value)!</p>
+                                    <img src={babyEmailImg} alt="Email discussing bringing back a baby" className="evidence-img" />
+                                    <div className="share-buttons modal-share">
+                                        <button onClick={() => handleShare('twitter')} className="share-btn twitter">Share on X</button>
+                                        <button onClick={() => handleShare('facebook')} className="share-btn facebook">Share on Facebook</button>
                                     </div>
-
-                                    <div className="avatar-container">
-                                        <img src={trumpAvatar} alt="Donald Trump reading the story" className="trump-avatar" />
+                                    <div className={`exit-email-capture ${hasSharedInExitModal ? 'unlocked' : 'locked'}`} style={{ marginBottom: '2.5rem' }}>
+                                        {exitModalStatus !== 'success' ? (
+                                            <>
+                                                <form onSubmit={handleExitEmailSubmit} className="prize-form exit-inline-form">
+                                                    <input
+                                                        type="email"
+                                                        placeholder={hasSharedInExitModal ? "Enter email address..." : "Share to unlock..."}
+                                                        value={exitEmail}
+                                                        onChange={(e) => setExitEmail(e.target.value)}
+                                                        required
+                                                        disabled={!hasSharedInExitModal || exitModalStatus === 'loading'}
+                                                        className="prize-input"
+                                                    />
+                                                    <button
+                                                        type="submit"
+                                                        disabled={!hasSharedInExitModal || exitModalStatus === 'loading'}
+                                                        className="submit-btn"
+                                                    >
+                                                        {exitModalStatus === 'loading' ? 'Sending...' : 'Claim $80 Value'}
+                                                    </button>
+                                                </form>
+                                                {exitModalStatus === 'error' && <p className="error-text" style={{ marginTop: '0.5rem', color: '#ef4444' }}>Transmission failed. Try another address.</p>}
+                                            </>
+                                        ) : (
+                                            <div className="prize-success fade-in" style={{ padding: '1rem', textAlign: 'center', background: 'rgba(74, 222, 128, 0.1)', borderRadius: '8px', border: '1px solid rgba(74, 222, 128, 0.2)' }}>
+                                                <h3 className="success-text" style={{ color: '#4ade80', margin: 0, fontSize: '1.2rem' }}>SUCCESS!</h3>
+                                                <p style={{ color: '#94a3b8', margin: '0.5rem 0 0 0', fontSize: '0.9rem' }}>Your Free Year of Wise Wolf has been claimed.</p>
+                                            </div>
+                                        )}
                                     </div>
-
-                                    <div className="export-watermark cta-watermark">
-                                        🔥 <span>CREATE YOUR OWN EPSTEIN LEAK</span> AT <span className="highlight">WWW.SADLIBS.ONLINE</span> 🔥
-                                    </div>
-
-                                    <div className="action-buttons-row export-ignore">
-                                        <button onClick={handleReplayAudio} className="action-btn replay" disabled={!activeAudioUrl}>
-                                            🔊 Replay Audio
-                                        </button>
-                                        <button onClick={() => { handleShare('facebook'); handleDownloadAudio(); }} className="action-btn download" disabled={!activeAudioUrl}>
-                                            💾 Download MP3 & Share to FB
-                                        </button>
-                                        <button onClick={() => { handleShare('facebook'); handleDownloadMeme(); }} className="action-btn image-export" disabled={isProcessingMeme}>
-                                            {isProcessingMeme ? '📷 Processing...' : '📷 Download Image & Share to FB'}
-                                        </button>
-                                    </div>
-
-                                    <hr className="divider export-ignore" />
-
-                                    <div className="truth-section">
-                                        <h3>The Ugly Truth:</h3>
-                                        <div className="real-quote-box">
-                                            <p>{activeStory.realQuote}</p>
-                                        </div>
-                                        <div className="sources-box">
-                                            <h4>Sources:</h4>
-                                            <ul>
-                                                {activeStory.sources.map((src, i) => (
-                                                    <li key={i}>
-                                                        <a href={src.url} target="_blank" rel="noopener noreferrer">
-                                                            {src.name}
-                                                        </a>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                    <button onClick={clearSelection} className="submit-btn outline full-width">
-                                        Select Another File
-                                    </button>
-                                </div>
+                                    <button className="close-btn outline-close" style={{ marginTop: '1.5rem' }} onClick={() => setShowExitModal(false)}>Close Archive</button>
+                                </>
                             )}
                         </div>
                     </div>
                 )}
 
-            </main>
+                {/* Email Capture Prize Modal */}
+                {showPrizeModal && (
+                    <div className="modal-overlay">
+                        <div className="modal prize-modal">
+                            {isDeciphered && prizeModalStatus !== 'success' && (
+                                <>
+                                    <div className="decipher-container">
+                                        <h2 className="decipher-text locked">
+                                            {decipherText}
+                                        </h2>
+                                    </div>
+                                    <div className="prize-form-container fade-in">
+                                        {!hasSharedInExitModal ? (
+                                            <>
+                                                <p className="prize-desc" style={{ marginBottom: '1rem', color: '#fff' }}>Share this leaked document to receive your FREE Year of The Wise Wolf ($80 value)!</p>
+                                                <button className="share-btn twitter full-width" onClick={() => handleShare('x')} style={{ marginBottom: '0.5rem' }}>
+                                                    SHARE ON X
+                                                </button>
+                                                <button className="share-btn facebook full-width" onClick={() => handleShare('facebook')} style={{ marginBottom: '0.5rem' }}>
+                                                    SHARE ON FACEBOOK
+                                                </button>
+                                                <button className="share-btn copy full-width" onClick={() => handleShare('copy')}>
+                                                    COPY LINK
+                                                </button>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <p className="prize-desc">Enter your secure terminal address below to claim your prize.</p>
+                                                <form onSubmit={handlePrizeEmailSubmit} className="prize-form">
+                                                    <input
+                                                        type="email"
+                                                        placeholder="Enter email address..."
+                                                        value={prizeEmail}
+                                                        onChange={(e) => setPrizeEmail(e.target.value)}
+                                                        required
+                                                        className="prize-input"
+                                                        disabled={prizeModalStatus === 'loading'}
+                                                    />
+                                                    <button
+                                                        type="submit"
+                                                        className="share-btn twitter full-width"
+                                                        disabled={prizeModalStatus === 'loading'}
+                                                    >
+                                                        {prizeModalStatus === 'loading' ? 'Encrypting...' : 'CLAIM MEMBERSHIP'}
+                                                    </button>
+                                                </form>
+                                                {prizeModalStatus === 'error' && <p className="error-text" style={{ marginTop: '1rem', color: '#ef4444' }}>Transmission failed. Try another address.</p>}
+                                            </>
+                                        )}
+                                    </div>
+                                </>
+                            )}
 
-            <div className="social-share-section">
-                <h3>{shareCount.toLocaleString()} people shared this game, will you?</h3>
-                <div className="share-buttons">
-                    <button onClick={() => handleShare('twitter')} className="share-btn twitter">Share on X</button>
-                    <button onClick={() => handleShare('facebook')} className="share-btn facebook">Share on Facebook</button>
-                    <button onClick={() => handleShare('copy')} className="share-btn copy">Copy Link</button>
-                </div>
-            </div>
+                            {prizeModalStatus === 'success' && (
+                                <div className="prize-success fade-in" style={{ padding: '2rem', textAlign: 'center' }}>
+                                    <h3 className="success-text" style={{ color: '#4ade80', marginBottom: '1rem', fontSize: '1.5rem' }}>ACCESS GRANTED</h3>
+                                    <p style={{ color: '#94a3b8' }}>Membership credentials will be transmitted shortly.</p>
+                                </div>
+                            )}
 
-            <div className="merch-ad-container">
-                <a href="https://www.bonfire.com/store/the-wise-wolf-merch/" target="_blank" rel="noopener noreferrer">
-                    <img src={merchImg} alt="Buy an Epstein Island Meme T-Shirt" className="merch-ad-img" />
-                </a>
-            </div>
-
-            <footer className="footer">
-                <p>Made by The Wise Wolf &copy; {new Date().getFullYear()}</p>
-                <p>Contact: <a href="mailto:douchecoded@gmail.com">douchecoded@gmail.com</a></p>
-                <p className="designer-link">Website designed by <a href="http://www.acheapdesigner.com" target="_blank" rel="noopener noreferrer">www.acheapdesigner.com</a></p>
-            </footer>
-
-            {showModal && (
-                <div className="modal-overlay" onClick={() => setShowModal(false)}>
-                    <div className="modal" onClick={e => e.stopPropagation()} style={{ textAlign: 'left' }}>
-                        <h2 style={{ textAlign: 'center', marginBottom: '1rem' }}>How to Play</h2>
-                        <p style={{ marginBottom: '1rem' }}>Enter words into the blanks to complete the story. The story will be revealed with your words inserted. Have fun!</p>
-
-                        <h3 style={{ color: '#fca5a5', marginTop: '1rem', marginBottom: '0.5rem' }}>Grammar Refresher (For the Smooth Brains):</h3>
-                        <ul style={{ marginBottom: '1.5rem', marginLeft: '1.5rem', lineHeight: '1.6' }}>
-                            <li><strong>Noun:</strong> A person, place, or thing. <em>(e.g., donkey, toilet, senator)</em></li>
-                            <li><strong>Verb:</strong> An action word. <em>(e.g., run, explode, embezzle)</em></li>
-                            <li><strong>Adjective:</strong> Describes a noun. <em>(e.g., slimy, pathetic, radioactive)</em></li>
-                            <li><strong>Adverb:</strong> Describes a verb (usually ends in -ly). <em>(e.g., slowly, violently, suspiciously)</em></li>
-                        </ul>
-
-                        <div style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)', padding: '1rem', borderRadius: '8px', marginBottom: '1.5rem', textAlign: 'center' }}>
-                            <strong>Pro Tip:</strong><br />
-                            It is WAY funnier when you use absolute filth and dirty words. Do not hold back. Maximize the hilarity.
+                            {isDeciphered && prizeModalStatus !== 'success' && (
+                                <button className="close-btn outline-close" style={{ marginTop: '1.5rem' }} onClick={() => setShowPrizeModal(false)}>Refuse Clearance</button>
+                            )}
                         </div>
-
-                        <button className="close-btn full-width" onClick={() => setShowModal(false)}>Close & Start Playing</button>
                     </div>
-                </div>
-            )}
+                )}
 
-            {showNamesModal && (
-                <div className="modal-overlay" onClick={() => setShowNamesModal(false)}>
-                    <div className="modal names-modal" onClick={e => e.stopPropagation()}>
-                        <h2>The High-Profile Names</h2>
-                        <div className="names-list">
-                            <span className="name-tag">Bill Clinton</span>
-                            <span className="name-tag">Prince Andrew</span>
-                            <span className="name-tag">Stephen Hawking</span>
-                            <span className="name-tag">David Copperfield</span>
-                            <span className="name-tag">Ehud Barak</span>
-                            <span className="name-tag">Jean-Luc Brunel</span>
-                            <span className="name-tag">Bill Gates</span>
-                            <span className="name-tag">Leslie Wexner</span>
-                            <span className="name-tag">Alan Dershowitz</span>
-                            <span className="name-tag">Al Gore</span>
-                            <span className="name-tag">Kevin Spacey</span>
-                        </div>
-                        <p className="names-disclaimer">Note: Appearance in the unsealed documents does not necessarily imply criminal wrongdoing.</p>
-                        <button className="close-btn" onClick={() => setShowNamesModal(false)}>Close Archive</button>
-                    </div>
-                </div>
-            )}
+                {/* Corner Decals */}
+                <img src={sadGirlImg} alt="Sad Girl Mascot" className="corner-decal left" />
+                <img src={funForAllAgesImg} alt="Fun for All Ages" className="corner-decal right" />
 
-            {showExitModal && (
-                <div className="modal-overlay" onClick={() => setShowExitModal(false)}>
-                    <div className={`modal exit-modal ${exitStage === 2 ? 'stage-two' : ''}`} onClick={e => e.stopPropagation()}>
-                        {exitStage === 1 ? (
-                            <>
-                                <h2>Hey before you go...</h2>
-                                <p className="exit-message">Share this game, then enter your email to get a <strong>FREE Year of The Wise Wolf</strong> ($80 value)!</p>
-                                <div className="share-buttons modal-share">
-                                    <button onClick={() => handleShare('twitter')} className="share-btn twitter">Share on X</button>
-                                    <button onClick={() => handleShare('facebook')} className="share-btn facebook">Share on Facebook</button>
-                                    <button onClick={() => handleShare('copy')} className="share-btn copy">Copy Link</button>
-                                </div>
-                                <div className={`exit-email-capture ${hasSharedInExitModal ? 'unlocked' : 'locked'}`} style={{ marginBottom: '2.5rem' }}>
-                                    {exitModalStatus !== 'success' ? (
-                                        <>
-                                            <form onSubmit={handleExitEmailSubmit} className="prize-form exit-inline-form">
-                                                <input
-                                                    type="email"
-                                                    placeholder={hasSharedInExitModal ? "Enter email address..." : "Share to unlock..."}
-                                                    value={exitEmail}
-                                                    onChange={(e) => setExitEmail(e.target.value)}
-                                                    required
-                                                    disabled={!hasSharedInExitModal || exitModalStatus === 'loading'}
-                                                    className="prize-input"
-                                                />
-                                                <button
-                                                    type="submit"
-                                                    disabled={!hasSharedInExitModal || exitModalStatus === 'loading'}
-                                                    className="submit-btn"
-                                                >
-                                                    {exitModalStatus === 'loading' ? 'Sending...' : 'Claim $80 Value'}
-                                                </button>
-                                            </form>
-                                            {exitModalStatus === 'error' && <p className="error-text" style={{ marginTop: '0.5rem', color: '#ef4444' }}>Transmission failed. Try another address.</p>}
-                                        </>
-                                    ) : (
-                                        <div className="prize-success fade-in" style={{ padding: '1rem', textAlign: 'center', background: 'rgba(74, 222, 128, 0.1)', borderRadius: '8px', border: '1px solid rgba(74, 222, 128, 0.2)' }}>
-                                            <h3 className="success-text" style={{ color: '#4ade80', margin: 0, fontSize: '1.2rem' }}>SUCCESS!</h3>
-                                            <p style={{ color: '#94a3b8', margin: '0.5rem 0 0 0', fontSize: '0.9rem' }}>Your Free Year of Wise Wolf has been claimed.</p>
-                                        </div>
-                                    )}
-                                </div>
-                                <button className="close-btn outline-close" style={{ marginTop: '1.5rem' }} onClick={() => setShowExitModal(false)}>No thanks, maybe later</button>
-                            </>
-                        ) : (
-                            <>
-                                <h2 className="angry-heading">If you won't share the game...</h2>
-                                <p className="exit-message">At least share the fact that this woman sold Epstein a baby. A freaking baby. Share this game, then enter your email to get a <strong>FREE Year of The Wise Wolf</strong> ($80 value)!</p>
-                                <img src={babyEmailImg} alt="Email discussing bringing back a baby" className="evidence-img" />
-                                <div className="share-buttons modal-share">
-                                    <button onClick={() => handleShare('twitter')} className="share-btn twitter">Share on X</button>
-                                    <button onClick={() => handleShare('facebook')} className="share-btn facebook">Share on Facebook</button>
-                                </div>
-                                <div className={`exit-email-capture ${hasSharedInExitModal ? 'unlocked' : 'locked'}`} style={{ marginBottom: '2.5rem' }}>
-                                    {exitModalStatus !== 'success' ? (
-                                        <>
-                                            <form onSubmit={handleExitEmailSubmit} className="prize-form exit-inline-form">
-                                                <input
-                                                    type="email"
-                                                    placeholder={hasSharedInExitModal ? "Enter email address..." : "Share to unlock..."}
-                                                    value={exitEmail}
-                                                    onChange={(e) => setExitEmail(e.target.value)}
-                                                    required
-                                                    disabled={!hasSharedInExitModal || exitModalStatus === 'loading'}
-                                                    className="prize-input"
-                                                />
-                                                <button
-                                                    type="submit"
-                                                    disabled={!hasSharedInExitModal || exitModalStatus === 'loading'}
-                                                    className="submit-btn"
-                                                >
-                                                    {exitModalStatus === 'loading' ? 'Sending...' : 'Claim $80 Value'}
-                                                </button>
-                                            </form>
-                                            {exitModalStatus === 'error' && <p className="error-text" style={{ marginTop: '0.5rem', color: '#ef4444' }}>Transmission failed. Try another address.</p>}
-                                        </>
-                                    ) : (
-                                        <div className="prize-success fade-in" style={{ padding: '1rem', textAlign: 'center', background: 'rgba(74, 222, 128, 0.1)', borderRadius: '8px', border: '1px solid rgba(74, 222, 128, 0.2)' }}>
-                                            <h3 className="success-text" style={{ color: '#4ade80', margin: 0, fontSize: '1.2rem' }}>SUCCESS!</h3>
-                                            <p style={{ color: '#94a3b8', margin: '0.5rem 0 0 0', fontSize: '0.9rem' }}>Your Free Year of Wise Wolf has been claimed.</p>
-                                        </div>
-                                    )}
-                                </div>
-                                <button className="close-btn outline-close" style={{ marginTop: '1.5rem' }} onClick={() => setShowExitModal(false)}>Close Archive</button>
-                            </>
-                        )}
-                    </div>
-                </div>
-            )}
-
-            {/* Email Capture Prize Modal */}
-            {showPrizeModal && (
-                <div className="modal-overlay">
-                    <div className="modal prize-modal">
-                        {isDeciphered && prizeModalStatus !== 'success' && (
-                            <>
-                                <div className="decipher-container">
-                                    <h2 className="decipher-text locked">
-                                        {decipherText}
-                                    </h2>
-                                </div>
-                                <div className="prize-form-container fade-in">
-                                    {!hasSharedInExitModal ? (
-                                        <>
-                                            <p className="prize-desc" style={{ marginBottom: '1rem', color: '#fff' }}>Share this leaked document to receive your FREE Year of The Wise Wolf ($80 value)!</p>
-                                            <button className="share-btn twitter full-width" onClick={() => handleShare('x')} style={{ marginBottom: '0.5rem' }}>
-                                                SHARE ON X
-                                            </button>
-                                            <button className="share-btn facebook full-width" onClick={() => handleShare('facebook')} style={{ marginBottom: '0.5rem' }}>
-                                                SHARE ON FACEBOOK
-                                            </button>
-                                            <button className="share-btn copy full-width" onClick={() => handleShare('copy')}>
-                                                COPY LINK
-                                            </button>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <p className="prize-desc">Enter your secure terminal address below to claim your prize.</p>
-                                            <form onSubmit={handlePrizeEmailSubmit} className="prize-form">
-                                                <input
-                                                    type="email"
-                                                    placeholder="Enter email address..."
-                                                    value={prizeEmail}
-                                                    onChange={(e) => setPrizeEmail(e.target.value)}
-                                                    required
-                                                    className="prize-input"
-                                                    disabled={prizeModalStatus === 'loading'}
-                                                />
-                                                <button
-                                                    type="submit"
-                                                    className="share-btn twitter full-width"
-                                                    disabled={prizeModalStatus === 'loading'}
-                                                >
-                                                    {prizeModalStatus === 'loading' ? 'Encrypting...' : 'CLAIM MEMBERSHIP'}
-                                                </button>
-                                            </form>
-                                            {prizeModalStatus === 'error' && <p className="error-text" style={{ marginTop: '1rem', color: '#ef4444' }}>Transmission failed. Try another address.</p>}
-                                        </>
-                                    )}
-                                </div>
-                            </>
-                        )}
-
-                        {prizeModalStatus === 'success' && (
-                            <div className="prize-success fade-in" style={{ padding: '2rem', textAlign: 'center' }}>
-                                <h3 className="success-text" style={{ color: '#4ade80', marginBottom: '1rem', fontSize: '1.5rem' }}>ACCESS GRANTED</h3>
-                                <p style={{ color: '#94a3b8' }}>Membership credentials will be transmitted shortly.</p>
-                            </div>
-                        )}
-
-                        {isDeciphered && prizeModalStatus !== 'success' && (
-                            <button className="close-btn outline-close" style={{ marginTop: '1.5rem' }} onClick={() => setShowPrizeModal(false)}>Refuse Clearance</button>
-                        )}
-                    </div>
-                </div>
-            )}
-
-            {/* Corner Decals */}
-            <img src={sadGirlImg} alt="Sad Girl Mascot" className="corner-decal left" />
-            <img src={funForAllAgesImg} alt="Fun for All Ages" className="corner-decal right" />
-
-        </div>
-    )
-
+            </div>
+        </>
+    );
 }
 
-export default App
+export default App;
