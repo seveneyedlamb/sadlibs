@@ -913,24 +913,24 @@ function App() {
 
                 {showModal && (
                     <div className="modal-overlay" onClick={() => setShowModal(false)}>
-                        <div className="modal" onClick={e => e.stopPropagation()} style={{ textAlign: 'left' }}>
-                            <h2 style={{ textAlign: 'center', marginBottom: '1rem' }}>How to Play</h2>
-                            <p style={{ marginBottom: '1rem' }}>Enter words into the blanks to complete the story. The story will be revealed with your words inserted. Have fun!</p>
+                        <div className="modal how-to-play-modal" onClick={e => e.stopPropagation()}>
+                            <h2>How to Play</h2>
+                            <p className="modal-desc">Enter words into the blanks to complete the story. The story will be revealed with your words inserted. Have fun!</p>
 
-                            <h3 style={{ color: '#fca5a5', marginTop: '1rem', marginBottom: '0.5rem' }}>Grammar Refresher (For the Smooth Brains):</h3>
-                            <ul style={{ marginBottom: '1.5rem', marginLeft: '1.5rem', lineHeight: '1.6' }}>
+                            <h3 className="grammar-title">Grammar Refresher (For the Smooth Brains):</h3>
+                            <ul className="grammar-list">
                                 <li><strong>Noun:</strong> A person, place, or thing. <em>(e.g., donkey, toilet, senator)</em></li>
                                 <li><strong>Verb:</strong> An action word. <em>(e.g., run, explode, embezzle)</em></li>
                                 <li><strong>Adjective:</strong> Describes a noun. <em>(e.g., slimy, pathetic, radioactive)</em></li>
-                                <li><strong>Adverb:</strong> Describes a verb (usually ends in -ly). <em>(e.g., slowly, violently, suspiciously)</em></li>
+                                <li><strong>Adverb:</strong> Describes a verb (ends in -ly). <em>(e.g., slowly, violently)</em></li>
                             </ul>
 
-                            <div style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)', padding: '1rem', borderRadius: '8px', marginBottom: '1.5rem', textAlign: 'center' }}>
+                            <div className="pro-tip-box">
                                 <strong>Pro Tip:</strong><br />
                                 It is WAY funnier when you use absolute filth and dirty words. Do not hold back. Maximize the hilarity.
                             </div>
 
-                            <button className="close-btn full-width" onClick={() => setShowModal(false)}>Close & Start Playing</button>
+                            <button className="close-btn full-width compact-btn" onClick={() => setShowModal(false)}>Close & Start Playing</button>
                         </div>
                     </div>
                 )}
