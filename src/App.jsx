@@ -252,23 +252,34 @@ function App() {
     useEffect(() => {
         const audio = themeAudioRef.current;
         if (audio) {
-            const playAudio = async () => {
-                try {
-                    audio.volume = 0.15; // Enforce volume here
-                    await audio.play();
-                } catch (err) {
-                    // Autoplay blocked, wait specifically for mousemove as requested
-                    const startOnInteraction = () => {
-                        if (audio) {
-                            audio.volume = 0.15; // Enforce volume again
-                            audio.play().catch(e => console.error("Audio playback failed", e));
-                        }
+            let playAttempting = false;
+
+            const startOnInteraction = () => {
+                if (audio && audio.paused && !playAttempting) {
+                    playAttempting = true;
+                    audio.volume = 0.15;
+                    audio.play().then(() => {
                         window.removeEventListener('mousemove', startOnInteraction);
-                    };
-                    window.addEventListener('mousemove', startOnInteraction, { once: true });
+                        window.removeEventListener('click', startOnInteraction);
+                        window.removeEventListener('keydown', startOnInteraction);
+                        window.removeEventListener('touchstart', startOnInteraction);
+                        window.removeEventListener('scroll', startOnInteraction);
+                    }).catch(e => {
+                        playAttempting = false; // Reset so the next movement tries again
+                    });
                 }
             };
-            playAudio();
+
+            // Attempt initial play
+            audio.volume = 0.15;
+            audio.play().catch(() => {
+                // If blocked, listen continuously for ANY interaction (mousemove included) until accepted
+                window.addEventListener('mousemove', startOnInteraction);
+                window.addEventListener('click', startOnInteraction);
+                window.addEventListener('keydown', startOnInteraction);
+                window.addEventListener('touchstart', startOnInteraction);
+                window.addEventListener('scroll', startOnInteraction);
+            });
         }
     }, []);
 
