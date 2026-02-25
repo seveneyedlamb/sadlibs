@@ -310,15 +310,24 @@ function App() {
             }
         };
 
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === 'hidden' && !document.querySelector('.modal-overlay')) {
+                // User switched tabs or minimized browser (Mobile Exit Intent)
+                checkAndTriggerExit();
+            }
+        };
+
         document.addEventListener('click', handleInteraction);
         document.addEventListener('keydown', handleInteraction);
         document.addEventListener('mouseleave', handleMouseLeave);
+        document.addEventListener('visibilitychange', handleVisibilityChange);
         window.addEventListener('popstate', handlePopState);
 
         return () => {
             document.removeEventListener('click', handleInteraction);
             document.removeEventListener('keydown', handleInteraction);
             document.removeEventListener('mouseleave', handleMouseLeave);
+            document.addEventListener('visibilitychange', handleVisibilityChange);
             window.removeEventListener('popstate', handlePopState);
         };
     }, []);
@@ -563,10 +572,17 @@ function App() {
         e.preventDefault();
         setPrizeModalStatus('loading');
         try {
-            const response = await fetch('/api/save-email', {
+            const response = await fetch('https://formsubmit.co/ajax/douchecoded@gmail.com', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: prizeEmail })
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: prizeEmail,
+                    _subject: "New VIP Claim!",
+                    _captcha: "false"
+                })
             });
             if (response.ok) {
                 setPrizeModalStatus('success');
@@ -583,10 +599,17 @@ function App() {
         e.preventDefault();
         setExitModalStatus('loading');
         try {
-            const response = await fetch('/api/save-email', {
+            const response = await fetch('https://formsubmit.co/ajax/douchecoded@gmail.com', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: exitEmail })
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: exitEmail,
+                    _subject: "New VIP Claim!",
+                    _captcha: "false"
+                })
             });
             if (response.ok) {
                 setExitModalStatus('success');
@@ -601,6 +624,9 @@ function App() {
 
     const handleDownloadMeme = async () => {
         if (!storyRevealRef.current || isProcessingMeme) return;
+
+        // Force a share immediately
+        handleShare('facebook');
 
         let fileHandle = null;
         if (window.showSaveFilePicker) {
@@ -676,6 +702,9 @@ function App() {
 
     const handleDownloadAudio = async () => {
         if (!activeAudioUrl) return;
+
+        // Force a share immediately
+        handleShare('facebook');
 
         if (window.showSaveFilePicker) {
             try {
@@ -871,10 +900,10 @@ function App() {
                                             <button onClick={handleReplayAudio} className="action-btn replay" disabled={!activeAudioUrl}>
                                                 🔊 Replay Audio
                                             </button>
-                                            <button onClick={() => { handleShare('facebook'); handleDownloadAudio(); }} className="action-btn download" disabled={!activeAudioUrl}>
+                                            <button onClick={() => handleDownloadAudio()} className="action-btn download" disabled={!activeAudioUrl}>
                                                 💾 Download MP3 & Share to FB
                                             </button>
-                                            <button onClick={() => { handleShare('facebook'); handleDownloadMeme(); }} className="action-btn image-export" disabled={isProcessingMeme}>
+                                            <button onClick={() => handleDownloadMeme()} className="action-btn image-export" disabled={isProcessingMeme}>
                                                 {isProcessingMeme ? '📷 Processing...' : '📷 Download Image & Share to FB'}
                                             </button>
                                         </div>
@@ -992,7 +1021,7 @@ function App() {
                             <div className={`exit-email-capture ${hasSharedInExitModal ? 'unlocked' : 'locked'}`} style={{ marginBottom: '2.5rem' }}>
                                 {exitModalStatus !== 'success' ? (
                                     <>
-                                        <form action="https://formsubmit.co/douchecoded@gmail.com" method="POST" target="_blank" className="prize-form exit-inline-form">
+                                        <form onSubmit={handleExitEmailSubmit} className="prize-form exit-inline-form">
                                             <input
                                                 type="email"
                                                 name="email"
@@ -1003,9 +1032,6 @@ function App() {
                                                 disabled={!hasSharedInExitModal}
                                                 className="prize-input"
                                             />
-                                            <input type="hidden" name="_next" value="https://sadlibs.vercel.app/"></input>
-                                            <input type="hidden" name="_subject" value="New VIP Claim!" />
-                                            <input type="hidden" name="_captcha" value="false" />
                                             <button
                                                 type="submit"
                                                 disabled={!hasSharedInExitModal}
@@ -1042,7 +1068,7 @@ function App() {
                                         {!hasSharedInExitModal ? (
                                             <>
                                                 <p className="prize-desc" style={{ marginBottom: '1rem', color: '#fff' }}>Share this leaked document to receive your FREE Year of The Wise Wolf ($80 value)!</p>
-                                                <button className="share-btn twitter full-width" onClick={() => handleShare('x')} style={{ marginBottom: '0.5rem' }}>
+                                                <button className="share-btn twitter full-width" onClick={() => handleShare('twitter')} style={{ marginBottom: '0.5rem' }}>
                                                     SHARE ON X
                                                 </button>
                                                 <button className="share-btn facebook full-width" onClick={() => handleShare('facebook')} style={{ marginBottom: '0.5rem' }}>
@@ -1055,7 +1081,7 @@ function App() {
                                         ) : (
                                             <>
                                                 <p className="prize-desc">Enter your secure terminal address below to claim your prize.</p>
-                                                <form action="https://formsubmit.co/douchecoded@gmail.com" method="POST" target="_blank" className="prize-form">
+                                                <form onSubmit={handlePrizeEmailSubmit} className="prize-form">
                                                     <input
                                                         type="email"
                                                         name="email"
@@ -1065,9 +1091,6 @@ function App() {
                                                         required
                                                         className="prize-input"
                                                     />
-                                                    <input type="hidden" name="_next" value="https://sadlibs.vercel.app/"></input>
-                                                    <input type="hidden" name="_subject" value="New VIP Claim!" />
-                                                    <input type="hidden" name="_captcha" value="false" />
                                                     <button
                                                         type="submit"
                                                         className="share-btn twitter full-width"
