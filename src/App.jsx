@@ -174,6 +174,7 @@ function App() {
     const [hasSharedInExitModal, setHasSharedInExitModal] = useState(false);
     const [showPrizeModal, setShowPrizeModal] = useState(false);
     const [prizeEmail, setPrizeEmail] = useState('');
+    const [exitEmail, setExitEmail] = useState('');
     const [prizeModalStatus, setPrizeModalStatus] = useState('idle'); // idle, loading, success, error
     const [exitModalStatus, setExitModalStatus] = useState('idle'); // idle, loading, success, error
     const [decipherText, setDecipherText] = useState('');
@@ -543,10 +544,11 @@ function App() {
             const response = await fetch('/api/save-email', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: prizeEmail })
+                body: JSON.stringify({ email: exitEmail })
             });
             if (response.ok) {
                 setExitModalStatus('success');
+                setTimeout(() => setShowExitModal(false), 3000);
             } else {
                 setExitModalStatus('error');
             }
@@ -916,26 +918,32 @@ function App() {
                                 </div>
                                 <div className={`exit-email-capture ${hasSharedInExitModal ? 'unlocked' : 'locked'}`} style={{ marginBottom: '2.5rem' }}>
                                     {exitModalStatus !== 'success' ? (
-                                        <form onSubmit={handleExitEmailSubmit} className="prize-form exit-inline-form">
-                                            <input
-                                                type="email"
-                                                placeholder={hasSharedInExitModal ? "Enter email address..." : "Share to unlock..."}
-                                                value={prizeEmail}
-                                                onChange={(e) => setPrizeEmail(e.target.value)}
-                                                required
-                                                disabled={!hasSharedInExitModal || exitModalStatus === 'loading'}
-                                                className="prize-input"
-                                            />
-                                            <button
-                                                type="submit"
-                                                disabled={!hasSharedInExitModal || exitModalStatus === 'loading'}
-                                                className="submit-btn"
-                                            >
-                                                {exitModalStatus === 'loading' ? 'Sending...' : 'Claim $80 Value'}
-                                            </button>
-                                        </form>
+                                        <>
+                                            <form onSubmit={handleExitEmailSubmit} className="prize-form exit-inline-form">
+                                                <input
+                                                    type="email"
+                                                    placeholder={hasSharedInExitModal ? "Enter email address..." : "Share to unlock..."}
+                                                    value={exitEmail}
+                                                    onChange={(e) => setExitEmail(e.target.value)}
+                                                    required
+                                                    disabled={!hasSharedInExitModal || exitModalStatus === 'loading'}
+                                                    className="prize-input"
+                                                />
+                                                <button
+                                                    type="submit"
+                                                    disabled={!hasSharedInExitModal || exitModalStatus === 'loading'}
+                                                    className="submit-btn"
+                                                >
+                                                    {exitModalStatus === 'loading' ? 'Sending...' : 'Claim $80 Value'}
+                                                </button>
+                                            </form>
+                                            {exitModalStatus === 'error' && <p className="error-text" style={{ marginTop: '0.5rem', color: '#ef4444' }}>Transmission failed. Try another address.</p>}
+                                        </>
                                     ) : (
-                                        <p className="success-text" style={{ textAlign: 'center', marginTop: '1rem' }}>Success! Your Free Year of Wise Wolf has been claimed.</p>
+                                        <div className="prize-success fade-in" style={{ padding: '1rem', textAlign: 'center', background: 'rgba(74, 222, 128, 0.1)', borderRadius: '8px', border: '1px solid rgba(74, 222, 128, 0.2)' }}>
+                                            <h3 className="success-text" style={{ color: '#4ade80', margin: 0, fontSize: '1.2rem' }}>SUCCESS!</h3>
+                                            <p style={{ color: '#94a3b8', margin: '0.5rem 0 0 0', fontSize: '0.9rem' }}>Your Free Year of Wise Wolf has been claimed.</p>
+                                        </div>
                                     )}
                                 </div>
                                 <button className="close-btn outline-close" style={{ marginTop: '1.5rem' }} onClick={() => setShowExitModal(false)}>No thanks, maybe later</button>
@@ -951,26 +959,32 @@ function App() {
                                 </div>
                                 <div className={`exit-email-capture ${hasSharedInExitModal ? 'unlocked' : 'locked'}`} style={{ marginBottom: '2.5rem' }}>
                                     {exitModalStatus !== 'success' ? (
-                                        <form onSubmit={handleExitEmailSubmit} className="prize-form exit-inline-form">
-                                            <input
-                                                type="email"
-                                                placeholder={hasSharedInExitModal ? "Enter email address..." : "Share to unlock..."}
-                                                value={prizeEmail}
-                                                onChange={(e) => setPrizeEmail(e.target.value)}
-                                                required
-                                                disabled={!hasSharedInExitModal || exitModalStatus === 'loading'}
-                                                className="prize-input"
-                                            />
-                                            <button
-                                                type="submit"
-                                                disabled={!hasSharedInExitModal || exitModalStatus === 'loading'}
-                                                className="submit-btn"
-                                            >
-                                                {exitModalStatus === 'loading' ? 'Sending...' : 'Claim $80 Value'}
-                                            </button>
-                                        </form>
+                                        <>
+                                            <form onSubmit={handleExitEmailSubmit} className="prize-form exit-inline-form">
+                                                <input
+                                                    type="email"
+                                                    placeholder={hasSharedInExitModal ? "Enter email address..." : "Share to unlock..."}
+                                                    value={exitEmail}
+                                                    onChange={(e) => setExitEmail(e.target.value)}
+                                                    required
+                                                    disabled={!hasSharedInExitModal || exitModalStatus === 'loading'}
+                                                    className="prize-input"
+                                                />
+                                                <button
+                                                    type="submit"
+                                                    disabled={!hasSharedInExitModal || exitModalStatus === 'loading'}
+                                                    className="submit-btn"
+                                                >
+                                                    {exitModalStatus === 'loading' ? 'Sending...' : 'Claim $80 Value'}
+                                                </button>
+                                            </form>
+                                            {exitModalStatus === 'error' && <p className="error-text" style={{ marginTop: '0.5rem', color: '#ef4444' }}>Transmission failed. Try another address.</p>}
+                                        </>
                                     ) : (
-                                        <p className="success-text" style={{ textAlign: 'center', marginTop: '1rem' }}>Success! Your Free Year of Wise Wolf has been claimed.</p>
+                                        <div className="prize-success fade-in" style={{ padding: '1rem', textAlign: 'center', background: 'rgba(74, 222, 128, 0.1)', borderRadius: '8px', border: '1px solid rgba(74, 222, 128, 0.2)' }}>
+                                            <h3 className="success-text" style={{ color: '#4ade80', margin: 0, fontSize: '1.2rem' }}>SUCCESS!</h3>
+                                            <p style={{ color: '#94a3b8', margin: '0.5rem 0 0 0', fontSize: '0.9rem' }}>Your Free Year of Wise Wolf has been claimed.</p>
+                                        </div>
                                     )}
                                 </div>
                                 <button className="close-btn outline-close" style={{ marginTop: '1.5rem' }} onClick={() => setShowExitModal(false)}>Close Archive</button>
