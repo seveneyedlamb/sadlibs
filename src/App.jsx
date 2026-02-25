@@ -7,6 +7,7 @@ import heroCard from '../images/herocard.png';
 import sadGirlImg from '../images/sadgirl.png';
 import funForAllAgesImg from '../images/fun4allages.png';
 import merchImg from '../images/buyatee.png';
+import themeSong from '../audio/sad.mp3';
 import html2canvas from 'html2canvas';
 
 const stories = [
@@ -180,6 +181,10 @@ function App() {
     const [decipherText, setDecipherText] = useState('');
     const [isDeciphered, setIsDeciphered] = useState(false);
 
+    // Audio Background State
+    const [isMuted, setIsMuted] = useState(false);
+    const themeAudioRef = useRef(null);
+
     // Generation Animation State
     const [isGenerating, setIsGenerating] = useState(false);
     const [loadingMessage, setLoadingMessage] = useState("");
@@ -239,6 +244,33 @@ function App() {
         if (hasTracking) {
             const newUrl = window.location.pathname + (urlParams.toString() ? '?' + urlParams.toString() : '') + window.location.hash;
             window.history.replaceState({}, document.title, newUrl);
+        }
+    }, []);
+
+    // Theme Song Autoplay & Interaction Fallback
+    useEffect(() => {
+        const audio = themeAudioRef.current;
+        if (audio) {
+            audio.volume = 0.15;
+            const playAudio = async () => {
+                try {
+                    await audio.play();
+                } catch (err) {
+                    // Autoplay blocked, wait for interaction
+                    const startOnInteraction = () => {
+                        audio.play().catch(e => console.error("Audio playback failed", e));
+                        window.removeEventListener('mousemove', startOnInteraction);
+                        window.removeEventListener('click', startOnInteraction);
+                        window.removeEventListener('scroll', startOnInteraction);
+                        window.removeEventListener('keydown', startOnInteraction);
+                    };
+                    window.addEventListener('mousemove', startOnInteraction);
+                    window.addEventListener('click', startOnInteraction);
+                    window.addEventListener('scroll', startOnInteraction);
+                    window.addEventListener('keydown', startOnInteraction);
+                }
+            };
+            playAudio();
         }
     }, []);
 
@@ -704,6 +736,14 @@ function App() {
 
     return (
         <>
+            <audio ref={themeAudioRef} src={themeSong} loop muted={isMuted} playsInline />
+            <button
+                className="mute-btn"
+                onClick={() => setIsMuted(!isMuted)}
+                title={isMuted ? "Unmute Background Music" : "Mute Background Music"}
+            >
+                {isMuted ? '🔇' : '🔊'}
+            </button>
             <div className="logo-banner-wrapper">
                 <img src={logo} alt="SadLibs logo" className={`logo ${isGlitching ? 'glitch-effect' : ''}`} onClick={(e) => { e.stopPropagation(); handleLogoClick(); }} />
             </div>
