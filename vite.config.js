@@ -13,14 +13,12 @@ const customApiPlugin = () => ({
                 req.on('data', chunk => {
                     body += chunk.toString();
                 });
-                req.on('end', () => {
+                req.on('end', async () => {
                     try {
                         const { email } = JSON.parse(body);
                         if (email) {
-                            const filePath = path.join(process.cwd(), 'emails.txt');
-                            const entry = `${new Date().toISOString()} - ${email}\n`;
-                            fs.appendFileSync(filePath, entry);
-
+                            console.log(`[LOCAL] Saving ${email} to local emails.txt`);
+                            fs.appendFileSync(path.join(process.cwd(), 'emails.txt'), `${email}\n`);
                             res.statusCode = 200;
                             res.setHeader('Content-Type', 'application/json');
                             res.end(JSON.stringify({ success: true, message: 'Access Granted' }));
@@ -29,6 +27,7 @@ const customApiPlugin = () => ({
                             res.end(JSON.stringify({ error: 'Email required' }));
                         }
                     } catch (e) {
+                        console.error("[LOCAL TEST] Save email error:", e);
                         res.statusCode = 500;
                         res.end(JSON.stringify({ error: 'Server error' }));
                     }
