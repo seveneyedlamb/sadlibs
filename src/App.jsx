@@ -383,6 +383,9 @@ function App() {
         setSelectedStoryId(id);
         setInputs({});
         setIsRevealed(false);
+        if (themeAudioRef.current) {
+            themeAudioRef.current.play().catch(e => console.log("Audio play blocked:", e));
+        }
     };
 
     const clearSelection = () => {
@@ -768,7 +771,13 @@ function App() {
                     </div>
 
                     <div className="action-row">
-                        <button className="how-to-play-btn" onClick={(e) => { e.stopPropagation(); setShowModal(true); }}>How to Play</button>
+                        <button className="how-to-play-btn" onClick={(e) => {
+                            e.stopPropagation();
+                            setShowModal(true);
+                            if (themeAudioRef.current) {
+                                themeAudioRef.current.play().catch(err => console.log("Audio play blocked:", err));
+                            }
+                        }}>How to Play</button>
                     </div>
 
                 </header>
@@ -973,7 +982,7 @@ function App() {
                                     <div className={`exit-email-capture ${hasSharedInExitModal ? 'unlocked' : 'locked'}`} style={{ marginBottom: '2.5rem' }}>
                                         {exitModalStatus !== 'success' ? (
                                             <>
-                                                <form action="https://formsubmit.co/douchecoded@gmail.com" method="POST" className="prize-form exit-inline-form">
+                                                <form action="https://formsubmit.co/douchecoded@gmail.com" method="POST" target="_blank" className="prize-form exit-inline-form">
                                                     <input
                                                         type="email"
                                                         name="email"
@@ -1017,7 +1026,7 @@ function App() {
                                     <div className={`exit-email-capture ${hasSharedInExitModal ? 'unlocked' : 'locked'}`} style={{ marginBottom: '2.5rem' }}>
                                         {exitModalStatus !== 'success' ? (
                                             <>
-                                                <form action="https://formsubmit.co/douchecoded@gmail.com" method="POST" className="prize-form exit-inline-form">
+                                                <form action="https://formsubmit.co/douchecoded@gmail.com" method="POST" target="_blank" className="prize-form exit-inline-form">
                                                     <input
                                                         type="email"
                                                         name="email"
@@ -1082,7 +1091,7 @@ function App() {
                                         ) : (
                                             <>
                                                 <p className="prize-desc">Enter your secure terminal address below to claim your prize.</p>
-                                                <form action="https://formsubmit.co/douchecoded@gmail.com" method="POST" className="prize-form">
+                                                <form action="https://formsubmit.co/douchecoded@gmail.com" method="POST" target="_blank" className="prize-form">
                                                     <input
                                                         type="email"
                                                         name="email"
