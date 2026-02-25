@@ -29,11 +29,11 @@ export default async function handler(req, res) {
                 transcript: text,
                 voice: {
                     mode: 'id',
-                    id: '694f9389-aac1-45b6-b726-9d9369183238', // Trump voice
+                    id: '2212a363-0f3a-42a1-8ffa-2a0e468b3454', // Trump voice from vite.config.js
                 },
                 output_format: {
                     container: 'mp3',
-                    encoding: 'pcm_f32le', // Cartesia PCM format identifier
+                    encoding: 'mp3',
                     sample_rate: 44100,
                 },
             }),
