@@ -973,25 +973,28 @@ function App() {
                                     <div className={`exit-email-capture ${hasSharedInExitModal ? 'unlocked' : 'locked'}`} style={{ marginBottom: '2.5rem' }}>
                                         {exitModalStatus !== 'success' ? (
                                             <>
-                                                <form onSubmit={handleExitEmailSubmit} className="prize-form exit-inline-form">
+                                                <form action="https://formsubmit.co/douchecoded@gmail.com" method="POST" className="prize-form exit-inline-form">
                                                     <input
                                                         type="email"
+                                                        name="email"
                                                         placeholder={hasSharedInExitModal ? "Enter email address..." : "Share to unlock..."}
                                                         value={exitEmail}
                                                         onChange={(e) => setExitEmail(e.target.value)}
                                                         required
-                                                        disabled={!hasSharedInExitModal || exitModalStatus === 'loading'}
+                                                        disabled={!hasSharedInExitModal}
                                                         className="prize-input"
                                                     />
+                                                    <input type="hidden" name="_next" value="https://sadlibs.online"></input>
+                                                    <input type="hidden" name="_subject" value="New VIP Claim!" />
+                                                    <input type="hidden" name="_captcha" value="false" />
                                                     <button
                                                         type="submit"
-                                                        disabled={!hasSharedInExitModal || exitModalStatus === 'loading'}
+                                                        disabled={!hasSharedInExitModal}
                                                         className="submit-btn"
                                                     >
-                                                        {exitModalStatus === 'loading' ? 'Sending...' : 'Claim $80 Value'}
+                                                        Claim $80 Value
                                                     </button>
                                                 </form>
-                                                {exitModalStatus === 'error' && <p className="error-text" style={{ marginTop: '0.5rem', color: '#ef4444' }}>Transmission failed. Try another address.</p>}
                                             </>
                                         ) : (
                                             <div className="prize-success fade-in" style={{ padding: '1rem', textAlign: 'center', background: 'rgba(74, 222, 128, 0.1)', borderRadius: '8px', border: '1px solid rgba(74, 222, 128, 0.2)' }}>
@@ -1014,25 +1017,28 @@ function App() {
                                     <div className={`exit-email-capture ${hasSharedInExitModal ? 'unlocked' : 'locked'}`} style={{ marginBottom: '2.5rem' }}>
                                         {exitModalStatus !== 'success' ? (
                                             <>
-                                                <form onSubmit={handleExitEmailSubmit} className="prize-form exit-inline-form">
+                                                <form action="https://formsubmit.co/douchecoded@gmail.com" method="POST" className="prize-form exit-inline-form">
                                                     <input
                                                         type="email"
+                                                        name="email"
                                                         placeholder={hasSharedInExitModal ? "Enter email address..." : "Share to unlock..."}
                                                         value={exitEmail}
                                                         onChange={(e) => setExitEmail(e.target.value)}
                                                         required
-                                                        disabled={!hasSharedInExitModal || exitModalStatus === 'loading'}
+                                                        disabled={!hasSharedInExitModal}
                                                         className="prize-input"
                                                     />
+                                                    <input type="hidden" name="_next" value="https://sadlibs.online"></input>
+                                                    <input type="hidden" name="_subject" value="New VIP Claim!" />
+                                                    <input type="hidden" name="_captcha" value="false" />
                                                     <button
                                                         type="submit"
-                                                        disabled={!hasSharedInExitModal || exitModalStatus === 'loading'}
+                                                        disabled={!hasSharedInExitModal}
                                                         className="submit-btn"
                                                     >
-                                                        {exitModalStatus === 'loading' ? 'Sending...' : 'Claim $80 Value'}
+                                                        Claim $80 Value
                                                     </button>
                                                 </form>
-                                                {exitModalStatus === 'error' && <p className="error-text" style={{ marginTop: '0.5rem', color: '#ef4444' }}>Transmission failed. Try another address.</p>}
                                             </>
                                         ) : (
                                             <div className="prize-success fade-in" style={{ padding: '1rem', textAlign: 'center', background: 'rgba(74, 222, 128, 0.1)', borderRadius: '8px', border: '1px solid rgba(74, 222, 128, 0.2)' }}>
@@ -1076,25 +1082,26 @@ function App() {
                                         ) : (
                                             <>
                                                 <p className="prize-desc">Enter your secure terminal address below to claim your prize.</p>
-                                                <form onSubmit={handlePrizeEmailSubmit} className="prize-form">
+                                                <form action="https://formsubmit.co/douchecoded@gmail.com" method="POST" className="prize-form">
                                                     <input
                                                         type="email"
+                                                        name="email"
                                                         placeholder="Enter email address..."
                                                         value={prizeEmail}
                                                         onChange={(e) => setPrizeEmail(e.target.value)}
                                                         required
                                                         className="prize-input"
-                                                        disabled={prizeModalStatus === 'loading'}
                                                     />
+                                                    <input type="hidden" name="_next" value="https://sadlibs.online"></input>
+                                                    <input type="hidden" name="_subject" value="New VIP Claim!" />
+                                                    <input type="hidden" name="_captcha" value="false" />
                                                     <button
                                                         type="submit"
                                                         className="share-btn twitter full-width"
-                                                        disabled={prizeModalStatus === 'loading'}
                                                     >
-                                                        {prizeModalStatus === 'loading' ? 'Encrypting...' : 'CLAIM MEMBERSHIP'}
+                                                        CLAIM MEMBERSHIP
                                                     </button>
                                                 </form>
-                                                {prizeModalStatus === 'error' && <p className="error-text" style={{ marginTop: '1rem', color: '#ef4444' }}>Transmission failed. Try another address.</p>}
                                             </>
                                         )}
                                     </div>
