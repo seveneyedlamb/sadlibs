@@ -8,6 +8,7 @@ import sadGirlImg from '../images/sadgirl.png';
 import funForAllAgesImg from '../images/fun4allages.png';
 import merchImg from '../images/buyatee.png';
 import html2canvas from 'html2canvas';
+import { Analytics } from '@vercel/analytics/react';
 
 const stories = [
     {
@@ -1005,6 +1006,7 @@ function App() {
             <img src={sadGirlImg} alt="Sad Girl Mascot" className="corner-decal left" />
             <img src={funForAllAgesImg} alt="Fun for All Ages" className="corner-decal right" />
 
+            <Analytics />
         </div>
     )
 
