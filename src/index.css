@@ -90,8 +90,9 @@ body::after {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: -4rem;
-    margin-bottom: 2.5rem;
+    margin-top: 15px;
+    margin-bottom: calc(30px - 4rem);
+    /* Counteract the 4rem app-container top padding */
     position: relative;
 }
 
