@@ -1,36 +1,23 @@
-export const config = {
-    runtime: 'edge',
-};
-
-export default async function handler(req) {
+export default async function handler(req, res) {
     if (req.method !== 'POST') {
-        return new Response(JSON.stringify({ error: 'Method Not Allowed' }), {
-            status: 405,
-            headers: { 'Content-Type': 'application/json' }
-        });
+        return res.status(405).json({ error: 'Method Not Allowed' });
     }
 
     try {
-        const { text } = await req.json();
+        const text = req.body?.text;
 
         if (!text) {
-            return new Response(JSON.stringify({ error: 'Text required' }), {
-                status: 400,
-                headers: { 'Content-Type': 'application/json' }
-            });
+            return res.status(400).json({ error: 'Text required' });
         }
 
         const cartesiaApiKey = process.env.CARTESIA_API_KEY;
 
         if (!cartesiaApiKey) {
             console.error("Missing CARTESIA_API_KEY environment variable.");
-            return new Response(JSON.stringify({ error: 'Server configuration error' }), {
-                status: 500,
-                headers: { 'Content-Type': 'application/json' }
-            });
+            return res.status(500).json({ error: 'Server configuration error' });
         }
 
-        const response = await fetch('https://api.cartesia.ai/tts/bytes', {
+        const cartesiaRes = await fetch('https://api.cartesia.ai/tts/bytes', {
             method: 'POST',
             headers: {
                 'Cartesia-Version': '2024-06-10',
@@ -42,40 +29,33 @@ export default async function handler(req) {
                 transcript: text,
                 voice: {
                     mode: 'id',
-                    id: '694f9389-aac1-45b6-b726-9d9369183238',
+                    id: '694f9389-aac1-45b6-b726-9d9369183238', // Trump voice
                 },
                 output_format: {
                     container: 'mp3',
-                    encoding: 'pcm_f32le',
+                    encoding: 'pcm_f32le', // Cartesia PCM format identifier
                     sample_rate: 44100,
                 },
             }),
         });
 
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error("Cartesia API Error:", response.status, errorText);
-            return new Response(JSON.stringify({ error: 'TTS Request Failed' }), {
-                status: response.status,
-                headers: { 'Content-Type': 'application/json' }
-            });
+        if (!cartesiaRes.ok) {
+            const errorText = await cartesiaRes.text();
+            console.error("Cartesia API Error:", cartesiaRes.status, errorText);
+            return res.status(cartesiaRes.status).json({ error: 'TTS Request Failed' });
         }
 
-        const audioBuffer = await response.arrayBuffer();
+        // Convert the API response ArrayBuffer to a Node Buffer to send properly
+        const arrayBuffer = await cartesiaRes.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
 
-        return new Response(audioBuffer, {
-            status: 200,
-            headers: {
-                'Content-Type': 'audio/mpeg',
-                'Cache-Control': 'public, max-age=3600'
-            }
-        });
+        res.status(200);
+        res.setHeader('Content-Type', 'audio/mpeg');
+        res.setHeader('Cache-Control', 'public, max-age=3600');
+        res.send(buffer);
 
     } catch (error) {
-        console.error("Serverless Function Error:", error);
-        return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
-            status: 500,
-            headers: { 'Content-Type': 'application/json' }
-        });
+        console.error("TTS Node Function Error:", error);
+        return res.status(500).json({ error: 'Internal Server Error' });
     }
 }
