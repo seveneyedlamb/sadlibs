@@ -317,6 +317,7 @@ function App() {
     // Audio Background State
     const [isMuted, setIsMuted] = useState(false);
     const themeAudioRef = useRef(null);
+    const [shareReady, setShareReady] = useState(false);
     const storyContainerRef = useRef(null);
 
     // Generation Animation State
@@ -625,15 +626,18 @@ function App() {
 
             if (audioToPlay) {
                 audioToPlay.onended = () => {
+                    setShareReady(true); // Emotional peak — light up the share buttons
                     if (newCount === 1) {
                         setShowPrizeModal(true);
                     }
                 };
                 audioToPlay.play().catch(e => {
                     console.error("Audio auto-play failed:", e);
+                    setShareReady(true);
                     if (newCount === 1) setShowPrizeModal(true);
                 });
             } else {
+                setShareReady(true);
                 if (newCount === 1) {
                     setTimeout(() => setShowPrizeModal(true), 3000);
                 }
@@ -789,7 +793,8 @@ function App() {
             setHasSharedInExitModal(true);
 
             // 4. Share
-            const shareText = 'Listen to this insane Epstein leak I just uncovered (Sound ON 🔊) 👇';
+            const storyName = activeStory ? activeStory.title : 'an Epstein leak';
+            const shareText = `I just uncovered: "${storyName}" from the Epstein files 😱 (Sound ON 🔊) — play it yourself:`;
             const appUrl = 'https://sadlibs.vercel.app';
             // Share card URL — Twitter's crawler visits this, reads twitter:image meta, shows image inline in tweet
             const shareCardUrl = `${appUrl}/api/share?img=${encodeURIComponent(imageUrl)}`;
@@ -975,7 +980,10 @@ function App() {
                                             🔥 <span>CREATE YOUR OWN EPSTEIN LEAK</span> AT <span className="highlight">SADLIBS.VERCEL.APP</span> 🔥
                                         </div>
 
-                                        <div className="action-buttons-row export-ignore">
+                                        <div className="share-proof-inline export-ignore">
+                                            🔥 {shareCount.toLocaleString()} people have already shared this
+                                        </div>
+                                        <div className={`action-buttons-row export-ignore${shareReady ? ' share-ready' : ''}`}>
                                             <button onClick={handleReplayAudio} className="action-btn replay" disabled={!activeAudioUrl}>
                                                 🔊 Replay Audio
                                             </button>

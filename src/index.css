@@ -972,6 +972,37 @@ body::after {
     box-shadow: 0 10px 20px rgba(147, 197, 253, 0.2);
 }
 
+/* Social proof counter on reveal page */
+.share-proof-inline {
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #94a3b8;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.75rem;
+}
+
+/* Pulse share buttons after audio ends to catch emotional peak */
+@keyframes sharePulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(167, 139, 250, 0.6);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(167, 139, 250, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(167, 139, 250, 0);
+    }
+}
+
+.action-buttons-row.share-ready .action-btn.image-export,
+.action-buttons-row.share-ready .action-btn.facebook {
+    animation: sharePulse 1.2s ease 0s 3;
+    border-color: rgba(167, 139, 250, 0.6);
+}
+
 
 /* Footer Section */
 .footer {
