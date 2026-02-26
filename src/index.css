@@ -1034,6 +1034,16 @@ body::after {
     box-shadow: 0 10px 20px rgba(147, 197, 253, 0.2);
 }
 
+.action-btn.native-share {
+    color: #86efac;
+    border-color: rgba(134, 239, 172, 0.4);
+}
+
+.action-btn.native-share:hover:not(:disabled) {
+    background: rgba(134, 239, 172, 0.1);
+    box-shadow: 0 10px 20px rgba(134, 239, 172, 0.2);
+}
+
 /* Social proof counter on reveal page */
 .share-proof-inline {
     text-align: center;

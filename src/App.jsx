@@ -830,6 +830,20 @@ function App() {
                 else window.open(tweetUrl, '_blank');
             } else if (platform === 'facebook') {
                 window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareCardUrl)}`, '_blank');
+            } else if (platform === 'native') {
+                // Native OS share sheet — fires on mobile, shares the image directly to any app
+                canvas.toBlob(async (blob) => {
+                    const file = new File([blob], 'epstein-leak.png', { type: 'image/png' });
+                    try {
+                        await navigator.share({
+                            files: [file],
+                            text: shareText,
+                            url: appUrl
+                        });
+                    } catch (e) { /* user cancelled or not supported */ }
+                    setIsProcessingMeme(false);
+                }, 'image/png');
+                return; // blob callback handles cleanup
             } else if (platform === 'copy') {
                 navigator.clipboard.writeText(`${shareText}\n${shareCardUrl}`);
                 alert('Link copied to clipboard!');
@@ -995,6 +1009,11 @@ function App() {
                                             <button onClick={handleReplayAudio} className="action-btn replay" disabled={!activeAudioUrl}>
                                                 Hear It Again (Seriously Though)
                                             </button>
+                                            {typeof navigator !== 'undefined' && navigator.share && (
+                                                <button onClick={() => handleShareStory('native')} className="action-btn native-share" disabled={isProcessingMeme}>
+                                                    {isProcessingMeme ? 'Preparing evidence...' : 'Share Image to Any App'}
+                                                </button>
+                                            )}
                                             <button onClick={() => handleShareStory('twitter')} className="action-btn image-export" disabled={isProcessingMeme}>
                                                 {isProcessingMeme ? 'Preparing evidence...' : 'Post to X Before It Gets Redacted'}
                                             </button>
