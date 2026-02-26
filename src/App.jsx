@@ -10,6 +10,141 @@ import merchImg from '../images/buyatee.png';
 import themeSong from '../audio/sad.mp3';
 import html2canvas from 'html2canvas';
 
+const NAMES_DATA = [
+    { name: 'Donald Trump', url: 'https://en.wikipedia.org/wiki/Donald_Trump' },
+    { name: 'Bill Clinton', url: 'https://en.wikipedia.org/wiki/Bill_Clinton' },
+    { name: 'Bill Gates', url: 'https://en.wikipedia.org/wiki/Bill_Gates' },
+    { name: 'Hillary Clinton', url: 'https://en.wikipedia.org/wiki/Hillary_Clinton' },
+    { name: 'Tony Blair', url: 'https://en.wikipedia.org/wiki/Tony_Blair' },
+    { name: 'Mohammed bin Salman', url: 'https://en.wikipedia.org/wiki/Mohammed_bin_Salman' },
+    { name: 'Henry Kissinger', url: 'https://en.wikipedia.org/wiki/Henry_Kissinger' },
+    { name: 'Harvey Weinstein', url: 'https://en.wikipedia.org/wiki/Harvey_Weinstein' },
+    { name: 'Ghislaine Maxwell', url: 'https://en.wikipedia.org/wiki/Ghislaine_Maxwell' },
+    { name: 'Andrew Mountbatten-Windsor', url: 'https://en.wikipedia.org/wiki/Prince_Andrew,_Duke_of_York' },
+    { name: 'Woody Allen', url: 'https://en.wikipedia.org/wiki/Woody_Allen' },
+    { name: 'Richard Branson', url: 'https://en.wikipedia.org/wiki/Richard_Branson' },
+    { name: 'Ehud Barak', url: 'https://en.wikipedia.org/wiki/Ehud_Barak' },
+    { name: 'Ehud Olmert', url: 'https://en.wikipedia.org/wiki/Ehud_Olmert' },
+    { name: 'Shimon Peres', url: 'https://en.wikipedia.org/wiki/Shimon_Peres' },
+    { name: 'Steve Bannon', url: 'https://en.wikipedia.org/wiki/Steve_Bannon' },
+    { name: 'Noam Chomsky', url: 'https://en.wikipedia.org/wiki/Noam_Chomsky' },
+    { name: 'Kevin Spacey', url: 'https://en.wikipedia.org/wiki/Kevin_Spacey' },
+    { name: 'Larry Page', url: 'https://en.wikipedia.org/wiki/Larry_Page' },
+    { name: 'Sergey Brin', url: 'https://en.wikipedia.org/wiki/Sergey_Brin' },
+    { name: 'Peter Thiel', url: 'https://en.wikipedia.org/wiki/Peter_Thiel' },
+    { name: 'Reid Hoffman', url: 'https://en.wikipedia.org/wiki/Reid_Hoffman' },
+    { name: 'Jamie Dimon', url: 'https://en.wikipedia.org/wiki/Jamie_Dimon' },
+    { name: 'Larry Summers', url: 'https://en.wikipedia.org/wiki/Lawrence_Summers' },
+    { name: 'Robert Kraft', url: 'https://en.wikipedia.org/wiki/Robert_Kraft' },
+    { name: 'Paul Tudor Jones', url: 'https://en.wikipedia.org/wiki/Paul_Tudor_Jones' },
+    { name: 'Leon Black', url: 'https://en.wikipedia.org/wiki/Leon_Black' },
+    { name: 'Marvin Minsky', url: 'https://en.wikipedia.org/wiki/Marvin_Minsky' },
+    { name: 'Stephen Hawking', url: 'https://en.wikipedia.org/wiki/Stephen_Hawking' },
+    { name: 'Al Gore', url: 'https://en.wikipedia.org/wiki/Al_Gore' },
+    { name: 'Jean-Luc Brunel', url: 'https://en.wikipedia.org/wiki/Jean-Luc_Brunel' },
+    { name: 'Alan Dershowitz', url: 'https://en.wikipedia.org/wiki/Alan_Dershowitz' },
+    { name: 'Les Wexner', url: 'https://en.wikipedia.org/wiki/Leslie_Wexner' },
+    { name: 'Conrad Black', url: 'https://en.wikipedia.org/wiki/Conrad_Black' },
+    { name: 'Sarah Ferguson', url: 'https://en.wikipedia.org/wiki/Sarah,_Duchess_of_York' },
+    { name: 'King Frederik X', url: 'https://en.wikipedia.org/wiki/Frederik_X' },
+    { name: 'Mette-Marit', url: 'https://en.wikipedia.org/wiki/Mette-Marit,_Crown_Princess_of_Norway' },
+    { name: 'Princess Sofia of Sweden', url: 'https://en.wikipedia.org/wiki/Princess_Sofia_of_Sweden' },
+    { name: 'Prince Laurent of Belgium', url: 'https://en.wikipedia.org/wiki/Prince_Laurent_of_Belgium' },
+    { name: 'Isaac Herzog', url: 'https://en.wikipedia.org/wiki/Isaac_Herzog' },
+    { name: 'Moshe Katsav', url: 'https://en.wikipedia.org/wiki/Moshe_Katsav' },
+    { name: 'Jack Lang', url: 'https://en.wikipedia.org/wiki/Jack_Lang_(politician)' },
+    { name: 'Peter Mandelson', url: 'https://en.wikipedia.org/wiki/Peter_Mandelson' },
+    { name: 'Graydon Carter', url: 'https://en.wikipedia.org/wiki/Graydon_Carter' },
+    { name: 'Brett Ratner', url: 'https://en.wikipedia.org/wiki/Brett_Ratner' },
+    { name: 'Tom Pritzker', url: 'https://en.wikipedia.org/wiki/Tom_Pritzker' },
+    { name: 'Charles Bronfman', url: 'https://en.wikipedia.org/wiki/Charles_Bronfman' },
+    { name: 'Edgar Bronfman', url: 'https://en.wikipedia.org/wiki/Edgar_Bronfman_Sr.' },
+    { name: 'Marc Rich', url: 'https://en.wikipedia.org/wiki/Marc_Rich' },
+    { name: 'David Copperfield', url: 'https://en.wikipedia.org/wiki/David_Copperfield_(illusionist)' },
+    { name: 'Howard Lutnik', url: 'https://en.wikipedia.org/wiki/Howard_Lutnick' },
+    { name: 'Robert Rubin', url: 'https://en.wikipedia.org/wiki/Robert_Rubin' },
+    { name: 'William Burns', url: 'https://en.wikipedia.org/wiki/William_J._Burns_(diplomat)' },
+    { name: 'Joi Ito', url: 'https://en.wikipedia.org/wiki/Joi_Ito' },
+    { name: 'Nathan Myhrvold', url: 'https://en.wikipedia.org/wiki/Nathan_Myhrvold' },
+    { name: 'Lawrence Krauss', url: 'https://en.wikipedia.org/wiki/Lawrence_Krauss' },
+    { name: 'Martin Nowak', url: 'https://en.wikipedia.org/wiki/Martin_Nowak_(mathematician)' },
+    { name: 'Leon Botstein', url: 'https://en.wikipedia.org/wiki/Leon_Botstein' },
+    { name: 'Alan Greenberg', url: 'https://en.wikipedia.org/wiki/Alan_Greenberg' },
+    { name: 'Mary Erdoes', url: 'https://en.wikipedia.org/wiki/Mary_Erdoes' },
+    { name: 'Eva Dubin', url: 'https://en.wikipedia.org/wiki/Eva_Dubin' },
+    { name: 'Glenn Dubin', url: 'https://en.wikipedia.org/wiki/Glenn_Dubin' },
+    { name: 'Casey Wasserman', url: 'https://en.wikipedia.org/wiki/Casey_Wasserman' },
+    { name: 'Steve Tisch', url: 'https://en.wikipedia.org/wiki/Steve_Tisch' },
+    { name: 'Boris Nikolic', url: 'https://en.wikipedia.org/wiki/Boris_Nikolic_(geneticist)' },
+    { name: 'Brad Karp', url: 'https://en.wikipedia.org/wiki/Brad_Karp' },
+    { name: 'Børge Brende', url: 'https://en.wikipedia.org/wiki/B%C3%B8rge_Brende' },
+    { name: 'Barry Krischer', url: 'https://en.wikipedia.org/wiki/Barry_Krischer' },
+    { name: 'Arie Scher', url: 'https://en.wikipedia.org/wiki/Arie_Scher' },
+    { name: 'Ariane de Rothschild', url: 'https://en.wikipedia.org/wiki/Ariane_de_Rothschild' },
+    { name: 'Arnold Prosperi', url: 'https://en.wikipedia.org/wiki/Arnold_Prosperi' },
+    { name: 'Barnaby Marsh', url: 'https://en.wikipedia.org/wiki/Barnaby_Marsh' },
+    { name: 'Albert Bryan', url: 'https://en.wikipedia.org/wiki/Albert_Bryan' },
+    { name: 'Adriana Ross', url: 'https://en.wikipedia.org/wiki/Adriana_Ross' },
+    { name: 'Bill Richardson', url: 'https://en.wikipedia.org/wiki/Bill_Richardson' },
+    { name: 'Cecile de Jongh', url: 'https://en.wikipedia.org/wiki/Cecile_de_Jongh' },
+    { name: 'Claude Haddad', url: 'https://en.wikipedia.org/wiki/Claude_Haddad' },
+    { name: 'Daniel Siad', url: 'https://en.wikipedia.org/wiki/Daniel_Siad' },
+    { name: 'Darren Indyke', url: 'https://en.wikipedia.org/wiki/Darren_Indyke' },
+    { name: 'David Roland', url: 'https://en.wikipedia.org/wiki/David_Roland' },
+    { name: 'David Ross', url: 'https://en.wikipedia.org/wiki/David_Ross_(businessman)' },
+    { name: 'Doug Leese', url: 'https://en.wikipedia.org/wiki/Doug_Leese' },
+    { name: 'Gardner P. Dunnan', url: 'https://en.wikipedia.org/wiki/Gardner_Dunnan' },
+    { name: 'George Michael', url: 'https://en.wikipedia.org/wiki/George_Michael_(politician)' },
+    { name: 'George Steinberg', url: 'https://en.wikipedia.org/wiki/George_Steinberg' },
+    { name: 'Jeffery Schantz', url: 'https://en.wikipedia.org/wiki/Jeffery_Schantz' },
+    { name: 'Jennifer Gaffney', url: 'https://en.wikipedia.org/wiki/Jennifer_Gaffney' },
+    { name: 'Jide Zeitlin', url: 'https://en.wikipedia.org/wiki/Jide_Zeitlin' },
+    { name: 'Joanna Rubinstein', url: 'https://en.wikipedia.org/wiki/Joanna_Rubinstein' },
+    { name: 'John de Jongh', url: 'https://en.wikipedia.org/wiki/John_de_Jon%C3%A7' },
+    { name: 'John Duffy', url: 'https://en.wikipedia.org/wiki/John_Duffy' },
+    { name: 'Josh Cooper Ramo', url: 'https://en.wikipedia.org/wiki/Joshua_Cooper_Ramo' },
+    { name: 'Justin Nelson', url: 'https://en.wikipedia.org/wiki/Justin_Nelson' },
+    { name: 'Katheryn Rummler', url: 'https://en.wikipedia.org/wiki/Kathryn_Ruemmler' },
+    { name: 'Kenneth Mapp', url: 'https://en.wikipedia.org/wiki/Kenneth_Mapp' },
+    { name: 'Kimberly Foley', url: 'https://en.wikipedia.org/wiki/Kimberly_Foley' },
+    { name: 'Leonic Leonov', url: 'https://en.wikipedia.org/wiki/Leonid_Leonov' },
+    { name: 'Lesley Groff', url: 'https://en.wikipedia.org/wiki/Lesley_Groff' },
+    { name: 'Louis Ranieri', url: 'https://en.wikipedia.org/wiki/Lewis_Ranieri' },
+    { name: 'Marc Rowan', url: 'https://en.wikipedia.org/wiki/Marc_Rowan' },
+    { name: 'Maria Drokova', url: 'https://en.wikipedia.org/wiki/Maria_Drokova' },
+    { name: 'Melanie Walker', url: 'https://en.wikipedia.org/wiki/Melanie_Walker' },
+    { name: 'Michael Steinhardt', url: 'https://en.wikipedia.org/wiki/Michael_Steinhardt' },
+    { name: 'Michael Wolf', url: 'https://en.wikipedia.org/wiki/Michael_Wolff_(author)' },
+    { name: 'Miroslav Lajčák', url: 'https://en.wikipedia.org/wiki/Miroslav_Laj%C4%8D%C3%A1k' },
+    { name: 'Mort Zuckerman', url: 'https://en.wikipedia.org/wiki/Mort_Zuckerman' },
+    { name: 'Nadia Marcinkova', url: 'https://en.wikipedia.org/wiki/Nadia_Marcinkova' },
+    { name: 'Nicola Caputo', url: 'https://en.wikipedia.org/wiki/Nicola_Caputo' },
+    { name: 'Peter Attia', url: 'https://en.wikipedia.org/wiki/Peter_Attia' },
+    { name: 'Peter Cohen', url: 'https://en.wikipedia.org/wiki/Peter_Cohen_(financier)' },
+    { name: 'Pincus Green', url: 'https://en.wikipedia.org/wiki/Pincus_Green' },
+    { name: 'Raafat Al-Sabbagh', url: 'https://en.wikipedia.org/wiki/Raafat_Al-Sabbagh' },
+    { name: 'Reid Weingarten', url: 'https://en.wikipedia.org/wiki/Reid_Weingarten' },
+    { name: 'Richard Khan', url: 'https://en.wikipedia.org/wiki/Richard_Khan' },
+    { name: 'Richard Strauss', url: 'https://en.wikipedia.org/wiki/Richard_Strauss' },
+    { name: 'Robert Schottenstein', url: 'https://en.wikipedia.org/wiki/Robert_Schottenstein' },
+    { name: 'Ronald Perlman', url: 'https://en.wikipedia.org/wiki/Ron_Perelman' },
+    { name: 'Salvatore Nuara', url: 'https://en.wikipedia.org/wiki/Salvatore_Nuara' },
+    { name: 'Sarah Kellen', url: 'https://en.wikipedia.org/wiki/Sarah_Kellen' },
+    { name: 'Sergey Belyakov', url: 'https://en.wikipedia.org/wiki/Sergey_Belyakov' },
+    { name: 'Stacey Plaskett', url: 'https://en.wikipedia.org/wiki/Stacey_Plaskett' },
+    { name: 'Steven Hoffenberg', url: 'https://en.wikipedia.org/wiki/Steven_Hoffenberg' },
+    { name: 'Stoy Cowles', url: 'https://en.wikipedia.org/wiki/Stoy_Cowles' },
+    { name: 'Sultan Ahmed bin Sulayem', url: 'https://en.wikipedia.org/wiki/Sultan_Ahmed_bin_Sulayem' },
+    { name: 'Tancredi Marchiolo', url: 'https://en.wikipedia.org/wiki/Tancredi_Marchiolo' },
+    { name: 'Terje Rod Larsen', url: 'https://en.wikipedia.org/wiki/Terje_R%C3%B8d-Larsen' },
+    { name: 'Thomas H. Lee', url: 'https://en.wikipedia.org/wiki/Thomas_H._Lee_(financier)' },
+    { name: 'Vincent Frazer', url: 'https://en.wikipedia.org/wiki/Vincent_Frazer' },
+    { name: 'James Cayne', url: 'https://en.wikipedia.org/wiki/James_Cayne' },
+    { name: 'James Staley', url: 'https://en.wikipedia.org/wiki/James_Staley' },
+    { name: 'James R. Burrit', url: 'https://en.wikipedia.org/wiki/James_R._Burrit' },
+    { name: 'Zurab Mikeladze', url: 'https://en.wikipedia.org/wiki/Zurab_Mikeladze' },
+];
+
 const stories = [
     {
         id: 'lolita-2017',
@@ -610,73 +745,75 @@ function App() {
         }
     };
 
-    const handleDownloadMeme = async () => {
+    const handleShareStory = async (platform) => {
         if (!storyRevealRef.current || isProcessingMeme) return;
-
-        // Force a share immediately
-        handleShare('facebook');
-
-        let fileHandle = null;
-        if (window.showSaveFilePicker) {
-            try {
-                fileHandle = await window.showSaveFilePicker({
-                    suggestedName: `SadLibs_Classified_${Date.now()}.png`,
-                    types: [{
-                        description: 'PNG Image',
-                        accept: { 'image/png': ['.png'] },
-                    }],
-                });
-            } catch (err) {
-                if (err.name !== 'AbortError') console.error(err);
-                return; // User cancelled the save dialog
-            }
-        }
-
         setIsProcessingMeme(true);
+
         try {
+            // 1. Generate Image from DOM
             const element = storyRevealRef.current;
             const canvas = await html2canvas(element, {
                 backgroundColor: '#0f172a',
-                scale: 2, // High DPI capture
+                scale: 2,
                 logging: false,
-                ignoreElements: (el) => el.classList.contains('export-ignore'), // Ignore action buttons
+                ignoreElements: (el) => el.classList.contains('export-ignore'),
                 onclone: (clonedDoc) => {
                     const watermark = clonedDoc.querySelector('.cta-watermark');
                     if (watermark) watermark.style.display = 'block';
                 }
             });
 
-            if (fileHandle) {
-                // Use Native File System API
-                canvas.toBlob(async (blob) => {
-                    if (!blob) throw new Error("Canvas Blob failed");
-                    const writable = await fileHandle.createWritable();
-                    await writable.write(blob);
-                    await writable.close();
-                    setIsProcessingMeme(false);
-                }, 'image/png');
-            } else {
-                // Fallback for browsers without File System API
-                canvas.toBlob((blob) => {
-                    if (!blob) return;
-                    const url = window.URL.createObjectURL(blob);
-                    const link = document.createElement('a');
-                    link.style.position = 'absolute';
-                    link.style.visibility = 'hidden';
-                    link.href = url;
-                    link.download = `SadLibs_Classified_${Date.now()}.png`;
-                    document.body.appendChild(link);
-                    link.click();
-                    setTimeout(() => {
-                        document.body.removeChild(link);
-                        window.URL.revokeObjectURL(url);
-                    }, 5000);
-                    setIsProcessingMeme(false);
-                }, 'image/png');
+            // 2. Upload to ImgBB via server proxy (ImgBB has no CORS support for direct browser requests)
+            const base64 = canvas.toDataURL('image/png').split(',')[1];
+
+            const uploadRes = await fetch('/api/upload-image', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ image: base64 })
+            });
+            const uploadData = await uploadRes.json();
+
+            if (!uploadRes.ok || !uploadData.url) {
+                throw new Error(uploadData.error || 'ImgBB upload failed');
             }
+            const imageUrl = uploadData.url;
+
+            // 3. Construct Payload URL for Audio Re-generation
+            let shareUrl = 'https://sadlibs.vercel.app';
+            try {
+                const payloadData = JSON.stringify({
+                    s: selectedStoryId,
+                    i: inputs
+                });
+                const encodedPayload = encodeURIComponent(btoa(payloadData));
+                shareUrl = `${shareUrl}/?payload=${encodedPayload}`;
+            } catch (err) {
+                console.error("Failed to encode payload", err);
+            }
+
+            // 4. Track sharing
+            const newCount = shareCount + 1;
+            setShareCount(newCount);
+            localStorage.setItem('sadlibs_share_count', newCount);
+            sessionStorage.setItem('sadlibs_exit_stage', '2');
+            setHasSharedInExitModal(true);
+
+            // 5. Open Share Intent
+            const text = encodeURIComponent("Listen to this insane Epstein leak I just uncovered (Sound ON 🔊) 👇");
+
+            if (platform === 'twitter') {
+                window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${text}%0A%0A${encodeURIComponent(imageUrl)}`, '_blank');
+            } else if (platform === 'facebook') {
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, '_blank');
+            } else if (platform === 'copy') {
+                navigator.clipboard.writeText(`Listen to this insane Epstein leak I just uncovered (Sound ON 🔊) 👇\n${shareUrl}\n\nPreview: ${imageUrl}`);
+                alert('Link copied to clipboard!');
+            }
+
         } catch (err) {
-            console.error("Meme generation failed:", err);
-            alert("Sorry, couldn't generate the image! Try screenshotting instead.");
+            console.error("Failed to share story:", err);
+            alert("Sorry, preparing the share link failed. Please try again.");
+        } finally {
             setIsProcessingMeme(false);
         }
     };
@@ -685,69 +822,6 @@ function App() {
         if (audioRef.current) {
             audioRef.current.currentTime = 0;
             audioRef.current.play();
-        }
-    };
-
-    const handleDownloadAudio = async () => {
-        if (!activeAudioUrl) return;
-
-        // Force a share immediately
-        handleShare('facebook');
-
-        if (window.showSaveFilePicker) {
-            try {
-                const fileHandle = await window.showSaveFilePicker({
-                    suggestedName: 'Classified_Audio_Leak.mp3',
-                    types: [{
-                        description: 'MP3 Audio',
-                        accept: { 'audio/mpeg': ['.mp3'] },
-                    }],
-                });
-
-                const response = await fetch(activeAudioUrl);
-                const blobData = await response.blob();
-                const blob = new Blob([blobData], { type: 'audio/mpeg' });
-                const writable = await fileHandle.createWritable();
-                await writable.write(blob);
-                await writable.close();
-                return;
-            } catch (err) {
-                if (err.name !== 'AbortError') console.error(err);
-                return; // Cancelled
-            }
-        }
-
-        // Fallback for older browsers
-        try {
-            const response = await fetch(activeAudioUrl);
-            const blobData = await response.blob();
-            const blob = new Blob([blobData], { type: 'audio/mpeg' });
-            const objectUrl = window.URL.createObjectURL(blob);
-
-            const link = document.createElement('a');
-            link.style.position = 'absolute';
-            link.style.visibility = 'hidden';
-            link.href = objectUrl;
-            link.download = 'Classified_Audio_Leak.mp3';
-            document.body.appendChild(link);
-            link.click();
-
-            setTimeout(() => {
-                document.body.removeChild(link);
-                window.URL.revokeObjectURL(objectUrl);
-            }, 10000);
-        } catch (err) {
-            console.error("Failed to download audio:", err);
-            const link = document.createElement('a');
-            link.style.position = 'absolute';
-            link.style.visibility = 'hidden';
-            link.href = activeAudioUrl;
-            link.download = 'Classified_Audio_Leak.mp3';
-            document.body.appendChild(link);
-            link.click();
-            setTimeout(() => {
-                document.body.removeChild(link);
-            }, 10000);
         }
     };
 
@@ -888,11 +962,11 @@ function App() {
                                             <button onClick={handleReplayAudio} className="action-btn replay" disabled={!activeAudioUrl}>
                                                 🔊 Replay Audio
                                             </button>
-                                            <button onClick={() => handleDownloadAudio()} className="action-btn download" disabled={!activeAudioUrl}>
-                                                💾 Download MP3 & Share to FB
+                                            <button onClick={() => handleShareStory('twitter')} className="action-btn image-export" disabled={isProcessingMeme} style={{ background: '#1DA1F2' }}>
+                                                {isProcessingMeme ? '⏳ Creating Link...' : '🐦 Share My Story to X'}
                                             </button>
-                                            <button onClick={() => handleDownloadMeme()} className="action-btn image-export" disabled={isProcessingMeme}>
-                                                {isProcessingMeme ? '📷 Processing...' : '📷 Download Image & Share to FB'}
+                                            <button onClick={() => handleShareStory('copy')} className="action-btn download" disabled={isProcessingMeme} style={{ background: '#475569' }}>
+                                                {isProcessingMeme ? '⏳ Creating...' : '🔗 Copy Custom Link'}
                                             </button>
                                         </div>
 
@@ -978,17 +1052,17 @@ function App() {
                         <div className="modal names-modal" onClick={e => e.stopPropagation()}>
                             <h2>The High-Profile Names</h2>
                             <div className="names-list">
-                                <span className="name-tag">Bill Clinton</span>
-                                <span className="name-tag">Prince Andrew</span>
-                                <span className="name-tag">Stephen Hawking</span>
-                                <span className="name-tag">David Copperfield</span>
-                                <span className="name-tag">Ehud Barak</span>
-                                <span className="name-tag">Jean-Luc Brunel</span>
-                                <span className="name-tag">Bill Gates</span>
-                                <span className="name-tag">Leslie Wexner</span>
-                                <span className="name-tag">Alan Dershowitz</span>
-                                <span className="name-tag">Al Gore</span>
-                                <span className="name-tag">Kevin Spacey</span>
+                                {NAMES_DATA.map((entry, i) => (
+                                    <a
+                                        key={i}
+                                        href={entry.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="name-tag"
+                                    >
+                                        {entry.name}
+                                    </a>
+                                ))}
                             </div>
                             <p className="names-disclaimer">Note: Appearance in the unsealed documents does not necessarily imply criminal wrongdoing.</p>
                             <button className="close-btn" onClick={() => setShowNamesModal(false)}>Close Archive</button>
