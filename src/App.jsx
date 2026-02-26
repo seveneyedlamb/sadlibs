@@ -979,11 +979,14 @@ function App() {
                                             <button onClick={handleReplayAudio} className="action-btn replay" disabled={!activeAudioUrl}>
                                                 🔊 Replay Audio
                                             </button>
-                                            <button onClick={() => handleShareStory('twitter')} className="action-btn image-export" disabled={isProcessingMeme} style={{ background: '#1DA1F2' }}>
-                                                {isProcessingMeme ? '⏳ Creating Link...' : '🐦 Share My Story to X'}
+                                            <button onClick={() => handleShareStory('twitter')} className="action-btn image-export" disabled={isProcessingMeme}>
+                                                {isProcessingMeme ? '⏳ Preparing...' : '𝕏 Share to X'}
                                             </button>
-                                            <button onClick={() => handleShareStory('copy')} className="action-btn download" disabled={isProcessingMeme} style={{ background: '#475569' }}>
-                                                {isProcessingMeme ? '⏳ Creating...' : '🔗 Copy Custom Link'}
+                                            <button onClick={() => handleShareStory('facebook')} className="action-btn facebook" disabled={isProcessingMeme}>
+                                                {isProcessingMeme ? '⏳ Preparing...' : '📘 Share to Facebook'}
+                                            </button>
+                                            <button onClick={() => handleShareStory('copy')} className="action-btn download" disabled={isProcessingMeme}>
+                                                {isProcessingMeme ? '⏳ Copying...' : '🔗 Copy Link'}
                                             </button>
                                         </div>
 
