@@ -32,6 +32,51 @@ const customApiPlugin = () => ({
                         res.end(JSON.stringify({ error: 'Server error' }));
                     }
                 });
+            } else if (req.url && req.url.startsWith('/api/share') && req.method === 'GET') {
+                const urlObj = new URL(req.url, 'http://localhost');
+                const img = urlObj.searchParams.get('img') || '';
+                const imageUrl = decodeURIComponent(img);
+                const appUrl = 'http://localhost:5173';
+                const html = `<!DOCTYPE html><html><head><meta charset="utf-8"/><title>SadLibs Share</title>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="${imageUrl}"/>
+<meta property="og:image" content="${imageUrl}"/>
+<meta http-equiv="refresh" content="0; url=${appUrl}"/>
+</head><body><p>Redirecting...</p></body></html>`;
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'text/html');
+                res.end(html);
+            } else if (req.url === '/api/upload-image' && req.method === 'POST') {
+                let body = '';
+                req.on('data', chunk => { body += chunk.toString(); });
+                req.on('end', async () => {
+                    try {
+                        const { image } = JSON.parse(body);
+                        if (!image) {
+                            res.statusCode = 400;
+                            return res.end(JSON.stringify({ error: 'Image required' }));
+                        }
+                        const formData = new URLSearchParams();
+                        formData.append('key', 'fafd3d5c821e506d3fb8fee519ecbbfb');
+                        formData.append('image', image);
+                        const uploadRes = await fetch('https://api.imgbb.com/1/upload', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                            body: formData.toString()
+                        });
+                        const data = await uploadRes.json();
+                        if (!data.success) {
+                            res.statusCode = 500;
+                            return res.end(JSON.stringify({ error: 'ImgBB upload failed', detail: data }));
+                        }
+                        res.statusCode = 200;
+                        res.setHeader('Content-Type', 'application/json');
+                        res.end(JSON.stringify({ url: data.data.url }));
+                    } catch (e) {
+                        res.statusCode = 500;
+                        res.end(JSON.stringify({ error: 'Server error: ' + e.message }));
+                    }
+                });
             } else if (req.url === '/api/tts' && req.method === 'POST') {
                 let body = '';
                 req.on('data', chunk => {

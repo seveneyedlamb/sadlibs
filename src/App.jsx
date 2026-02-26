@@ -791,6 +791,8 @@ function App() {
             // 4. Share
             const shareText = 'Listen to this insane Epstein leak I just uncovered (Sound ON 🔊) 👇';
             const appUrl = 'https://sadlibs.vercel.app';
+            // Share card URL — Twitter's crawler visits this, reads twitter:image meta, shows image inline in tweet
+            const shareCardUrl = `${appUrl}/api/share?img=${encodeURIComponent(imageUrl)}`;
 
             if (platform === 'twitter') {
                 // Try Web Share API first (mobile — actually attaches the image as a file)
@@ -805,22 +807,22 @@ function App() {
                             setIsProcessingMeme(false);
                             return;
                         }
-                        // canShare exists but files not supported — fall through to twitter intent
-                        const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(imageUrl)}`;
+                        // canShare exists but files not supported — use share card URL so image shows as card
+                        const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareCardUrl)}`;
                         if (twitterWindow) twitterWindow.location.href = tweetUrl;
                         else window.open(tweetUrl, '_blank');
                         setIsProcessingMeme(false);
                     }, 'image/png');
                     return; // blob callback handles the rest
                 }
-                // Desktop fallback — redirect the pre-opened window to the tweet intent
-                const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(imageUrl)}`;
+                // Desktop — redirect the pre-opened window to tweet intent with share card URL
+                const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareCardUrl)}`;
                 if (twitterWindow) twitterWindow.location.href = tweetUrl;
                 else window.open(tweetUrl, '_blank');
             } else if (platform === 'facebook') {
-                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(appUrl)}`, '_blank');
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareCardUrl)}`, '_blank');
             } else if (platform === 'copy') {
-                navigator.clipboard.writeText(`${shareText}\n${appUrl}\n\nPreview: ${imageUrl}`);
+                navigator.clipboard.writeText(`${shareText}\n${shareCardUrl}`);
                 alert('Link copied to clipboard!');
             }
 
