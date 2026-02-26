@@ -292,7 +292,7 @@ function App() {
     const [showModal, setShowModal] = useState(false);
     const [showNamesModal, setShowNamesModal] = useState(false);
     const [showExitModal, setShowExitModal] = useState(false);
-    const [volume, setVolume] = useState(5);
+    const [volume, setVolume] = useState(2);
     const [shareCount, setShareCount] = useState(() => {
         return parseInt(localStorage.getItem('sadlibs_share_count')) || 1300;
     });
