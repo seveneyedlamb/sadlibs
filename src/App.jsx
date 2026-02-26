@@ -409,15 +409,15 @@ function App() {
         }
     }, []);
 
-    // Auto-scroll to top of story container when selecting a file or revealing the story
+    // Auto-scroll to top of story container when selecting a file, generating, or revealing the story
     useEffect(() => {
-        if ((selectedStoryId || isRevealed) && storyContainerRef.current) {
+        if ((selectedStoryId || isGenerating || isRevealed) && storyContainerRef.current) {
             // Slight delay ensures the DOM has updated before scrolling
             setTimeout(() => {
                 storyContainerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 100);
         }
-    }, [selectedStoryId, isRevealed]);
+    }, [selectedStoryId, isGenerating, isRevealed]);
 
     useEffect(() => {
         const handleInteraction = () => {
