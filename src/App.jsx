@@ -749,8 +749,15 @@ function App() {
         if (!storyRevealRef.current || isProcessingMeme) return;
         setIsProcessingMeme(true);
 
+        // Open popup BEFORE any awaits — browsers block window.open() called after async work
+        let twitterWindow = null;
+        if (platform === 'twitter') {
+            twitterWindow = window.open('', '_blank');
+            if (twitterWindow) twitterWindow.document.write('<p style="font-family:sans-serif;padding:2rem">Preparing your story image, one moment...</p>');
+        }
+
         try {
-            // 1. Generate Image from DOM
+            // 1. Generate image from DOM (only the story card, ugly truth excluded via export-ignore)
             const element = storyRevealRef.current;
             const canvas = await html2canvas(element, {
                 backgroundColor: '#0f172a',
@@ -763,56 +770,64 @@ function App() {
                 }
             });
 
-            // 2. Upload to ImgBB via server proxy (ImgBB has no CORS support for direct browser requests)
+            // 2. Upload to ImgBB
             const base64 = canvas.toDataURL('image/png').split(',')[1];
-
             const uploadRes = await fetch('/api/upload-image', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ image: base64 })
             });
             const uploadData = await uploadRes.json();
-
-            if (!uploadRes.ok || !uploadData.url) {
-                throw new Error(uploadData.error || 'ImgBB upload failed');
-            }
+            if (!uploadRes.ok || !uploadData.url) throw new Error(uploadData.error || 'ImgBB upload failed');
             const imageUrl = uploadData.url;
 
-            // 3. Construct Payload URL for Audio Re-generation
-            let shareUrl = 'https://sadlibs.vercel.app';
-            try {
-                const payloadData = JSON.stringify({
-                    s: selectedStoryId,
-                    i: inputs
-                });
-                const encodedPayload = encodeURIComponent(btoa(payloadData));
-                shareUrl = `${shareUrl}/?payload=${encodedPayload}`;
-            } catch (err) {
-                console.error("Failed to encode payload", err);
-            }
-
-            // 4. Track sharing
+            // 3. Track sharing
             const newCount = shareCount + 1;
             setShareCount(newCount);
             localStorage.setItem('sadlibs_share_count', newCount);
             sessionStorage.setItem('sadlibs_exit_stage', '2');
             setHasSharedInExitModal(true);
 
-            // 5. Open Share Intent
-            const text = encodeURIComponent("Listen to this insane Epstein leak I just uncovered (Sound ON 🔊) 👇");
+            // 4. Share
+            const shareText = 'Listen to this insane Epstein leak I just uncovered (Sound ON 🔊) 👇';
+            const appUrl = 'https://sadlibs.vercel.app';
 
             if (platform === 'twitter') {
-                window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${text}%0A%0A${encodeURIComponent(imageUrl)}`, '_blank');
+                // Try Web Share API first (mobile — actually attaches the image as a file)
+                if (navigator.canShare) {
+                    canvas.toBlob(async (blob) => {
+                        const file = new File([blob], 'epstein-leak.png', { type: 'image/png' });
+                        if (navigator.canShare({ files: [file] })) {
+                            if (twitterWindow) twitterWindow.close();
+                            try {
+                                await navigator.share({ files: [file], title: shareText, text: `${shareText}\n${appUrl}` });
+                            } catch (e) { /* user cancelled */ }
+                            setIsProcessingMeme(false);
+                            return;
+                        }
+                        // canShare exists but files not supported — fall through to twitter intent
+                        const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(imageUrl)}`;
+                        if (twitterWindow) twitterWindow.location.href = tweetUrl;
+                        else window.open(tweetUrl, '_blank');
+                        setIsProcessingMeme(false);
+                    }, 'image/png');
+                    return; // blob callback handles the rest
+                }
+                // Desktop fallback — redirect the pre-opened window to the tweet intent
+                const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(imageUrl)}`;
+                if (twitterWindow) twitterWindow.location.href = tweetUrl;
+                else window.open(tweetUrl, '_blank');
             } else if (platform === 'facebook') {
-                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, '_blank');
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(appUrl)}`, '_blank');
             } else if (platform === 'copy') {
-                navigator.clipboard.writeText(`Listen to this insane Epstein leak I just uncovered (Sound ON 🔊) 👇\n${shareUrl}\n\nPreview: ${imageUrl}`);
+                navigator.clipboard.writeText(`${shareText}\n${appUrl}\n\nPreview: ${imageUrl}`);
                 alert('Link copied to clipboard!');
             }
 
         } catch (err) {
-            console.error("Failed to share story:", err);
-            alert("Sorry, preparing the share link failed. Please try again.");
+            console.error('Failed to share story:', err);
+            if (twitterWindow) twitterWindow.close();
+            alert('Sorry, preparing the share image failed. Please try again.');
         } finally {
             setIsProcessingMeme(false);
         }
@@ -972,7 +987,7 @@ function App() {
 
                                         <hr className="divider export-ignore" />
 
-                                        <div className="truth-section">
+                                        <div className="truth-section export-ignore">
                                             <h3>The Ugly Truth:</h3>
                                             <div className="real-quote-box">
                                                 <p>{activeStory.realQuote}</p>
