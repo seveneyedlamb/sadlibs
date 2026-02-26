@@ -1102,43 +1102,47 @@ function App() {
                     <div className="modal-overlay" onClick={() => setShowExitModal(false)}>
                         <div className="modal exit-modal" onClick={e => e.stopPropagation()}>
                             <h2 className="angry-heading">Hold on a second.</h2>
-                            <p className="exit-message">A woman in these files offered to acquire an African baby for Jeffrey Epstein. As a gift. This is not a bit. Share this game so more people find out, then leave us your email for a free year of The Wise Wolf ($80 value). You were leaving anyway.</p>
+                            <p className="exit-message">A woman in these files offered to procure an African baby for Jeffrey Epstein. As a gift. We are not making this up. More people need to know about this.</p>
                             <img src={babyEmailImg} alt="Email discussing bringing back a baby" className="evidence-img" />
-                            <div className="share-buttons modal-share">
-                                <button onClick={() => handleShare('twitter')} className="share-btn twitter">Share on X</button>
-                                <button onClick={() => handleShare('facebook')} className="share-btn facebook">Share on Facebook</button>
-                            </div>
-                            <div className={`exit-email-capture ${hasSharedInExitModal ? 'unlocked' : 'locked'}`} style={{ marginBottom: '2.5rem' }}>
-                                {exitModalStatus !== 'success' ? (
-                                    <>
-                                        <form onSubmit={handleExitEmailSubmit} className="prize-form exit-inline-form">
-                                            <input
-                                                type="email"
-                                                name="email"
-                                                placeholder={hasSharedInExitModal ? "Enter email address..." : "Share to unlock..."}
-                                                value={exitEmail}
-                                                onChange={(e) => setExitEmail(e.target.value)}
-                                                required
-                                                disabled={!hasSharedInExitModal}
-                                                className="prize-input"
-                                            />
-                                            <button
-                                                type="submit"
-                                                disabled={!hasSharedInExitModal}
-                                                className="submit-btn"
-                                            >
-                                                Claim Free Year (It's Real)
-                                            </button>
-                                        </form>
-                                    </>
-                                ) : (
-                                    <div className="prize-success fade-in" style={{ padding: '1rem', textAlign: 'center', background: 'rgba(74, 222, 128, 0.1)', borderRadius: '8px', border: '1px solid rgba(74, 222, 128, 0.2)' }}>
-                                        <h3 className="success-text" style={{ color: '#4ade80', margin: 0, fontSize: '1.2rem' }}>SUCCESS!</h3>
-                                        <p style={{ color: '#94a3b8', margin: '0.5rem 0 0 0', fontSize: '0.9rem' }}>Done. We'll be in touch. Don't let anyone redact this email.</p>
+
+                            {!hasSharedInExitModal ? (
+                                <>
+                                    <p className="exit-share-prompt">Share this before someone redacts it. Takes two seconds.</p>
+                                    <div className="share-buttons modal-share exit-share-big">
+                                        <button onClick={() => handleShare('twitter')} className="share-btn twitter">Post to X</button>
+                                        <button onClick={() => handleShare('facebook')} className="share-btn facebook">Post to Facebook</button>
                                     </div>
-                                )}
-                            </div>
-                            <button className="close-btn outline-close" style={{ marginTop: '1.5rem' }} onClick={() => setShowExitModal(false)}>Fine. Close This.</button>
+                                    <button className="exit-skip-btn" onClick={() => setShowExitModal(false)}>No thanks, I don't care about babies.</button>
+                                </>
+                            ) : (
+                                <>
+                                    {exitModalStatus !== 'success' ? (
+                                        <>
+                                            <p className="exit-message" style={{ marginTop: '1.5rem' }}>Thanks. Leave your email and we'll give you a free year of The Wise Wolf ($80 value). We will not sell it to anyone. Probably.</p>
+                                            <form onSubmit={handleExitEmailSubmit} className="prize-form exit-inline-form">
+                                                <input
+                                                    type="email"
+                                                    name="email"
+                                                    placeholder="Enter email address..."
+                                                    value={exitEmail}
+                                                    onChange={(e) => setExitEmail(e.target.value)}
+                                                    required
+                                                    className="prize-input"
+                                                />
+                                                <button type="submit" className="submit-btn">
+                                                    {exitModalStatus === 'loading' ? 'Sending...' : 'Claim Free Year (It\'s Real)'}
+                                                </button>
+                                            </form>
+                                        </>
+                                    ) : (
+                                        <div className="prize-success fade-in" style={{ padding: '1rem', textAlign: 'center', background: 'rgba(74, 222, 128, 0.1)', borderRadius: '8px', border: '1px solid rgba(74, 222, 128, 0.2)', marginTop: '1.5rem' }}>
+                                            <h3 className="success-text" style={{ color: '#4ade80', margin: 0, fontSize: '1.2rem' }}>Done.</h3>
+                                            <p style={{ color: '#94a3b8', margin: '0.5rem 0 0 0', fontSize: '0.9rem' }}>We'll be in touch. Don't let anyone redact this email.</p>
+                                        </div>
+                                    )}
+                                    <button className="close-btn outline-close" style={{ marginTop: '1.5rem' }} onClick={() => setShowExitModal(false)}>Close</button>
+                                </>
+                            )}
                         </div>
                     </div>
                 )}

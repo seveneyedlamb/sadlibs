@@ -899,6 +899,39 @@ body::after {
     background: #475569;
 }
 
+/* Exit modal share CTA styles */
+.exit-share-big .share-btn {
+    padding: 1.1rem 2.5rem;
+    font-size: 1.1rem;
+    width: 100%;
+}
+
+.exit-share-prompt {
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #f1f5f9;
+    margin: 1.5rem 0 1rem;
+}
+
+.exit-skip-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: none;
+    border: none;
+    color: #475569;
+    font-size: 0.8rem;
+    cursor: pointer;
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+    transition: color 0.2s;
+}
+
+.exit-skip-btn:hover {
+    color: #64748b;
+}
+
 /* Viral Action Buttons */
 .action-buttons-row {
     display: flex;
