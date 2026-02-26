@@ -566,12 +566,12 @@ function App() {
 
             // Start the loading animation messages
             const messages = [
-                "Crossing I's...",
-                "Dotting T's...",
-                "Redacting References to Donald Trump...",
-                "Eating a Baby...",
-                "Building a Temple to Baal...",
-                "Prepare to laugh (and possibly cry.)"
+                "Cross-referencing with classified island guest lists...",
+                "Redacting names so powerful people don't sue us...",
+                "Translating from 'billionaire' to 'English'...",
+                "Contacting our legal team. They said 'publish it and run.'...",
+                "Running spell-check. (Epstein's staff could not spell.)...",
+                "Preparing evidence. Try not to make eye contact with the names."
             ];
 
             let msgIndex = 0;
@@ -794,7 +794,7 @@ function App() {
 
             // 4. Share
             const storyName = activeStory ? activeStory.title : 'an Epstein leak';
-            const shareText = `I just uncovered: "${storyName}" from the Epstein files 😱 (Sound ON 🔊) — play it yourself:`;
+            const shareText = `I just found "${storyName}" in the Epstein files and now I need someone to suffer with me:`;
             const appUrl = 'https://sadlibs.vercel.app';
             // Share card URL — Twitter's crawler visits this, reads twitter:image meta, shows image inline in tweet
             const shareCardUrl = `${appUrl}/api/share?img=${encodeURIComponent(imageUrl)}`;
@@ -981,20 +981,20 @@ function App() {
                                         </div>
 
                                         <div className="share-proof-inline export-ignore">
-                                            🔥 {shareCount.toLocaleString()} people have already shared this
+                                            {shareCount.toLocaleString()} people have shared this. Several are no longer welcome at Thanksgiving.
                                         </div>
                                         <div className={`action-buttons-row export-ignore${shareReady ? ' share-ready' : ''}`}>
                                             <button onClick={handleReplayAudio} className="action-btn replay" disabled={!activeAudioUrl}>
-                                                🔊 Replay Audio
+                                                Hear It Again (Seriously Though)
                                             </button>
                                             <button onClick={() => handleShareStory('twitter')} className="action-btn image-export" disabled={isProcessingMeme}>
-                                                {isProcessingMeme ? '⏳ Preparing...' : '𝕏 Share to X'}
+                                                {isProcessingMeme ? 'Preparing evidence...' : 'Post to X Before It Gets Redacted'}
                                             </button>
                                             <button onClick={() => handleShareStory('facebook')} className="action-btn facebook" disabled={isProcessingMeme}>
-                                                {isProcessingMeme ? '⏳ Preparing...' : '📘 Share to Facebook'}
+                                                {isProcessingMeme ? 'Preparing evidence...' : 'Post to Facebook (Wake Up Your Uncle)'}
                                             </button>
                                             <button onClick={() => handleShareStory('copy')} className="action-btn download" disabled={isProcessingMeme}>
-                                                {isProcessingMeme ? '⏳ Copying...' : '🔗 Copy Link'}
+                                                {isProcessingMeme ? 'Copying...' : 'Copy Evidence'}
                                             </button>
                                         </div>
 
@@ -1020,7 +1020,7 @@ function App() {
                                         </div>
 
                                         <button onClick={clearSelection} className="submit-btn outline full-width">
-                                            Select Another File
+                                            Open Another File
                                         </button>
                                     </div>
                                 )}
@@ -1031,7 +1031,7 @@ function App() {
                 </main>
 
                 <div className="social-share-section">
-                    <h3>{shareCount.toLocaleString()} people shared this game, will you?</h3>
+                    <h3>{shareCount.toLocaleString()} people have shared this game. Statistically, one of them regrets it.</h3>
                     <div className="share-buttons">
                         <button onClick={() => handleShare('twitter')} className="share-btn twitter">Share on X</button>
                         <button onClick={() => handleShare('facebook')} className="share-btn facebook">Share on Facebook</button>
@@ -1055,7 +1055,7 @@ function App() {
                     <div className="modal-overlay" onClick={() => setShowModal(false)}>
                         <div className="modal how-to-play-modal" onClick={e => e.stopPropagation()}>
                             <h2>How to Play</h2>
-                            <p className="modal-desc">Enter words into the blanks to complete the story. The story will be revealed with your words inserted. Have fun!</p>
+                            <p className="modal-desc">Fill in the blanks with whatever words come to mind. The story gets read aloud by a computer who has no idea what it's saying. This is, technically speaking, journalism.</p>
 
                             <h3 className="grammar-title">Grammar Refresher (For the Smooth Brains):</h3>
                             <ul className="grammar-list">
@@ -1066,11 +1066,11 @@ function App() {
                             </ul>
 
                             <div className="pro-tip-box">
-                                <strong>Pro Tip:</strong><br />
-                                It is WAY funnier when you use absolute filth and dirty words. Do not hold back. Maximize the hilarity.
+                                <strong>Important Note:</strong><br />
+                                The filthier your words, the more historically accurate this becomes. You are performing a public service.
                             </div>
 
-                            <button className="close-btn full-width compact-btn" onClick={() => setShowModal(false)}>Close & Start Playing</button>
+                            <button className="close-btn full-width compact-btn" onClick={() => setShowModal(false)}>I Understand. Let's Go.</button>
                         </div>
                     </div>
                 )}
@@ -1078,7 +1078,7 @@ function App() {
                 {showNamesModal && (
                     <div className="modal-overlay" onClick={() => setShowNamesModal(false)}>
                         <div className="modal names-modal" onClick={e => e.stopPropagation()}>
-                            <h2>The High-Profile Names</h2>
+                            <h2>Names on the File</h2>
                             <div className="names-list">
                                 {NAMES_DATA.map((entry, i) => (
                                     <a
@@ -1092,7 +1092,7 @@ function App() {
                                     </a>
                                 ))}
                             </div>
-                            <p className="names-disclaimer">Note: Appearance in the unsealed documents does not necessarily imply criminal wrongdoing.</p>
+                            <p className="names-disclaimer">Appearing in unsealed court documents does not constitute a criminal conviction. It does, however, constitute an interesting dinner conversation.</p>
                             <button className="close-btn" onClick={() => setShowNamesModal(false)}>Close Archive</button>
                         </div>
                     </div>
@@ -1101,8 +1101,8 @@ function App() {
                 {showExitModal && (
                     <div className="modal-overlay" onClick={() => setShowExitModal(false)}>
                         <div className="modal exit-modal" onClick={e => e.stopPropagation()}>
-                            <h2 className="angry-heading">Before you go...</h2>
-                            <p className="exit-message">At least share the fact that this woman sold Epstein a baby. A freaking baby. Share this game, then enter your email to get a <strong>FREE Year of The Wise Wolf</strong> ($80 value)!</p>
+                            <h2 className="angry-heading">Hold on a second.</h2>
+                            <p className="exit-message">A woman in these files offered to acquire an African baby for Jeffrey Epstein. As a gift. This is not a bit. Share this game so more people find out, then leave us your email for a free year of The Wise Wolf ($80 value). You were leaving anyway.</p>
                             <img src={babyEmailImg} alt="Email discussing bringing back a baby" className="evidence-img" />
                             <div className="share-buttons modal-share">
                                 <button onClick={() => handleShare('twitter')} className="share-btn twitter">Share on X</button>
@@ -1127,18 +1127,18 @@ function App() {
                                                 disabled={!hasSharedInExitModal}
                                                 className="submit-btn"
                                             >
-                                                Claim $80 Value
+                                                Claim Free Year (It's Real)
                                             </button>
                                         </form>
                                     </>
                                 ) : (
                                     <div className="prize-success fade-in" style={{ padding: '1rem', textAlign: 'center', background: 'rgba(74, 222, 128, 0.1)', borderRadius: '8px', border: '1px solid rgba(74, 222, 128, 0.2)' }}>
                                         <h3 className="success-text" style={{ color: '#4ade80', margin: 0, fontSize: '1.2rem' }}>SUCCESS!</h3>
-                                        <p style={{ color: '#94a3b8', margin: '0.5rem 0 0 0', fontSize: '0.9rem' }}>Your Free Year of Wise Wolf has been claimed.</p>
+                                        <p style={{ color: '#94a3b8', margin: '0.5rem 0 0 0', fontSize: '0.9rem' }}>Done. We'll be in touch. Don't let anyone redact this email.</p>
                                     </div>
                                 )}
                             </div>
-                            <button className="close-btn outline-close" style={{ marginTop: '1.5rem' }} onClick={() => setShowExitModal(false)}>Close Archive</button>
+                            <button className="close-btn outline-close" style={{ marginTop: '1.5rem' }} onClick={() => setShowExitModal(false)}>Fine. Close This.</button>
                         </div>
                     </div>
                 )}
@@ -1157,7 +1157,7 @@ function App() {
                                     <div className="prize-form-container fade-in">
                                         {!hasSharedInExitModal ? (
                                             <>
-                                                <p className="prize-desc" style={{ marginBottom: '1rem', color: '#fff' }}>Share this leaked document to receive your FREE Year of The Wise Wolf ($80 value)!</p>
+                                                <p className="prize-desc" style={{ marginBottom: '1rem', color: '#fff' }}>Share the leaked document. Tell people. Your uncle who still forwards chain emails will love this. In exchange: a free year of The Wise Wolf ($80 value).</p>
                                                 <button className="share-btn twitter full-width" onClick={() => handleShare('twitter')} style={{ marginBottom: '0.5rem' }}>
                                                     SHARE ON X
                                                 </button>
@@ -1170,7 +1170,7 @@ function App() {
                                             </>
                                         ) : (
                                             <>
-                                                <p className="prize-desc">Enter your secure terminal address below to claim your prize.</p>
+                                                <p className="prize-desc">Leave your email. We will not sell it to anyone. Probably.</p>
                                                 <form onSubmit={handlePrizeEmailSubmit} className="prize-form">
                                                     <input
                                                         type="email"
