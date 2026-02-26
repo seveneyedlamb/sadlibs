@@ -458,6 +458,35 @@ body::after {
     border-bottom: 2px solid var(--accent-color);
 }
 
+/* Clearance Level Badge */
+.clearance-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    border-radius: 8px;
+    background: rgba(239, 68, 68, 0.07);
+    margin-bottom: 2rem;
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+.clearance-level {
+    font-family: var(--mono-family);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--danger-accent);
+    text-transform: uppercase;
+}
+
+.clearance-rarity {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    font-style: italic;
+}
+
 /* Truth Section */
 .truth-section {
     margin-top: 5rem;

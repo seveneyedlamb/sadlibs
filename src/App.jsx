@@ -523,6 +523,10 @@ function App() {
 
     const allFilled = activeStory && placeholders.every(p => inputs[p.id] && inputs[p.id].trim() !== '');
 
+    // Fake rarity percentages — always exclusive, always consistent per story
+    const RARITY = [2, 3, 4, 2, 3, 2, 5, 3, 4, 2, 3, 4, 2, 3];
+    const storyRarity = activeStory ? RARITY[stories.indexOf(activeStory) % RARITY.length] : 3;
+
     const startStory = (id) => {
         setSelectedStoryId(id);
         setInputs({});
@@ -967,6 +971,10 @@ function App() {
                                     </div>
                                 ) : (
                                     <div className="story-reveal" ref={storyRevealRef}>
+                                        <div className="clearance-badge">
+                                            <span className="clearance-level">CLEARANCE LEVEL: TOP SECRET</span>
+                                            <span className="clearance-rarity">Only {storyRarity}% of readers accessed this file.</span>
+                                        </div>
                                         <div className="joke-section">
                                             <h3>The "Redacted" Version:</h3>
                                             {renderFinalStory()}
