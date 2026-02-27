@@ -1731,3 +1731,25 @@ body:has(.av2-fbi-terminal)::after {
     color: #334155;
     text-transform: uppercase;
 }
+
+/* ── 4CHAN MODE: MIDDLE SECTION BG ──────────────────── */
+.chan4-mid-bg {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.chan4-mid-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.72);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.chan4-mid-bg>* {
+    position: relative;
+    z-index: 1;
+}

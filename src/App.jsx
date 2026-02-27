@@ -19,6 +19,7 @@ import chan4bg7 from '../images/4chanmode/file7.jpg';
 import chan4bg8 from '../images/4chanmode/file8.png';
 import chan4ScrollImg from '../images/4chanmode/replacebothscrollingimages.jpg';
 import chan4CornerImg from '../images/4chanmode/replaceepsteinlowerrightimage.png';
+import chan4MidImg from '../images/4chanmode/backgroundmiddlesectionboxes.png';
 import themeSong from '../audio/sad.mp3';
 import dialupSound from '../audio/dialup.mp3';
 import html2canvas from 'html2canvas';
@@ -647,7 +648,7 @@ export default function AppAlt() {
             </section>
 
             {/* ── STORY SELECTION ──────────────────────── */}
-            <section id="av2-stories" className="av2-stories-section">
+            <section id="av2-stories" className={`av2-stories-section${is4ChanMode ? ' chan4-mid-bg' : ''}`} style={is4ChanMode ? { backgroundImage: `url(${chan4MidImg})` } : {}}>
                 <div className="av2-section-intro">
                     <h2 className="av2-section-title">Choose Your Depressing Adventure!</h2>
                     <p className="av2-section-desc">
