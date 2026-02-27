@@ -510,17 +510,40 @@ export default function AppAlt() {
     const handleShare = (platform) => {
         const nc = shareCount + 1; setShareCount(nc); localStorage.setItem('sadlibs_share_count', nc); setHasSharedInExitModal(true);
         const url = 'https://sadlibs.vercel.app';
-        const t = encodeURIComponent("I just found this Epstein files Mad Libs game and I need someone to suffer with me: #EpsteinFiles #EpsteinClientList");
+        const t = encodeURIComponent("The DOJ gave us 900 pages of Epstein files with the names redacted. I filled in the blanks. Then made Trump read them back. Your turn. #EpsteinFiles #EpsteinClientList");
         if (platform === 'twitter') window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${t}`, '_blank');
         if (platform === 'facebook') window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
-        if (platform === 'copy') { navigator.clipboard.writeText(`I just found this Epstein files Mad Libs game and I need someone to suffer with me: ${url}`); alert('Copied.'); }
+        if (platform === 'copy') { navigator.clipboard.writeText(`The DOJ gave us 900 pages of Epstein files with the names redacted. I filled in the blanks. Then made Trump read them back: ${url}`); alert('Copied.'); }
     };
 
     const handleShareStory = async (platform) => {
         if (!storyRevealRef.current || isProcessingMeme) return;
         setIsProcessingMeme(true);
+        const appDomain = 'https://sadlibs.vercel.app';
+        const sn = activeStory ? activeStory.title : 'an Epstein leak';
+
+        // Fast path: 4chan mode always, or 50% of normal shares — skip canvas, use static image
+        if (is4ChanMode || Math.random() < 0.5) {
+            const staticImg = is4ChanMode
+                ? CHAN_BGS[Math.floor(Math.random() * CHAN_BGS.length)]
+                : sadGirlImg;
+            const imgUrl = appDomain + staticImg;
+            const nc = shareCount + 1; setShareCount(nc); localStorage.setItem('sadlibs_share_count', nc); setHasSharedInExitModal(true);
+            const st = is4ChanMode
+                ? `The government redacted 900 pages of Epstein files. I filled in the blanks on "${sn}" and made Trump read it back. Your turn. #EpsteinFiles #Epstein`
+                : `The DOJ buried "${sn}" in Epstein's files. I filled in their redactions. Then made Trump read it back. Your turn. #EpsteinFiles #EpsteinClientList`;
+            const cardUrl = `${appDomain}/api/share?img=${encodeURIComponent(imgUrl)}`;
+            if (platform === 'twitter') window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(st)}&url=${encodeURIComponent(cardUrl)}`, '_blank');
+            else if (platform === 'facebook') window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(cardUrl)}`, '_blank');
+            else if (platform === 'native') { try { await navigator.share({ text: st, url: appDomain }); } catch (e) { } }
+            else if (platform === 'copy') { navigator.clipboard.writeText(`${st}\n${cardUrl}`); alert('Copied.'); }
+            setIsProcessingMeme(false);
+            return;
+        }
+
+        // Canvas path — generate meme card, upload, share
         let tw = null;
-        if (platform === 'twitter') { tw = window.open('', '_blank'); if (tw) tw.document.write('<p style="font-family:monospace;padding:2rem">Preparing your story image...</p>'); }
+        if (platform === 'twitter') { tw = window.open('', '_blank'); if (tw) tw.document.write('<p style="font-family:monospace;padding:2rem">Preparing your evidence...</p>'); }
         try {
             const canvas = await html2canvas(storyRevealRef.current, {
                 backgroundColor: '#020617', scale: 2, logging: false,
@@ -533,17 +556,15 @@ export default function AppAlt() {
             if (!up.ok || !ud.url) throw new Error('upload fail');
             const imgUrl = ud.url;
             const nc = shareCount + 1; setShareCount(nc); localStorage.setItem('sadlibs_share_count', nc); setHasSharedInExitModal(true);
-            const sn = activeStory ? activeStory.title : 'an Epstein leak';
-            const st = `I just found "${sn}" in the Epstein files and now I need someone to suffer with me: #EpsteinFiles #EpsteinClientList`;
-            const appUrl = 'https://sadlibs.vercel.app';
-            const cardUrl = `${appUrl}/api/share?img=${encodeURIComponent(imgUrl)}`;
+            const st = `The DOJ buried "${sn}" in Epstein's files. I filled in their redactions. Then made Trump read it back. Your turn. #EpsteinFiles #EpsteinClientList`;
+            const cardUrl = `${appDomain}/api/share?img=${encodeURIComponent(imgUrl)}`;
             if (platform === 'twitter') {
                 if (navigator.canShare) {
                     canvas.toBlob(async blob => {
                         const f = new File([blob], 'epstein-leak.png', { type: 'image/png' });
                         if (navigator.canShare({ files: [f] })) {
                             if (tw) tw.close();
-                            try { await navigator.share({ files: [f], text: st, url: appUrl }); } catch (e) { }
+                            try { await navigator.share({ files: [f], text: st, url: appDomain }); } catch (e) { }
                             setIsProcessingMeme(false); return;
                         }
                         const tu = `https://twitter.com/intent/tweet?text=${encodeURIComponent(st)}&url=${encodeURIComponent(cardUrl)}`;
@@ -558,7 +579,7 @@ export default function AppAlt() {
             } else if (platform === 'native') {
                 canvas.toBlob(async blob => {
                     const f = new File([blob], 'epstein-leak.png', { type: 'image/png' });
-                    try { await navigator.share({ files: [f], text: st, url: appUrl }); } catch (e) { }
+                    try { await navigator.share({ files: [f], text: st, url: appDomain }); } catch (e) { }
                     setIsProcessingMeme(false);
                 }, 'image/png'); return;
             } else if (platform === 'copy') {
