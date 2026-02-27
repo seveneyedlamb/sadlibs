@@ -1400,3 +1400,88 @@ img.corner-decal.left {
         filter: hue-rotate(0deg) drop-shadow(0 0 30px rgba(255, 0, 0, 0.8));
     }
 }
+
+/* ── EASTER EGGS (GLITCH & AFK) ───────────────────────── */
+.av2-glitch-scroll-msg {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--mono-family);
+    font-size: clamp(1rem, 4vw, 1.8rem);
+    font-weight: 900;
+    color: var(--danger-accent);
+    letter-spacing: 0.15em;
+    text-shadow: 0 0 15px rgba(239, 68, 68, 0.8);
+    z-index: 10000;
+    pointer-events: none;
+    animation: av2ScrollGlitchText 0.1s infinite alternate;
+}
+
+@keyframes av2ScrollGlitchText {
+    0% {
+        transform: translateX(-50%) translate(-2px, 2px);
+    }
+
+    100% {
+        transform: translateX(-50%) translate(2px, -2px);
+    }
+}
+
+body:has(.av2-glitch-scroll-msg) {
+    animation: intenseGlitch 0.15s infinite;
+}
+
+.av2-fbi-terminal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: #000;
+    z-index: 99999;
+    padding: 3rem 2rem;
+    font-family: var(--mono-family);
+    animation: wolfFadeBg 0.5s forwards;
+    pointer-events: none;
+    box-shadow: inset 0 0 100px rgba(0, 255, 0, 0.1);
+}
+
+.av2-terminal-header {
+    color: var(--danger-accent);
+    font-size: clamp(0.9rem, 3vw, 1.2rem);
+    font-weight: 800;
+    margin-bottom: 2rem;
+    letter-spacing: 0.2em;
+    border-bottom: 1px solid rgba(239, 68, 68, 0.3);
+    padding-bottom: 1rem;
+    animation: terminalBlink 4s infinite step-end;
+}
+
+.av2-terminal-logs {
+    color: #4ade80;
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    line-height: 1.8;
+}
+
+.av2-cursor {
+    animation: terminalBlink 1s step-end infinite;
+    display: inline-block;
+    width: 10px;
+    height: 1.1em;
+    background: #4ade80;
+    vertical-align: middle;
+    margin-left: 5px;
+}
+
+@keyframes terminalBlink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}

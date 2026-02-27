@@ -8,6 +8,7 @@ import funForAllAgesImg from '../images/fun4allages.png';
 import merchImg from '../images/buyatee.png';
 import wisewolfImg from '../images/wisewolf.png';
 import themeSong from '../audio/sad.mp3';
+import dialupSound from '../audio/dialup.mp3';
 import html2canvas from 'html2canvas';
 
 import bg1 from '../images/1.webp';
@@ -200,10 +201,23 @@ export default function AppAlt() {
     const [decipherText, setDecipherText] = useState('');
     const [showWolfEasterEgg, setShowWolfEasterEgg] = useState(false);
 
+    // Easter Egg States
+    const [isGlitchScrolling, setIsGlitchScrolling] = useState(false);
+    const [isAFK, setIsAFK] = useState(false);
+    const [terminalLines, setTerminalLines] = useState([]);
+    const afkTimerRef = useRef(null);
+
     const handleWolfClick = () => {
         if (showWolfEasterEgg) return;
         setShowWolfEasterEgg(true);
-        setTimeout(() => setShowWolfEasterEgg(false), 3000);
+        const screech = new Audio(dialupSound);
+        screech.volume = 1.0;
+        screech.play().catch(() => { });
+        setTimeout(() => {
+            setShowWolfEasterEgg(false);
+            screech.pause();
+            screech.currentTime = 0;
+        }, 3000);
     };
     const [isDeciphered, setIsDeciphered] = useState(false);
 
@@ -222,6 +236,70 @@ export default function AppAlt() {
         }, 3000);
         return () => { clearTimeout(t); clearInterval(iv); };
     }, []);
+
+    useEffect(() => {
+        const resetAfk = () => {
+            if (isAFK || document.title !== 'SadLibs') {
+                setIsAFK(false);
+                setTerminalLines([]);
+                document.title = 'SadLibs';
+            }
+            if (afkTimerRef.current) clearTimeout(afkTimerRef.current);
+            afkTimerRef.current = setTimeout(() => {
+                setIsAFK(true);
+                document.title = '🔴 REC - FBI SURVEILLANCE FEED 7';
+            }, 60000); // 60 seconds
+        };
+
+        window.addEventListener('mousemove', resetAfk);
+        window.addEventListener('keydown', resetAfk);
+        window.addEventListener('touchstart', resetAfk);
+        resetAfk();
+
+        return () => {
+            window.removeEventListener('mousemove', resetAfk);
+            window.removeEventListener('keydown', resetAfk);
+            window.removeEventListener('touchstart', resetAfk);
+            if (afkTimerRef.current) clearTimeout(afkTimerRef.current);
+        };
+    }, [isAFK]);
+
+    useEffect(() => {
+        if (!isAFK) return;
+        const honeypotLogs = [
+            "INITIALIZING HONEYPOT PROTOCOL v4.2...",
+            "CONNECTION SECURE. IP LOGGED.",
+            "ACCESSING EPSTEIN.DB MATCHES...",
+            "> DOWNLOADING KEYSTROKE TELEMETRY...",
+            "> CROSS-REFERENCING FLIGHT LOGS...",
+            "> TARGET PROBABILITY 92.4%...",
+            "> STANDBY FOR NSA HANDOFF...",
+            "DATA COLLECTION IN PROGRESS..."
+        ];
+        let i = 0;
+        const iv = setInterval(() => {
+            if (i < honeypotLogs.length) {
+                setTerminalLines(prev => [...prev, honeypotLogs[i]]);
+                i++;
+            } else {
+                clearInterval(iv);
+            }
+        }, 800);
+        return () => clearInterval(iv);
+    }, [isAFK]);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (!document.body) return;
+            const isBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 5);
+            if (isBottom && !isGlitchScrolling) {
+                setIsGlitchScrolling(true);
+                setTimeout(() => setIsGlitchScrolling(false), 2000); // 2 second tear event
+            }
+        };
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [isGlitchScrolling]);
 
     const startMusic = () => {
         const audio = themeAudioRef.current;
@@ -697,6 +775,22 @@ export default function AppAlt() {
                         ) : (
                             <p style={{ color: '#94a3b8' }}>Deciphering classified documents...</p>
                         )}
+                    </div>
+                </div>
+            )}
+
+            {/* ── EASTER EGGS ───────────────────────────── */}
+            {isGlitchScrolling && (
+                <div className="av2-glitch-scroll-msg">
+                    THEY ARE WATCHING YOU READ THIS.
+                </div>
+            )}
+            {isAFK && (
+                <div className="av2-fbi-terminal">
+                    <div className="av2-terminal-header">FEDERAL BUREAU OF INVESTIGATION - SURVEILLANCE FEED 7</div>
+                    <div className="av2-terminal-logs">
+                        {terminalLines.map((line, i) => <div key={i}>{line}</div>)}
+                        <span className="av2-cursor">_</span>
                     </div>
                 </div>
             )}
