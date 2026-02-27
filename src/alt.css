@@ -1205,7 +1205,7 @@ button.av2-red-play-main:hover {
 }
 
 /* ── ANIMATIONS ─────────────────────────────────────── */
-.corner-decal {
+img.corner-decal {
     animation: featherFall 4s cubic-bezier(0.25, 0.1, 0.25, 1) forwards, subtleSway 8s ease-in-out infinite alternate;
     animation-delay: 0s, 4s;
     /* Start swaying after fall finishes */
@@ -1215,7 +1215,7 @@ button.av2-red-play-main:hover {
     z-index: 100;
 }
 
-.corner-decal.left {
+img.corner-decal.left {
     animation-delay: -0.5s, 3.5s;
 }
 
