@@ -326,7 +326,7 @@ export default function AppAlt() {
     const handleShare = (platform) => {
         const nc = shareCount + 1; setShareCount(nc); localStorage.setItem('sadlibs_share_count', nc); setHasSharedInExitModal(true);
         const url = 'https://sadlibs.vercel.app';
-        const t = encodeURIComponent("I just found this Epstein files Mad Libs game and I need someone to suffer with me:");
+        const t = encodeURIComponent("I just found this Epstein files Mad Libs game and I need someone to suffer with me: #EpsteinFiles #EpsteinClientList");
         if (platform === 'twitter') window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${t}`, '_blank');
         if (platform === 'facebook') window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
         if (platform === 'copy') { navigator.clipboard.writeText(`I just found this Epstein files Mad Libs game and I need someone to suffer with me: ${url}`); alert('Copied.'); }
@@ -350,7 +350,7 @@ export default function AppAlt() {
             const imgUrl = ud.url;
             const nc = shareCount + 1; setShareCount(nc); localStorage.setItem('sadlibs_share_count', nc); setHasSharedInExitModal(true);
             const sn = activeStory ? activeStory.title : 'an Epstein leak';
-            const st = `I just found "${sn}" in the Epstein files and now I need someone to suffer with me:`;
+            const st = `I just found "${sn}" in the Epstein files and now I need someone to suffer with me: #EpsteinFiles #EpsteinClientList`;
             const appUrl = 'https://sadlibs.vercel.app';
             const cardUrl = `${appUrl}/api/share?img=${encodeURIComponent(imgUrl)}`;
             if (platform === 'twitter') {
