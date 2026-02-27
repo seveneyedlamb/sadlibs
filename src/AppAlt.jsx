@@ -245,6 +245,24 @@ export default function AppAlt() {
         return () => document.removeEventListener('mouseleave', handler);
     }, []);
 
+    // Scroll observer for fly-in cards
+    useEffect(() => {
+        if (selectedStoryId) return;
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        const cards = document.querySelectorAll('.av2-fly-in');
+        cards.forEach(c => observer.observe(c));
+
+        return () => cards.forEach(c => observer.unobserve(c));
+    }, [selectedStoryId, stories]);
+
     useEffect(() => {
         if (showPrizeModal && !isDeciphered) {
             const msg = "CLASSIFIED LEAK: FREE YEAR OF WISE WOLF MEMBERSHIP UNLOCKED ($80 VALUE FREE)";
@@ -403,16 +421,7 @@ export default function AppAlt() {
                     <p className="av2-hero-eyebrow">THE WISE WOLF PRESENTS</p>
                     <img src={logo} alt="SadLibs" className="av2-hero-logo" />
 
-                    <div className="av2-play-container">
-                        <span className="av2-play-arrow">➤</span>
-                        <button className="av2-cta av2-hero-play-main" onClick={() => { startMusic(); document.getElementById('av2-stories').scrollIntoView({ behavior: 'smooth' }); }}>
-                            Play Sad Libs
-                        </button>
-                        <span className="av2-play-arrow right-arrow">➤</span>
-                    </div>
-
-                    <img src={heroCard} alt="SadLibs game" className="av2-hero-card" />
-                    <div className="av2-hero-btns">
+                    <div className="av2-hero-btns" style={{ marginBottom: '1.5rem', marginTop: '1.5rem' }}>
                         <a href="https://www.wisewolf.club" target="_blank" rel="noopener noreferrer" className="av2-cta av2-wisewolf-btn">
                             <span className="ww-frame ww-1">Hate Bullshit?</span>
                             <span className="ww-frame ww-2">Read The Wise Wolf</span>
@@ -421,7 +430,14 @@ export default function AppAlt() {
                             Names on the File
                         </button>
                     </div>
-                    <p className="av2-hero-social-proof">{shareCount.toLocaleString()} people have shared this. Several are no longer welcome at Thanksgiving.</p>
+
+                    <div className="av2-play-container">
+                        <span className="av2-play-arrow">➤</span>
+                        <button className="av2-cta av2-hero-play-main" onClick={() => { startMusic(); document.getElementById('av2-stories').scrollIntoView({ behavior: 'smooth' }); }}>
+                            Play Sad Libs
+                        </button>
+                        <span className="av2-play-arrow right-arrow">➤</span>
+                    </div>
                 </div>
                 <div className="av2-scroll-hint">scroll ↓</div>
             </section>
@@ -438,7 +454,7 @@ export default function AppAlt() {
                 {!selectedStoryId ? (
                     <div className="av2-grid">
                         {stories.map((story, i) => (
-                            <button key={story.id} className="av2-card" onClick={() => startStory(story.id)}>
+                            <button key={story.id} className="av2-card av2-fly-in" style={{ '--av2-card-delay': `${(i % 3) * 0.15}s` }} onClick={() => startStory(story.id)}>
                                 <span className="av2-card-num">FILE {String(i + 1).padStart(3, '0')}</span>
                                 <h3 className="av2-card-title">{story.title}</h3>
                                 <p className="av2-card-hook">{story.hook}</p>
@@ -504,7 +520,7 @@ export default function AppAlt() {
                                 </div>
                                 {/* Share buttons */}
                                 <div className="av2-share-section export-ignore">
-                                    <p className="av2-share-proof">{shareCount.toLocaleString()} people have shared this. Several are no longer welcome at Thanksgiving.</p>
+                                    <p className="av2-share-proof">{shareCount.toLocaleString()} people have shared this. Statistically, at least one of them has their name in the Epstein documents.</p>
                                     <div className={`av2-share-row${shareReady ? ' share-ready' : ''}`}>
                                         {typeof navigator !== 'undefined' && navigator.share && (
                                             <button onClick={() => handleShareStory('native')} className="av2-action-btn native" disabled={isProcessingMeme}>
