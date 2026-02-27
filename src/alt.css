@@ -1271,3 +1271,103 @@ button.av2-red-play-main:hover {
         font-size: 1.4rem;
     }
 }
+
+/* ── EASTER EGG ─────────────────────────────────────── */
+.av2-wolf-easter-egg {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    animation: wolfFadeBg 3s forwards;
+}
+
+.av2-wolf-glitch {
+    width: 90vw;
+    max-width: 800px;
+    height: auto;
+    object-fit: contain;
+    /* Glitching throughout, pop in at start, vanish at the end */
+    animation:
+        wolfPopIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+        wolfGlitch 0.2s linear infinite alternate,
+        wolfVanish 0.3s ease-in 2.7s forwards;
+    filter: drop-shadow(0 0 30px rgba(255, 0, 0, 0.8));
+}
+
+@keyframes wolfFadeBg {
+    0% {
+        opacity: 0;
+    }
+
+    5% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes wolfPopIn {
+    0% {
+        transform: scale(0.1);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes wolfVanish {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+@keyframes wolfGlitch {
+    0% {
+        transform: translate(0) skew(0);
+        filter: hue-rotate(0deg) drop-shadow(0 0 30px rgba(255, 0, 0, 0.8));
+    }
+
+    20% {
+        transform: translate(-15px, 10px) skew(5deg) scale(1.02);
+        filter: hue-rotate(90deg) drop-shadow(0 0 40px rgba(0, 255, 0, 0.9));
+    }
+
+    40% {
+        transform: translate(15px, -10px) skew(-5deg) scale(0.98);
+        filter: hue-rotate(180deg) drop-shadow(0 0 50px rgba(0, 0, 255, 1));
+    }
+
+    60% {
+        transform: translate(-10px, 15px) skew(2deg) scale(1.05);
+        filter: hue-rotate(270deg) drop-shadow(0 0 40px rgba(255, 0, 255, 0.9));
+    }
+
+    80% {
+        transform: translate(10px, -15px) skew(-2deg) scale(0.95);
+        filter: hue-rotate(360deg) drop-shadow(0 0 30px rgba(255, 255, 0, 0.8));
+    }
+
+    100% {
+        transform: translate(0) skew(0) scale(1);
+        filter: hue-rotate(0deg) drop-shadow(0 0 30px rgba(255, 0, 0, 0.8));
+    }
+}

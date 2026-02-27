@@ -7,6 +7,7 @@ import heroCard from '../images/herocard.png';
 import sadGirlImg from '../images/sadgirl.png';
 import funForAllAgesImg from '../images/fun4allages.png';
 import merchImg from '../images/buyatee.png';
+import wisewolfImg from '../images/wisewolf.png';
 import themeSong from '../audio/sad.mp3';
 import html2canvas from 'html2canvas';
 
@@ -198,6 +199,13 @@ export default function AppAlt() {
     const [exitModalStatus, setExitModalStatus] = useState('idle');
     const [hasSharedInExitModal, setHasSharedInExitModal] = useState(false);
     const [decipherText, setDecipherText] = useState('');
+    const [showWolfEasterEgg, setShowWolfEasterEgg] = useState(false);
+
+    const handleWolfClick = () => {
+        if (showWolfEasterEgg) return;
+        setShowWolfEasterEgg(true);
+        setTimeout(() => setShowWolfEasterEgg(false), 3000);
+    };
     const [isDeciphered, setIsDeciphered] = useState(false);
 
     const RARITY = [2, 3, 4, 2, 3, 2, 5, 3, 4, 2, 3, 4, 2, 3];
@@ -583,13 +591,20 @@ export default function AppAlt() {
             </div>
 
             <footer className="av2-footer">
-                <p>Made by The Wise Wolf &copy; {new Date().getFullYear()} &nbsp;·&nbsp; <a href="mailto:douchecoded@gmail.com">douchecoded@gmail.com</a></p>
+                <p>Made by <span onClick={handleWolfClick} style={{ cursor: 'pointer' }}>The Wise Wolf</span> &copy; {new Date().getFullYear()} &nbsp;·&nbsp; <a href="mailto:douchecoded@gmail.com">douchecoded@gmail.com</a></p>
                 <p>Designed by <a href="http://www.acheapdesigner.com" target="_blank" rel="noopener noreferrer">acheapdesigner.com</a> &nbsp;·&nbsp; Not affiliated with the FBI. Yet.</p>
             </footer>
 
             {/* Corner Decals */}
             <img src={sadGirlImg} alt="Sad Girl Mascot" className="corner-decal left" />
             <img src={funForAllAgesImg} alt="Fun for All Ages" className="corner-decal right" />
+
+            {/* ── WISE WOLF EASTER EGG ──────────────────── */}
+            {showWolfEasterEgg && (
+                <div className="av2-wolf-easter-egg">
+                    <img src={wisewolfImg} alt="The Wise Wolf" className="av2-wolf-glitch" />
+                </div>
+            )}
 
             {/* ── NAMES MODAL ───────────────────────────── */}
             {showNamesModal && (
