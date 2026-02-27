@@ -269,10 +269,15 @@ export default function AppAlt() {
         setIsGenerating(true); setIsRevealed(false);
         const messages = [
             "Cross-referencing with classified island guest lists...",
+            "Encrypting connection...",
+            "Parsing FBI file...",
             "Redacting names so powerful people don't sue us...",
+            "Decrypting Maxwell files...",
             "Translating from 'billionaire' to 'English'...",
+            "Consulting lawyers...",
             "Contacting our legal team. They said 'publish it and run.'...",
-            "Running spell-check. (Epstein's staff could not spell.)...",
+            "Loading sad truths...",
+            "Generating audio...",
             "Preparing evidence. Try not to make eye contact with the names."
         ];
         let idx = 0; setLoadingMessage(messages[0]);
