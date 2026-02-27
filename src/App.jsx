@@ -408,6 +408,7 @@ export default function AppAlt() {
     // Scroll observer for fly-in cards
     useEffect(() => {
         if (selectedStoryId) return;
+        const DIRS = ['left', 'right', 'up', 'down'];
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -418,7 +419,10 @@ export default function AppAlt() {
         }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
         const cards = document.querySelectorAll('.av2-fly-in');
-        cards.forEach(c => observer.observe(c));
+        cards.forEach(c => {
+            c.dataset.dir = DIRS[Math.floor(Math.random() * DIRS.length)];
+            observer.observe(c);
+        });
 
         return () => cards.forEach(c => observer.unobserve(c));
     }, [selectedStoryId, stories]);

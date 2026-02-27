@@ -524,11 +524,22 @@ button.av2-red-play-main:hover {
 /* Fly-in animation for scroll */
 .av2-fly-in {
     opacity: 0;
-    transform: translateX(calc(100px * var(--scroll-dir, 1)));
 }
 
-.av2-fly-in:nth-child(even) {
-    --scroll-dir: -1;
+.av2-fly-in[data-dir="left"] {
+    transform: translateX(-120px);
+}
+
+.av2-fly-in[data-dir="right"] {
+    transform: translateX(120px);
+}
+
+.av2-fly-in[data-dir="up"] {
+    transform: translateY(-80px);
+}
+
+.av2-fly-in[data-dir="down"] {
+    transform: translateY(80px);
 }
 
 .av2-fly-in.visible {
@@ -539,7 +550,7 @@ button.av2-red-play-main:hover {
 @keyframes cardFlyIn {
     to {
         opacity: 1;
-        transform: translateX(0);
+        transform: translate(0, 0);
     }
 }
 
