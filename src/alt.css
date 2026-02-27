@@ -1209,7 +1209,8 @@ button.av2-red-play-main:hover {
     position: fixed;
     top: 0;
     bottom: 0;
-    width: 140px;
+    width: 35vw;
+    max-width: 450px;
     z-index: 50;
     /* Behind main content, above background */
     pointer-events: none;
@@ -1244,7 +1245,7 @@ button.av2-red-play-main:hover {
 
 .wf-item img {
     width: 100%;
-    max-width: 120px;
+    max-width: 450px;
     height: auto;
     object-fit: contain;
     /* Give each image a subtle sway as they fall */
@@ -1312,10 +1313,11 @@ button.av2-red-play-main:hover {
     }
 
     .av2-waterfall {
-        width: 60px;
+        width: 40vw;
+        max-width: 180px;
     }
 
     .wf-item img {
-        max-width: 50px;
+        max-width: 180px;
     }
 }
