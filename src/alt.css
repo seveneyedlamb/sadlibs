@@ -1206,22 +1206,17 @@ button.av2-red-play-main:hover {
 
 /* ── ANIMATIONS ─────────────────────────────────────── */
 .corner-decal {
-    /* Using a smooth linear drop so it floats down continuously without jerking, while the sway gives the rock. */
-    animation: featherFall 6s cubic-bezier(0.4, 0, 0.2, 1) forwards, subtleSway 8s ease-in-out infinite alternate !important;
-    animation-delay: 0s, 6s !important;
+    animation: featherFall 4s cubic-bezier(0.25, 0.1, 0.25, 1) forwards, subtleSway 8s ease-in-out infinite alternate;
+    animation-delay: 0s, 4s;
     /* Start swaying after fall finishes */
     transform-origin: center;
     /* Ensure they don't break flex layout during fall */
-    position: fixed !important;
-    bottom: auto !important;
-    /* Override index.css pinning it to the bottom */
-    top: 0 !important;
-    transform: translateY(-120vh) !important;
+    position: fixed;
     z-index: 100;
 }
 
 .corner-decal.left {
-    animation-delay: -0.5s, 5.5s;
+    animation-delay: -0.5s, 3.5s;
 }
 
 @keyframes featherFall {
@@ -1229,19 +1224,31 @@ button.av2-red-play-main:hover {
         transform: translateY(-120vh) rotate(-15deg);
     }
 
+    25% {
+        transform: translateY(-90vh) rotate(10deg);
+    }
+
+    50% {
+        transform: translateY(-60vh) rotate(-5deg);
+    }
+
+    75% {
+        transform: translateY(-30vh) rotate(5deg);
+    }
+
     100% {
-        /* Final resting position */
-        transform: translateY(85vh) rotate(0deg);
+        /* Final resting position in translateY */
+        transform: translateY(0) rotate(0deg);
     }
 }
 
 @keyframes subtleSway {
     0% {
-        transform: translateY(85vh) rotate(-10deg);
+        transform: translateY(0) rotate(-10deg);
     }
 
     100% {
-        transform: translateY(85vh) rotate(10deg);
+        transform: translateY(0) rotate(10deg);
     }
 }
 
