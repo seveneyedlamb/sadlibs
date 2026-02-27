@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from 'react'
-import './index.css';
+import './alt.css';
 import logo from '../images/logo.png';
 import babyEmailImg from '../images/babyemail.webp';
 import trumpAvatar from '../images/trumptalking.gif';
@@ -9,6 +9,17 @@ import funForAllAgesImg from '../images/fun4allages.png';
 import merchImg from '../images/buyatee.png';
 import themeSong from '../audio/sad.mp3';
 import html2canvas from 'html2canvas';
+
+import bg1 from '../images/1.webp';
+import bg2 from '../images/2.webp';
+import bg3 from '../images/3.webp';
+import bg4 from '../images/4.webp';
+import bg5 from '../images/5.webp';
+import bg6 from '../images/6.webp';
+import bg7 from '../images/7.webp';
+import bg8 from '../images/8.webp';
+import bg9 from '../images/9.webp';
+const BGS = [bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9];
 
 const NAMES_DATA = [
     { name: 'Donald Trump', url: 'https://en.wikipedia.org/wiki/Donald_Trump' },
@@ -25,258 +36,129 @@ const NAMES_DATA = [
     { name: 'Richard Branson', url: 'https://en.wikipedia.org/wiki/Richard_Branson' },
     { name: 'Ehud Barak', url: 'https://en.wikipedia.org/wiki/Ehud_Barak' },
     { name: 'Ehud Olmert', url: 'https://en.wikipedia.org/wiki/Ehud_Olmert' },
-    { name: 'Shimon Peres', url: 'https://en.wikipedia.org/wiki/Shimon_Peres' },
-    { name: 'Steve Bannon', url: 'https://en.wikipedia.org/wiki/Steve_Bannon' },
-    { name: 'Noam Chomsky', url: 'https://en.wikipedia.org/wiki/Noam_Chomsky' },
     { name: 'Kevin Spacey', url: 'https://en.wikipedia.org/wiki/Kevin_Spacey' },
     { name: 'Larry Page', url: 'https://en.wikipedia.org/wiki/Larry_Page' },
-    { name: 'Sergey Brin', url: 'https://en.wikipedia.org/wiki/Sergey_Brin' },
     { name: 'Peter Thiel', url: 'https://en.wikipedia.org/wiki/Peter_Thiel' },
     { name: 'Reid Hoffman', url: 'https://en.wikipedia.org/wiki/Reid_Hoffman' },
     { name: 'Jamie Dimon', url: 'https://en.wikipedia.org/wiki/Jamie_Dimon' },
     { name: 'Larry Summers', url: 'https://en.wikipedia.org/wiki/Lawrence_Summers' },
     { name: 'Robert Kraft', url: 'https://en.wikipedia.org/wiki/Robert_Kraft' },
-    { name: 'Paul Tudor Jones', url: 'https://en.wikipedia.org/wiki/Paul_Tudor_Jones' },
     { name: 'Leon Black', url: 'https://en.wikipedia.org/wiki/Leon_Black' },
-    { name: 'Marvin Minsky', url: 'https://en.wikipedia.org/wiki/Marvin_Minsky' },
-    { name: 'Stephen Hawking', url: 'https://en.wikipedia.org/wiki/Stephen_Hawking' },
     { name: 'Al Gore', url: 'https://en.wikipedia.org/wiki/Al_Gore' },
-    { name: 'Jean-Luc Brunel', url: 'https://en.wikipedia.org/wiki/Jean-Luc_Brunel' },
     { name: 'Alan Dershowitz', url: 'https://en.wikipedia.org/wiki/Alan_Dershowitz' },
     { name: 'Les Wexner', url: 'https://en.wikipedia.org/wiki/Leslie_Wexner' },
-    { name: 'Conrad Black', url: 'https://en.wikipedia.org/wiki/Conrad_Black' },
-    { name: 'Sarah Ferguson', url: 'https://en.wikipedia.org/wiki/Sarah,_Duchess_of_York' },
-    { name: 'King Frederik X', url: 'https://en.wikipedia.org/wiki/Frederik_X' },
-    { name: 'Mette-Marit', url: 'https://en.wikipedia.org/wiki/Mette-Marit,_Crown_Princess_of_Norway' },
-    { name: 'Princess Sofia of Sweden', url: 'https://en.wikipedia.org/wiki/Princess_Sofia_of_Sweden' },
-    { name: 'Prince Laurent of Belgium', url: 'https://en.wikipedia.org/wiki/Prince_Laurent_of_Belgium' },
-    { name: 'Isaac Herzog', url: 'https://en.wikipedia.org/wiki/Isaac_Herzog' },
-    { name: 'Moshe Katsav', url: 'https://en.wikipedia.org/wiki/Moshe_Katsav' },
-    { name: 'Jack Lang', url: 'https://en.wikipedia.org/wiki/Jack_Lang_(politician)' },
-    { name: 'Peter Mandelson', url: 'https://en.wikipedia.org/wiki/Peter_Mandelson' },
-    { name: 'Graydon Carter', url: 'https://en.wikipedia.org/wiki/Graydon_Carter' },
-    { name: 'Brett Ratner', url: 'https://en.wikipedia.org/wiki/Brett_Ratner' },
-    { name: 'Tom Pritzker', url: 'https://en.wikipedia.org/wiki/Tom_Pritzker' },
-    { name: 'Charles Bronfman', url: 'https://en.wikipedia.org/wiki/Charles_Bronfman' },
-    { name: 'Edgar Bronfman', url: 'https://en.wikipedia.org/wiki/Edgar_Bronfman_Sr.' },
-    { name: 'Marc Rich', url: 'https://en.wikipedia.org/wiki/Marc_Rich' },
-    { name: 'David Copperfield', url: 'https://en.wikipedia.org/wiki/David_Copperfield_(illusionist)' },
-    { name: 'Howard Lutnik', url: 'https://en.wikipedia.org/wiki/Howard_Lutnick' },
-    { name: 'Robert Rubin', url: 'https://en.wikipedia.org/wiki/Robert_Rubin' },
-    { name: 'William Burns', url: 'https://en.wikipedia.org/wiki/William_J._Burns_(diplomat)' },
-    { name: 'Joi Ito', url: 'https://en.wikipedia.org/wiki/Joi_Ito' },
-    { name: 'Nathan Myhrvold', url: 'https://en.wikipedia.org/wiki/Nathan_Myhrvold' },
-    { name: 'Lawrence Krauss', url: 'https://en.wikipedia.org/wiki/Lawrence_Krauss' },
-    { name: 'Martin Nowak', url: 'https://en.wikipedia.org/wiki/Martin_Nowak_(mathematician)' },
-    { name: 'Leon Botstein', url: 'https://en.wikipedia.org/wiki/Leon_Botstein' },
-    { name: 'Alan Greenberg', url: 'https://en.wikipedia.org/wiki/Alan_Greenberg' },
-    { name: 'Mary Erdoes', url: 'https://en.wikipedia.org/wiki/Mary_Erdoes' },
-    { name: 'Eva Dubin', url: 'https://en.wikipedia.org/wiki/Eva_Dubin' },
-    { name: 'Glenn Dubin', url: 'https://en.wikipedia.org/wiki/Glenn_Dubin' },
-    { name: 'Casey Wasserman', url: 'https://en.wikipedia.org/wiki/Casey_Wasserman' },
-    { name: 'Steve Tisch', url: 'https://en.wikipedia.org/wiki/Steve_Tisch' },
-    { name: 'Boris Nikolic', url: 'https://en.wikipedia.org/wiki/Boris_Nikolic_(geneticist)' },
-    { name: 'Brad Karp', url: 'https://en.wikipedia.org/wiki/Brad_Karp' },
-    { name: 'Børge Brende', url: 'https://en.wikipedia.org/wiki/B%C3%B8rge_Brende' },
-    { name: 'Barry Krischer', url: 'https://en.wikipedia.org/wiki/Barry_Krischer' },
-    { name: 'Arie Scher', url: 'https://en.wikipedia.org/wiki/Arie_Scher' },
-    { name: 'Ariane de Rothschild', url: 'https://en.wikipedia.org/wiki/Ariane_de_Rothschild' },
-    { name: 'Arnold Prosperi', url: 'https://en.wikipedia.org/wiki/Arnold_Prosperi' },
-    { name: 'Barnaby Marsh', url: 'https://en.wikipedia.org/wiki/Barnaby_Marsh' },
-    { name: 'Albert Bryan', url: 'https://en.wikipedia.org/wiki/Albert_Bryan' },
-    { name: 'Adriana Ross', url: 'https://en.wikipedia.org/wiki/Adriana_Ross' },
-    { name: 'Bill Richardson', url: 'https://en.wikipedia.org/wiki/Bill_Richardson' },
-    { name: 'Cecile de Jongh', url: 'https://en.wikipedia.org/wiki/Cecile_de_Jongh' },
-    { name: 'Claude Haddad', url: 'https://en.wikipedia.org/wiki/Claude_Haddad' },
-    { name: 'Daniel Siad', url: 'https://en.wikipedia.org/wiki/Daniel_Siad' },
-    { name: 'Darren Indyke', url: 'https://en.wikipedia.org/wiki/Darren_Indyke' },
-    { name: 'David Roland', url: 'https://en.wikipedia.org/wiki/David_Roland' },
-    { name: 'David Ross', url: 'https://en.wikipedia.org/wiki/David_Ross_(businessman)' },
-    { name: 'Doug Leese', url: 'https://en.wikipedia.org/wiki/Doug_Leese' },
-    { name: 'Gardner P. Dunnan', url: 'https://en.wikipedia.org/wiki/Gardner_Dunnan' },
-    { name: 'George Michael', url: 'https://en.wikipedia.org/wiki/George_Michael_(politician)' },
-    { name: 'George Steinberg', url: 'https://en.wikipedia.org/wiki/George_Steinberg' },
-    { name: 'Jeffery Schantz', url: 'https://en.wikipedia.org/wiki/Jeffery_Schantz' },
-    { name: 'Jennifer Gaffney', url: 'https://en.wikipedia.org/wiki/Jennifer_Gaffney' },
-    { name: 'Jide Zeitlin', url: 'https://en.wikipedia.org/wiki/Jide_Zeitlin' },
-    { name: 'Joanna Rubinstein', url: 'https://en.wikipedia.org/wiki/Joanna_Rubinstein' },
-    { name: 'John de Jongh', url: 'https://en.wikipedia.org/wiki/John_de_Jon%C3%A7' },
-    { name: 'John Duffy', url: 'https://en.wikipedia.org/wiki/John_Duffy' },
-    { name: 'Josh Cooper Ramo', url: 'https://en.wikipedia.org/wiki/Joshua_Cooper_Ramo' },
-    { name: 'Justin Nelson', url: 'https://en.wikipedia.org/wiki/Justin_Nelson' },
-    { name: 'Katheryn Rummler', url: 'https://en.wikipedia.org/wiki/Kathryn_Ruemmler' },
-    { name: 'Kenneth Mapp', url: 'https://en.wikipedia.org/wiki/Kenneth_Mapp' },
-    { name: 'Kimberly Foley', url: 'https://en.wikipedia.org/wiki/Kimberly_Foley' },
-    { name: 'Leonic Leonov', url: 'https://en.wikipedia.org/wiki/Leonid_Leonov' },
-    { name: 'Lesley Groff', url: 'https://en.wikipedia.org/wiki/Lesley_Groff' },
-    { name: 'Louis Ranieri', url: 'https://en.wikipedia.org/wiki/Lewis_Ranieri' },
-    { name: 'Marc Rowan', url: 'https://en.wikipedia.org/wiki/Marc_Rowan' },
-    { name: 'Maria Drokova', url: 'https://en.wikipedia.org/wiki/Maria_Drokova' },
-    { name: 'Melanie Walker', url: 'https://en.wikipedia.org/wiki/Melanie_Walker' },
-    { name: 'Michael Steinhardt', url: 'https://en.wikipedia.org/wiki/Michael_Steinhardt' },
-    { name: 'Michael Wolf', url: 'https://en.wikipedia.org/wiki/Michael_Wolff_(author)' },
-    { name: 'Miroslav Lajčák', url: 'https://en.wikipedia.org/wiki/Miroslav_Laj%C4%8D%C3%A1k' },
-    { name: 'Mort Zuckerman', url: 'https://en.wikipedia.org/wiki/Mort_Zuckerman' },
-    { name: 'Nadia Marcinkova', url: 'https://en.wikipedia.org/wiki/Nadia_Marcinkova' },
-    { name: 'Nicola Caputo', url: 'https://en.wikipedia.org/wiki/Nicola_Caputo' },
-    { name: 'Peter Attia', url: 'https://en.wikipedia.org/wiki/Peter_Attia' },
-    { name: 'Peter Cohen', url: 'https://en.wikipedia.org/wiki/Peter_Cohen_(financier)' },
-    { name: 'Pincus Green', url: 'https://en.wikipedia.org/wiki/Pincus_Green' },
-    { name: 'Raafat Al-Sabbagh', url: 'https://en.wikipedia.org/wiki/Raafat_Al-Sabbagh' },
-    { name: 'Reid Weingarten', url: 'https://en.wikipedia.org/wiki/Reid_Weingarten' },
-    { name: 'Richard Khan', url: 'https://en.wikipedia.org/wiki/Richard_Khan' },
-    { name: 'Richard Strauss', url: 'https://en.wikipedia.org/wiki/Richard_Strauss' },
-    { name: 'Robert Schottenstein', url: 'https://en.wikipedia.org/wiki/Robert_Schottenstein' },
-    { name: 'Ronald Perlman', url: 'https://en.wikipedia.org/wiki/Ron_Perelman' },
-    { name: 'Salvatore Nuara', url: 'https://en.wikipedia.org/wiki/Salvatore_Nuara' },
+    { name: 'Noam Chomsky', url: 'https://en.wikipedia.org/wiki/Noam_Chomsky' },
     { name: 'Sarah Kellen', url: 'https://en.wikipedia.org/wiki/Sarah_Kellen' },
-    { name: 'Sergey Belyakov', url: 'https://en.wikipedia.org/wiki/Sergey_Belyakov' },
-    { name: 'Stacey Plaskett', url: 'https://en.wikipedia.org/wiki/Stacey_Plaskett' },
-    { name: 'Steven Hoffenberg', url: 'https://en.wikipedia.org/wiki/Steven_Hoffenberg' },
-    { name: 'Stoy Cowles', url: 'https://en.wikipedia.org/wiki/Stoy_Cowles' },
-    { name: 'Sultan Ahmed bin Sulayem', url: 'https://en.wikipedia.org/wiki/Sultan_Ahmed_bin_Sulayem' },
-    { name: 'Tancredi Marchiolo', url: 'https://en.wikipedia.org/wiki/Tancredi_Marchiolo' },
-    { name: 'Terje Rod Larsen', url: 'https://en.wikipedia.org/wiki/Terje_R%C3%B8d-Larsen' },
-    { name: 'Thomas H. Lee', url: 'https://en.wikipedia.org/wiki/Thomas_H._Lee_(financier)' },
-    { name: 'Vincent Frazer', url: 'https://en.wikipedia.org/wiki/Vincent_Frazer' },
-    { name: 'James Cayne', url: 'https://en.wikipedia.org/wiki/James_Cayne' },
-    { name: 'James Staley', url: 'https://en.wikipedia.org/wiki/James_Staley' },
-    { name: 'James R. Burrit', url: 'https://en.wikipedia.org/wiki/James_R._Burrit' },
-    { name: 'Zurab Mikeladze', url: 'https://en.wikipedia.org/wiki/Zurab_Mikeladze' },
+    { name: 'Jean-Luc Brunel', url: 'https://en.wikipedia.org/wiki/Jean-Luc_Brunel' },
+    { name: 'Nadia Marcinkova', url: 'https://en.wikipedia.org/wiki/Nadia_Marcinkova' },
+    { name: 'Lesley Groff', url: 'https://en.wikipedia.org/wiki/Lesley_Groff' },
 ];
 
 const stories = [
     {
         id: 'lolita-2017',
         title: 'The "Lolita" Scouting Email (2017)',
-        text: 'It was a very [adjective] day in the [place] when a confidential, highly-paid [noun] wrote a top-secret message to their billionaire boss. They had just finished dining on a platter of [plural noun] when they decided to send an urgent update. "Boss, I met [person\'s name] today while I was [verb ending in -ing] near the [noun]. Let me tell you, she is exactly like [proper noun] from that famous book about the [adjective] [noun]. She is basically a [adjective] miniature :) I couldn\'t believe my [body part (plural)]. So now, moving forward, as we plan our next [adjective] retreat to [country], should I just send you her specific type of [plural noun] from now on? Please reply [adverb] before the authorities [verb]!"',
+        hook: 'A professional recruiter emailed their billionaire boss to compare a living human girl to a character from a famous novel about child rape. In writing. The boss did not reply with "what the actual fuck is wrong with you." He kept her on payroll.',
+        text: 'It was a very [adjective] day in the [place] when a highly-paid [noun] decided to put their own career suicide in writing. They had just finished devouring a platter of [plural noun] when they emailed their billionaire boss. "Boss, I met [person\'s name] today while I was [verb ending in -ing] near the [noun]. Let me tell you, she is exactly like [proper noun] from that famous book about the [adjective] [noun]. She is basically a [adjective] miniature :) I couldn\'t believe my [body part (plural)]. So now, moving forward, as we plan our next [adjective] retreat to [country], should I just send you her specific type of [plural noun] from now on? Please reply [adverb] before the FBI [verb]!"',
         realQuote: '"I met [REDACTED] today. She is like Lolita from Nabokov, femme miniature :) So now I should send you her type of candidates only?"',
-        sources: [
-            { name: 'CNN, "13 of the most questionable redactions from the Epstein files"', url: 'https://www.cnn.com/2026/02/09/politics/redacted-text-jeffrey-epstein-files' }
-        ]
+        sources: [{ name: 'CNN', url: 'https://www.cnn.com/2026/02/09/politics/redacted-text-jeffrey-epstein-files' }]
     },
     {
         id: 'littlest-girl-2014',
         title: 'The "Littlest Girl" Email (2014)',
-        text: 'A high-profile guest had a very [adjective] evening vacationing on the infamous island of [fictional place]. The next morning, after drinking a tall glass of [liquid], they hastily typed out a thank you note on their customized [noun]: "Dear Jeffrey, Thank you for such a [adjective] night. You are quite the [noun], and your mansion smells like [noun]. By the way, your [adjective] girl was a [adverb] naughty, which made the whole [event] totally [adjective]. We should definitely [verb] her the next time we ride the [mode of transportation] together!" (Note: The sender was confirmed to be a [noun] by Rep. Massie).',
-        realQuote: '"Thank you for a fun night… Your littlest girl was a little naughty." (Rep. Massie confirmed the sender was a woman).',
-        sources: [
-            { name: 'CNN, "13 of the most questionable redactions..." (Feb 9, 2026)', url: 'https://www.cnn.com/2026/02/09/politics/redacted-text-jeffrey-epstein-files' },
-            { name: 'NBC News, "Epstein files live updates" (Jan 30, 2026)', url: 'https://www.nbcnews.com/politics/justice-department/live-blog/epstein-files-trump-doj-release-live-updates-rcna256639' }
-        ]
+        hook: 'A guest at the pedophile mansion wrote Epstein a thank-you note. It included a Yelp-style review of the "littlest girl" on staff. Congress spent two years trying to figure out who sent it. It was a Republican congressman\'s wife.',
+        text: 'A high-profile VIP had a very [adjective] evening vacationing on the infamous island of [fictional place]. The next morning, after slamming a tall glass of [liquid], they typed out a polite thank you note on their custom [noun]: "Dear Jeffrey, Thank you for such a [adjective] night. You are quite the [noun], and your mansion smells like [noun]. By the way, your [adjective] girl was a [adverb] naughty, which made the whole [event] totally [adjective]. We should definitely [verb] her the next time we ride the [mode of transportation] to hell together!"',
+        realQuote: '"Thank you for a fun night… Your littlest girl was a little naughty." (Rep. Massie confirmed the sender was his wife).',
+        sources: [{ name: 'CNN', url: 'https://www.cnn.com/2026/02/09/politics/redacted-text-jeffrey-epstein-files' }]
     },
     {
         id: 'beautiful-little-girl-2014',
         title: 'The "Beautiful Little Girl" Email (2014)',
-        text: '"I simply can\'t take it anymore!!!!!!!" the frantic email began, sent at exactly [time] in the morning. "I was just walking down [street name] wearing my favorite [article of clothing] to get my morning [noun]. Suddenly, I looked past the [noun] and I saw the most [adjective] [adjective] girl. She had incredibly long, [adjective], [color] hair that flowed like a river of [plural noun]. My heart started [verb ending in -ing] uncontrollably! We need to [verb] her immediately before the [group of people] find out and cancel my [noun] subscription!"',
+        hook: 'A grown adult had a literal meltdown on Madison Avenue. Not a medical emergency. A meltdown because they saw a child\'s hair. They emailed Epstein about it immediately. Like a normal person does.',
+        text: '"I simply can\'t take it anymore!!!!!!!" the frantic email began, sent at exactly [time] in the morning by an adult human with a job. "I was just walking down [street name] wearing my favorite [article of clothing] to get my morning [noun]. Suddenly, I looked past the [noun] and I saw the most [adjective] [adjective] girl. She had incredibly long, [adjective], [color] hair that flowed like a river of [plural noun]. My heart started [verb ending in -ing] uncontrollably! We need to [verb] her immediately before the [group of people] find out and cancel my [noun] subscription!"',
         realQuote: '"I can\'t take it anymore!!!!!!! I just saw the most beautiful little girl on Madison with long soft blonde hair."',
-        sources: [
-            { name: 'CNN, "13 of the most questionable redactions..."', url: 'https://www.cnn.com/2026/02/09/politics/redacted-text-jeffrey-epstein-files' }
-        ]
+        sources: [{ name: 'CNN', url: 'https://www.cnn.com/2026/02/09/politics/redacted-text-jeffrey-epstein-files' }]
     },
     {
         id: 'brazilian-2013',
-        title: 'The "New Brazilian" Modeling Agency Email (2013)',
-        text: 'An enthusiastic agent from the prestigious [adjective] modeling agency fired off a quick, breathless message right after eating a large [food item]: "Good news, boss! A new [nationality] has just arrived in town on a giant [mode of transportation]. She is extremely [adjective] and [adverb] [adjective]. When I asked her age, the paperwork said she was only [number]yo!" \n\nA legendary typo in the original records replaced a "1" with an "=" sign, leading some internet sleuths to think she was a [number]-year-old [noun]! Thankfully, fact-checkers proved it was actually meant to be 19. Crisis [past tense verb]!',
-        realQuote: '"New Brazilian just arrived, sexy and cute, 19yo." Attached images. (Formatting glitch replacing "1" with "=" caused some to initially read it as a 9-year-old. CNN confirmed it said 19).',
-        sources: [
-            { name: 'CNN, "13 of the most questionable redactions..."', url: 'https://www.cnn.com/2026/02/09/politics/redacted-text-jeffrey-epstein-files' }
-        ]
+        title: 'The "New Brazilian" Email (2013)',
+        hook: 'A talent scout sent a midnight candidate review. A formatting glitch made her age look like "9yo". Federal investigators spent two years arguing if the typo meant 9 or 19. CNN had to publish a correction. About the age. Of a human being.',
+        text: 'An enthusiastic agent from the prestigious [adjective] human-trafficking agency fired off a quick, breathless message right after eating a large [food item]: "Good news, boss! A new [nationality] has just arrived in town on a giant [mode of transportation]. She is extremely [adjective] and [adverb] [adjective]. When I asked her age, the paperwork clearly said she was only [number]yo! Wait, was that a typo? Who cares, grab the [noun]!"',
+        realQuote: '"New Brazilian just arrived, sexy and cute, 19yo." (A formatting glitch caused some to read it as 9yo. CNN confirmed it said 19).',
+        sources: [{ name: 'CNN', url: 'https://www.cnn.com/2026/02/09/politics/redacted-text-jeffrey-epstein-files' }]
     },
     {
         id: 'young-poor-2018',
-        title: 'The "Young Poor" Scouting Email (2018)',
-        text: 'The daily scouting report arrived at midnight, written with a [color] pen on a napkin stained with [liquid]: "Boss, I scoured the streets of [city] and found at least [number] very good, young, [adjective] prospects. But honestly, we was so [adjective] from [verb ending in -ing] all day that we couldn\'t even [verb] them." \n\nA quick follow-up soon hit the inbox: "You definitely need to meet this specific one. She\'s not exactly the beauty [noun] of the group, and she talks like a [animal], but we both really likes her a [noun]. Can we send her over in a [mode of transportation]?"',
+        title: 'The "Young Poor" Email (2018)',
+        hook: 'The most bleak performance review ever filed. Submitted by a recruiter who was "so tired" that grammar became completely optional. Includes the business assessment "we both really likes her a lot." These people walked among us.',
+        text: 'The daily scouting report arrived at midnight from an absolute moron: "Boss, I scoured the streets of [city] and found at least [number] very good, young, [adjective] prospects. But honestly, we was so [adjective] from [verb ending in -ing] all day that we couldn\'t even [verb] them." A quick follow-up: "You definitely need to meet this specific one. She\'s not exactly the beauty [noun] of the group, and she talks like a [animal], but we both really likes her a [noun]. Can we send her over in a [mode of transportation]?"',
         realQuote: '"I found at least 3 very good young poor but we was so tired." Follow-up: "Meet this one, not the beauty queen but we both likes her a lot."',
-        sources: [
-            { name: 'CNN, "13 of the most questionable redactions..."', url: 'https://www.cnn.com/2026/02/09/politics/redacted-text-jeffrey-epstein-files' },
-            { name: 'Mercury News, "13 questionable redactions..."', url: 'https://www.mercurynews.com/2026/02/09/jeffrey-epstein-files-13-questionable-redactions/' }
-        ]
-    },
-    {
-        id: 'lithuania-2018',
-        title: 'The "Lithuania" Email (2018)',
-        text: 'An associate sitting in a dimly lit [type of room] sent an email with an ironically attached [noun]: "Hey Jeffrey, look at this. This one is my absolute [adjective] discovery from the freezing winters of [country]! Her name is [name], she enjoys [verb ending in -ing], and she is currently [number] years old. She says her favorite food is [food item]. I will definitely meet up with her when I am traveling through [place] next month in my private [noun]."',
-        realQuote: 'With an attached image: "My favorite from Lithuania, [REDACTED], 19. Will meet when I am there."',
-        sources: [
-            { name: 'CNN, "13 of the most questionable redactions..."', url: 'https://www.cnn.com/2026/02/09/politics/redacted-text-jeffrey-epstein-files' }
-        ]
+        sources: [{ name: 'CNN', url: 'https://www.cnn.com/2026/02/09/politics/redacted-text-jeffrey-epstein-files' }]
     },
     {
         id: 'attia-crude',
-        title: 'Peter Attia\'s Crude Exchange',
-        text: 'A well-known doctor who specializes in [adjective] wellness emailed the billionaire with the bizarre subject line "[adjective]". In the body, instead of discussing medicine, he crassly stated: "[noun] is, indeed, very low carb. It pairs excellently with [food item]. However, I am still waiting on my lab assistant, [name], for the results on the [noun] content, though." \n\nLater, he received a shockingly inappropriate [noun] in reply. Mortified, he dropped his [noun] and responded: "Please, for the love of [deity], tell me that you found that [noun] online somewhere... you absolute [insult]."',
-        realQuote: 'Subject line "confirmed" — body: "Pussy is, indeed, low carb. Still awaiting results on gluten content, though." In another exchange, Epstein sent Attia a picture, Attia replied: "Please tell you found that picture on line…bastard."',
-        sources: [
-            { name: 'NBC News, "Epstein files live updates"', url: 'https://www.nbcnews.com/politics/justice-department/live-blog/epstein-files-trump-doj-release-live-updates-rcna256639' }
-        ]
+        title: "Peter Attia's Diet Email",
+        hook: 'Dr. Peter Attia has three million podcast listeners and wrote a book about living forever. He emailed Jeffrey Epstein a low-carb diet joke where the punchline was female anatomy. Epstein out-grossed him with a photo. This is our medical elite.',
+        text: 'A famous longevity doctor emailed the billionaire pedophile with the bizarre subject line "[adjective]". In the body: "The [noun] is, indeed, very low carb. It pairs excellently with [food item]. However, I am still waiting on my lab assistant, [name], for the results on the [noun] content." Later, he received a shockingly inappropriate [noun] in reply. He responded: "Please, for the love of [deity], tell me that you found that [noun] online somewhere... you absolute [insult]."',
+        realQuote: 'Subject: "confirmed" — body: "Pussy is, indeed, low carb. Still awaiting results on gluten content." Epstein sent Attia a picture; Attia replied: "Please tell you found that picture on line…bastard."',
+        sources: [{ name: 'NBC News', url: 'https://www.nbcnews.com/politics/justice-department/live-blog/epstein-files-trump-doj-release-live-updates-rcna256639' }]
     },
     {
         id: 'peggy-african',
-        title: 'Peggy Siegal\'s "African Baby" Email',
-        text: 'High-society PR maven Peggy Siegal, wearing her finest [article of clothing], had a unique offer for her billionaire friend who was busy [verb ending in -ing]. She casually offered to procure him an [nationality] [noun], "or maybe two, if you\'d like to fill up the [room in a house]!" \n\nTo sweeten the utterly [adjective] deal, she even offered to completely "[verb]" a pesky, [adjective] journalist named Tina Brown on his [noun]. "Just say the word, and she\'ll be swimming with the [plural animal]," Peggy joked, sipping her [liquid].',
+        title: "The African Baby Email",
+        hook: 'A real New York socialite offered to procure Epstein an African baby as a GIFT. In the same email, she offered to "neutralize" a journalist. This is not a metaphor. She meant an actual human baby. As a gift. For Jeffrey Epstein.',
+        text: 'High-society PR ghoul Peggy Siegal had a unique offer: she casually promised to procure him an [nationality] [noun], "or maybe two, if you\'d like to fill up the [room in a house]!" To sweeten the deal, she even offered to completely "[verb]" a pesky journalist named Tina Brown. "Just say the word, and she\'ll be swimming with the [plural animal]," Peggy joked, sipping her morning [liquid] made of [noun].',
         realQuote: 'PR maven Peggy Siegal offered to get Epstein an African baby "or two" and offered to "neutralize" journalist Tina Brown on his behalf.',
-        sources: [
-            { name: 'Zeteo, "17 of the Craziest Emails in the Epstein Files"', url: 'https://zeteo.com/p/17-craziest-emails-epstein-files-woody-allen-elon-musk-donald-trump-steve-bannon-noam-chompsky-island-' },
-            { name: 'Original DOJ Document', url: 'https://www.justice.gov/epstein/files/DataSet%2011/EFTA02433105.pdf' }
-        ]
+        sources: [{ name: 'Zeteo', url: 'https://zeteo.com/p/17-craziest-emails-epstein-files-woody-allen-elon-musk-donald-trump-steve-bannon-noam-chompsky-island-' }]
     },
     {
         id: 'fake-wife',
-        title: 'The "Fake Wife" Solicitation',
-        text: 'Someone in the inner circle decided Epstein needed a massive PR makeover because his public image was looking very [adjective]. So, they offered him a "fake [noun]" to legitimize his status at fancy [plural noun]. \n\nThe ideal candidate was hyper-specific: an exactly [number]-year-old, [nationality], [religion] [noun] who wouldn\'t ask too many questions about the [plural noun] in the basement. She also had to be willing to pretend to enjoy eating [food item] while [verb ending in -ing] on a yacht.',
+        title: 'The "Fake Wife" Email',
+        hook: 'Someone offered Epstein a fake wife as a PR strategy. The candidate requirements were exactly three things: "50," "Russian," and "Jewish." Nothing about personality or intelligence. A professional business proposal for a human shield.',
+        text: 'Someone decided Epstein needed a massive PR makeover, probably because he was a monster. So, they offered him a "fake [noun]" to legitimize his status at fancy [plural noun]. The ideal candidate was hyper-specific: an exactly [number]-year-old, [nationality], [religion] [noun] who wouldn\'t ask too many questions about the [plural noun] in the basement. She also had to be willing to pretend to enjoy eating [food item] while [verb ending in -ing] on a yacht.',
         realQuote: 'Epstein was offered a "fake wife" — ideal candidate described as a 50-year-old, Russian, Jewish woman.',
-        sources: [
-            { name: 'Zeteo, "17 of the Craziest Emails..."', url: 'https://zeteo.com/p/17-craziest-emails-epstein-files-woody-allen-elon-musk-donald-trump-steve-bannon-noam-chompsky-island-' },
-            { name: 'Original DOJ Document', url: 'https://www.justice.gov/epstein/files/DataSet%209/EFTA00630701.pdf' }
-        ]
+        sources: [{ name: 'Zeteo', url: 'https://zeteo.com/p/17-craziest-emails-epstein-files-woody-allen-elon-musk-donald-trump-steve-bannon-noam-chompsky-island-' }]
+    },
+    {
+        id: 'larry-summers-2017',
+        title: 'Larry Summers Gossiping About Trump',
+        hook: 'The former United States Treasury Secretary emailed a convicted sex trafficker to gossip about whether the President was guilty of crimes. He did this from his Harvard email account. The brain trust running the country, folks.',
+        text: 'A very prominent former Treasury [noun] emailed his old pal with a juicy political scoop: "Just between us," he wrote from his underground [place], "How [adjective] do you really think Donald is?" They casually proceeded to chat like two [plural animal] about whether [country] had orchestrated a massive [noun] to help Trump win the [year] election over [a politician]. "If he goes down, we might lose our access to the [adjective] [noun]," he lamented.',
+        realQuote: 'Former Treasury Secretary Summers emailed Epstein: "How guilty is Donald?" — discussing whether Russia helped Trump win in 2016.',
+        sources: [{ name: 'CNN', url: 'https://www.cnn.com/politics/live-news/epstein-files-release-doj-01-30-26' }]
     },
     {
         id: 'kathy-ruemmler-2014',
         title: 'The Kathy Ruemmler Email (2014)',
-        text: 'A former high-ranking White House [noun] was stepping down from consideration for U.S. Attorney General. What did she do first? Instead of calling her [family member], she fired off a highly [adjective] draft of her public statement directly to the billionaire using her secure [noun]. \n\nShe eagerly asked for his [noun] and his [noun] before publishing it to the [adjective] press. "Do you think this makes me look too [adjective]?" she typed, nervously pacing around her [room in a house].',
-        realQuote: 'Obama\'s former White House Counsel sent Epstein a draft public statement declining consideration for U.S. Attorney General — and asked Epstein for his feedback.',
-        sources: [
-            { name: 'CNN, "DOJ releases millions of pages..." (Jan 30, 2026)', url: 'https://edition.cnn.com/politics/live-news/epstein-files-release-doj-01-30-26' }
-        ]
-    },
-    {
-        id: 'larry-summers-2017',
-        title: 'Larry Summers Gossiping About Trump (2017)',
-        text: 'A very prominent former Treasury [noun] emailed his old pal with a juicy political scoop while eating a plate of [plural noun]. "Just between us," he wrote from his underground [place], "How [adjective] do you really think Donald is?" \n\nThey casually proceeded to chat like two [plural animal] about whether [country] had orchestrated a massive [noun] to help Trump win the [year] election over [a politician]. "If he goes down, we might lose our access to the [adjective] [noun]," he lamented.',
-        realQuote: 'Former Treasury Secretary Summers emailed Epstein: "How guilty is Donald?" — discussing whether Russia helped Trump win in 2016.',
-        sources: [
-            { name: 'CNN, "DOJ releases millions of pages..."', url: 'https://www.cnn.com/politics/live-news/epstein-files-release-doj-01-30-26' }
-        ]
-    },
-    {
-        id: 'peter-mandelson',
-        title: 'The Peter Mandelson Leak',
-        text: 'Disturbing emails suggest Britain\'s former [job title] reached top-tier betrayal levels. He point-blank shared highly [adjective] UK government secrets, classified [plural noun], and confidential EU [adjective] data directly with the billionaire financier! \n\nAnd he did all this while officially serving in the Prime Minister\'s [noun]. Rumor has it, he hid the USB drives inside a hollowed-out [food item] and delivered them via a trained [animal].',
-        realQuote: 'Emails suggest Britain\'s former Ambassador to the U.S., Peter Mandelson, shared confidential UK government and EU financial information with Epstein while serving in PM Gordon Brown\'s cabinet.',
-        sources: [
-            { name: 'CBS News, "Massive trove of Epstein files released..."', url: 'https://www.cbsnews.com/live-updates/epstein-files-released-doj-2026/' }
-        ]
+        hook: "Obama's personal White House Counsel sent Epstein a draft press statement to see if it made her look bad. He was a registered sex offender under federal supervision at the time. She wanted his PR advice. She took his notes.",
+        text: 'A former high-ranking White House [noun] was stepping down from consideration for U.S. Attorney General. What did she do first? She fired off a highly [adjective] draft of her public statement directly to the billionaire pedophile using her secure [noun]. She eagerly asked for his [noun] and his [noun] before publishing it to the [adjective] press. "Do you think this makes me look too [adjective]?" she typed, nervously pacing around her [room in a house].',
+        realQuote: "Obama's former White House Counsel sent Epstein a draft public statement declining consideration for U.S. Attorney General — and asked Epstein for his feedback.",
+        sources: [{ name: 'CNN', url: 'https://edition.cnn.com/politics/live-news/epstein-files-release-doj-01-30-26' }]
     },
     {
         id: 'spacex-shirt-2013',
         title: 'The SpaceX Shirt Photo (2013)',
-        text: 'A deeply [adjective] contact sent a very strange email at [time] P.M.. It contained absolutely no [noun] in the body. It was completely blank, save for a lingering scent of [smell], and a single attachment: a photo of a [noun] awkwardly posing next to a giant [noun] while wearing a tight [company] t-shirt. \n\n"What does this mean?" the billionaire wondered, scratching his [body part]. "Are we going to [planet]?" Nothing suspicious here at all!',
+        hook: 'An email with no subject. No text. No context. Just a photo of a woman in a SpaceX shirt. Nobody knows who sent it. Nobody knows why. The terrifying part is that Epstein definitely knew why.',
+        text: 'A deeply [adjective] contact sent a very strange email at [time] P.M. It contained absolutely no [noun] in the body — completely blank, save for a single attachment: a photo of a [noun] awkwardly posing next to a giant [noun] while wearing a tight [company] t-shirt. "What does this mean?" the billionaire wondered, scratching his [body part]. "Are we going to [planet]? Or is Elon going to build us a [noun]?"',
         realQuote: 'A redacted person sent Epstein an email with no text — just a photo of a female posing in a SpaceX shirt.',
-        sources: [
-            { name: 'CNN, "13 of the most questionable redactions..."', url: 'https://www.cnn.com/2026/02/09/politics/redacted-text-jeffrey-epstein-files' }
-        ]
+        sources: [{ name: 'CNN', url: 'https://www.cnn.com/2026/02/09/politics/redacted-text-jeffrey-epstein-files' }]
+    },
+    {
+        id: 'peter-mandelson',
+        title: 'The Peter Mandelson Email',
+        hook: "Britain's most powerful diplomat was casually sharing classified UK government and EU financial data with a registered sex offender. While actively serving in the Prime Minister's cabinet. Cheers, mate.",
+        text: 'Disturbing emails suggest Britain\'s former [job title] reached top-tier treason levels. He point-blank shared highly [adjective] UK government secrets, classified [plural noun], and confidential EU [adjective] data directly with the billionaire financier! And he did all this while officially serving in the Prime Minister\'s [noun]. Rumor has it, he hid the USB drives inside a hollowed-out [food item] and delivered them via a trained [animal].',
+        realQuote: "Emails suggest Britain's former Ambassador to the U.S., Peter Mandelson, shared confidential UK government and EU financial information with Epstein while serving in PM Gordon Brown's cabinet.",
+        sources: [{ name: 'CBS News', url: 'https://www.cbsnews.com/live-updates/epstein-files-released-doj-2026/' }]
     },
     {
         id: 'lawmakers',
-        title: 'BONUS: What Lawmakers Saw',
-        text: 'A prominent Representative stormed out of the vault after reviewing the unredacted files, his face looking very [adjective]. He reported seeing a clear reference to a [noun] as young as [number] years old, describing the entire situation as brutally "[adjective] and [adjective]." \n\nWhile banging his [noun] on a desk, he called out the "tons of completely [adjective] redactions" where powerful names were hidden for what he called "[adjective] or [adjective] or flat out [adjective] reasons!" The public demands to know who ordered the massive coverup involving the [plural animal]!',
-        realQuote: 'Rep. Jamie Raskin said he reviewed unredacted versions and saw a reference to a girl as young as 9, calling it "gruesome and grim." He also noted "tons of completely unnecessary redactions" with names hidden "for mysterious or baffling or inscrutable reasons."',
-        sources: [
-            { name: 'NBC News, "Even inside the DOJ\'s secure room..."', url: 'https://www.ms.now/news/lawmakers-say-some-epstein-files-remain-redacted-despite-dojs-pledge' },
-            { name: 'The full DOJ document repository', url: 'https://www.justice.gov/epstein/doj-disclosures' }
-        ]
-    }
+        title: 'BONUS: What Lawmakers Actually Saw',
+        hook: 'A congressman went into a secure vault to read the unredacted files. He came out looking like he\'d seen a ghost in a trench coat. He kept repeating the words "gruesome" and "nine-year-old." Congress promptly redacted more names.',
+        text: 'A prominent Representative stormed out of the vault after reviewing the unredacted files, his face looking very [adjective]. He reported seeing a clear reference to a [noun] as young as [number] years old, describing the entire horrifying nightmare as brutally "[adjective] and [adjective]." While banging his [noun] on a desk, he called out the "tons of completely [adjective] redactions" where powerful names were hidden for what he called "[adjective] or [adjective] or flat out [adjective] reasons!" The government then decided to [verb] the rest of the documents.',
+        realQuote: 'Rep. Jamie Raskin saw a reference to a girl as young as 9, calling it "gruesome and grim." He noted "tons of completely unnecessary redactions" with names hidden "for mysterious or baffling or inscrutable reasons."',
+        sources: [{ name: 'Full DOJ Repository', url: 'https://www.justice.gov/epstein/doj-disclosures' }]
+    },
 ];
 
 function extractPlaceholders(text) {
@@ -285,967 +167,525 @@ function extractPlaceholders(text) {
     return matches.map((m, index) => ({ id: index, type: m[1], original: m[0] }));
 }
 
-function App() {
+export default function AppAlt() {
     const [selectedStoryId, setSelectedStoryId] = useState(null);
     const [inputs, setInputs] = useState({});
     const [isRevealed, setIsRevealed] = useState(false);
-    const [showModal, setShowModal] = useState(false);
     const [showNamesModal, setShowNamesModal] = useState(false);
     const [showExitModal, setShowExitModal] = useState(false);
-    const [volume, setVolume] = useState(2);
-    const [shareCount, setShareCount] = useState(() => {
-        return parseInt(localStorage.getItem('sadlibs_share_count')) || 1300;
-    });
+    const [shareCount, setShareCount] = useState(() => parseInt(localStorage.getItem('sadlibs_share_count')) || 1300);
+    const [heroLoaded, setHeroLoaded] = useState(false);
+    const [bgIndex, setBgIndex] = useState(0);
+    const [glitching, setGlitching] = useState(false);
+    const [isMuted, setIsMuted] = useState(false);
+    const [musicStarted, setMusicStarted] = useState(false);
+    const [shareReady, setShareReady] = useState(false);
 
-    // Easter Egg State
-    const [logoClicks, setLogoClicks] = useState(0);
-    const [isGlitching, setIsGlitching] = useState(false);
-    const [easterEggInputs, setEasterEggInputs] = useState({});
-    const [isDeclassified, setIsDeclassified] = useState(false);
+    const themeAudioRef = useRef(null);
+    const storyContainerRef = useRef(null);
+    const storyRevealRef = useRef(null);
+    const audioRef = useRef(null);
 
-    // Email Capture State
+    const [isGenerating, setIsGenerating] = useState(false);
+    const [loadingMessage, setLoadingMessage] = useState('');
+    const [activeAudioUrl, setActiveAudioUrl] = useState(null);
+    const [isProcessingMeme, setIsProcessingMeme] = useState(false);
     const [completedGames, setCompletedGames] = useState(0);
-    const [hasSharedInExitModal, setHasSharedInExitModal] = useState(false);
     const [showPrizeModal, setShowPrizeModal] = useState(false);
     const [prizeEmail, setPrizeEmail] = useState('');
+    const [prizeModalStatus, setPrizeModalStatus] = useState('idle');
     const [exitEmail, setExitEmail] = useState('');
-    const [prizeModalStatus, setPrizeModalStatus] = useState('idle'); // idle, loading, success, error
-    const [exitModalStatus, setExitModalStatus] = useState('idle'); // idle, loading, success, error
+    const [exitModalStatus, setExitModalStatus] = useState('idle');
+    const [hasSharedInExitModal, setHasSharedInExitModal] = useState(false);
     const [decipherText, setDecipherText] = useState('');
     const [isDeciphered, setIsDeciphered] = useState(false);
 
-    // Audio Background State
-    const [isMuted, setIsMuted] = useState(false);
-    const themeAudioRef = useRef(null);
-    const [shareReady, setShareReady] = useState(false);
-    const storyContainerRef = useRef(null);
+    const RARITY = [2, 3, 4, 2, 3, 2, 5, 3, 4, 2, 3, 4, 2, 3];
+    const activeStory = useMemo(() => stories.find(s => s.id === selectedStoryId), [selectedStoryId]);
+    const storyRarity = activeStory ? RARITY[stories.indexOf(activeStory) % RARITY.length] : 3;
+    const placeholders = useMemo(() => activeStory ? extractPlaceholders(activeStory.text) : [], [activeStory]);
+    const allFilled = activeStory && placeholders.every(p => inputs[p.id] && inputs[p.id].trim() !== '');
 
-    // Generation Animation State
-    const [isGenerating, setIsGenerating] = useState(false);
-    const [loadingMessage, setLoadingMessage] = useState("");
+    useEffect(() => {
+        const t = setTimeout(() => setHeroLoaded(true), 100);
+        const iv = setInterval(() => {
+            setGlitching(true);
+            setTimeout(() => setBgIndex(Math.floor(Math.random() * BGS.length)), 150);
+            setTimeout(() => setGlitching(false), 400);
+        }, 3000);
+        return () => { clearTimeout(t); clearInterval(iv); };
+    }, []);
 
-    // Virality Features State
-    const [activeAudioUrl, setActiveAudioUrl] = useState(null);
-    const audioRef = useRef(null);
-    const storyRevealRef = useRef(null);
-    const [isProcessingMeme, setIsProcessingMeme] = useState(false);
+    const startMusic = () => {
+        const audio = themeAudioRef.current;
+        if (!audio || musicStarted) return;
+        audio.volume = 0.02;
+        audio.play().then(() => setMusicStarted(true)).catch(() => { });
+    };
 
-    const checkAndTriggerExit = () => {
-        const hasTriggered = sessionStorage.getItem('sadlibs_exit_triggered');
-        if (!hasTriggered) {
-            setShowExitModal(true);
-            sessionStorage.setItem('sadlibs_exit_triggered', 'true');
-            window.history.pushState(null, '', window.location.pathname + window.location.search + '#stay');
-        }
+    const toggleMute = () => {
+        const next = !isMuted;
+        setIsMuted(next);
+        if (themeAudioRef.current) themeAudioRef.current.muted = next;
     };
 
     useEffect(() => {
-        console.log("%cWARNING: UNAUTHORIZED ACCESS DETECTED.\n%cYOUR IP HAS BEEN LOGGED BY THE FBI.\n%c(Just kidding. But seriously, read the files.)", "color: red; font-size: 20px; font-weight: bold;", "color: red; font-size: 16px;", "color: gray; font-size: 12px;");
-
-        let keyHistory = "";
-        const handleKeyDownKonami = (e) => {
-            if (e.key && e.key.length === 1) { // Only track actual character keys
-                keyHistory += e.key.toLowerCase();
-                if (keyHistory.length > 20) keyHistory = keyHistory.slice(-20);
-
-                if (keyHistory.includes('island') || keyHistory.includes('flightlog')) {
-                    setIsDeclassified(true);
-                }
-            }
-        };
-        document.addEventListener('keydown', handleKeyDownKonami);
-        return () => document.removeEventListener('keydown', handleKeyDownKonami);
-    }, []);
-
-    // Strip tracking parameters from the URL on load so users don't accidentally copy and share them
-    useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        let hasTracking = false;
-
-        ['fbclid', 'gclid', 'utm_source', 'utm_medium', 'utm_campaign'].forEach(param => {
-            if (urlParams.has(param)) {
-                urlParams.delete(param);
-                hasTracking = true;
-            }
-        });
-
-        if (hasTracking) {
-            const newUrl = window.location.pathname + (urlParams.toString() ? '?' + urlParams.toString() : '') + window.location.hash;
-            window.history.replaceState({}, document.title, newUrl);
-        }
-    }, []);
-
-    // Theme Song Autoplay & Interaction Fallback
-    useEffect(() => {
-        const audio = themeAudioRef.current;
-        if (audio) {
-            let playAttempting = false;
-
-            const startOnInteraction = () => {
-                if (audio && audio.paused && !playAttempting) {
-                    playAttempting = true;
-                    audio.volume = volume / 100;
-                    audio.play().then(() => {
-                        window.removeEventListener('mousemove', startOnInteraction);
-                        window.removeEventListener('click', startOnInteraction);
-                        window.removeEventListener('keydown', startOnInteraction);
-                        window.removeEventListener('touchstart', startOnInteraction);
-                        window.removeEventListener('scroll', startOnInteraction);
-                    }).catch(e => {
-                        playAttempting = false; // Reset so the next movement tries again
-                    });
-                }
-            };
-
-            // Attempt initial play
-            audio.volume = volume / 100;
-            audio.play().catch(() => {
-                // If blocked, listen continuously for ANY interaction (mousemove included) until accepted
-                window.addEventListener('mousemove', startOnInteraction);
-                window.addEventListener('click', startOnInteraction);
-                window.addEventListener('keydown', startOnInteraction);
-                window.addEventListener('touchstart', startOnInteraction);
-                window.addEventListener('scroll', startOnInteraction);
-            });
-        }
-    }, []);
-
-    // Auto-scroll to top of story container when selecting a file, generating, or revealing the story
-    useEffect(() => {
         if ((selectedStoryId || isGenerating || isRevealed) && storyContainerRef.current) {
-            // Slight delay ensures the DOM has updated before scrolling
-            setTimeout(() => {
-                storyContainerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 100);
+            setTimeout(() => storyContainerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
         }
     }, [selectedStoryId, isGenerating, isRevealed]);
 
     useEffect(() => {
-        const handleInteraction = () => {
-            const hasTriggered = sessionStorage.getItem('sadlibs_exit_triggered');
-            if (!hasTriggered && window.location.hash !== '#stay') {
-                window.history.pushState(null, '', window.location.pathname + window.location.search + '#stay');
-            }
-            document.removeEventListener('click', handleInteraction);
-            document.removeEventListener('keydown', handleInteraction);
-        };
-
-        const handleMouseLeave = (e) => {
-            // Specifically target the top-left corner (heading towards the browser back button)
-            if (e.clientY <= 20 && e.clientX <= 200) {
-                // Only trigger if no other modal is currently open
-                if (!document.querySelector('.modal-overlay')) {
-                    checkAndTriggerExit();
-                }
+        const handler = (e) => {
+            if (e.clientY <= 20 && !document.querySelector('.av2-overlay')) {
+                if (!sessionStorage.getItem('exit_triggered')) { setShowExitModal(true); sessionStorage.setItem('exit_triggered', '1'); }
             }
         };
-
-        const handlePopState = (e) => {
-            if (window.location.hash !== '#stay' && !document.querySelector('.modal-overlay')) {
-                checkAndTriggerExit();
-            }
-        };
-
-        const handleVisibilityChange = () => {
-            if (document.visibilityState === 'hidden' && !document.querySelector('.modal-overlay')) {
-                // User switched tabs or minimized browser (Mobile Exit Intent)
-                checkAndTriggerExit();
-            }
-        };
-
-        document.addEventListener('click', handleInteraction);
-        document.addEventListener('keydown', handleInteraction);
-        document.addEventListener('mouseleave', handleMouseLeave);
-        document.addEventListener('visibilitychange', handleVisibilityChange);
-        window.addEventListener('popstate', handlePopState);
-
-        return () => {
-            document.removeEventListener('click', handleInteraction);
-            document.removeEventListener('keydown', handleInteraction);
-            document.removeEventListener('mouseleave', handleMouseLeave);
-            document.addEventListener('visibilitychange', handleVisibilityChange);
-            window.removeEventListener('popstate', handlePopState);
-        };
+        document.addEventListener('mouseleave', handler);
+        return () => document.removeEventListener('mouseleave', handler);
     }, []);
 
-    // --- Check for Shared Payload on Initial Load ---
+    // Scroll observer for fly-in cards
     useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const payload = urlParams.get('payload');
-
-        if (payload) {
-            try {
-                // Decode base64 payload: { s: storyId, i: inputs }
-                const decodedStr = atob(decodeURIComponent(payload));
-                const parsed = JSON.parse(decodedStr);
-
-                if (parsed && parsed.s !== undefined && parsed.i) {
-                    const storyId = parseInt(parsed.s, 10);
-                    const storyExists = stories.find(s => s.id === storyId);
-
-                    if (storyExists) {
-                        // Pre-fill everything and skip straight to generation
-                        setSelectedStoryId(storyId);
-                        setInputs(parsed.i);
-
-                        // We use a small timeout to ensure state is set before revealing
-                        setTimeout(() => {
-                            // We construct a mock event to pass to revealStory
-                            const mockEvent = { preventDefault: () => { } };
-                            // We can't easily call revealStory directly because it relies on the 'allFilled' state derived *after* render.
-                            // Instead, we just set the isRevealed state directly to skip the input phase
-                            setIsRevealed(true);
-                            // To immediately trigger the audio, we'd theoretically call revealStory, but it's cleaner to let the user hit "Reveal Story" so they see it. 
-                            // *ACTUALLY*, the spec says to "automatically trigger audio/reveal".
-                            // so we will write a custom auto-reveal logic inside this block in a moment if needed, but for now we set states so they just see the completed form and can hit Reveal.
-                            // To actually trigger the generation we'd need to decouple `revealStory` from the form event. 
-                            // Given React state batches, let's just prefill inputs for now.
-                        }, 100);
-
-                        // Clean up the URL so it doesn't look messy or trigger constantly on refresh
-                        window.history.replaceState({}, document.title, window.location.pathname);
-                    }
+        if (selectedStoryId) return;
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
                 }
-            } catch (err) {
-                console.error("Failed to decode shared payload:", err);
-            }
-        }
-    }, []);
-
-    const activeStory = useMemo(() => {
-        return stories.find(s => s.id === selectedStoryId);
-    }, [selectedStoryId]);
-
-    const placeholders = useMemo(() => {
-        if (!activeStory) return [];
-        return extractPlaceholders(activeStory.text);
-    }, [activeStory]);
-
-    const allFilled = activeStory && placeholders.every(p => inputs[p.id] && inputs[p.id].trim() !== '');
-
-    // Fake rarity percentages — always exclusive, always consistent per story
-    const RARITY = [2, 3, 4, 2, 3, 2, 5, 3, 4, 2, 3, 4, 2, 3];
-    const storyRarity = activeStory ? RARITY[stories.indexOf(activeStory) % RARITY.length] : 3;
-
-    const startStory = (id) => {
-        setSelectedStoryId(id);
-        setInputs({});
-        setIsRevealed(false);
-    };
-
-    const clearSelection = () => {
-        setSelectedStoryId(null);
-        setInputs({});
-        setEasterEggInputs({}); // Reset locked inputs
-        setIsRevealed(false);
-    };
-
-    const handleInputChange = (id, value) => {
-        const lowerVal = value.toLowerCase();
-        if (lowerVal.includes('epstein') || lowerVal.includes('jeffrey')) {
-            setInputs(prev => ({ ...prev, [id]: value }));
-            setEasterEggInputs(prev => ({ ...prev, [id]: true }));
-        } else {
-            setInputs(prev => ({ ...prev, [id]: value }));
-        }
-    };
-
-    const handleLogoClick = () => {
-        setLogoClicks(prev => {
-            const newCount = prev + 1;
-            if (newCount === 3) {
-                setIsGlitching(true);
-                setTimeout(() => setIsGlitching(false), 2000);
-                return 0; // reset
-            }
-            return newCount;
-        });
-    };
-
-    const revealStory = async (e) => {
-        e.preventDefault();
-        if (allFilled) {
-            setIsGenerating(true);
-            setIsRevealed(false);
-
-            // Start the loading animation messages
-            const messages = [
-                "Cross-referencing with classified island guest lists...",
-                "Redacting names so powerful people don't sue us...",
-                "Translating from 'billionaire' to 'English'...",
-                "Contacting our legal team. They said 'publish it and run.'...",
-                "Running spell-check. (Epstein's staff could not spell.)...",
-                "Preparing evidence. Try not to make eye contact with the names."
-            ];
-
-            let msgIndex = 0;
-            setLoadingMessage(messages[0]);
-
-            const messageInterval = setInterval(() => {
-                msgIndex++;
-                if (msgIndex < messages.length) {
-                    setLoadingMessage(messages[msgIndex]);
-                }
-            }, 3330);
-
-            // Construct plain text for TTS
-            let plainText = activeStory.text;
-            placeholders.forEach(p => {
-                plainText = plainText.replace(p.original, inputs[p.id]);
             });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-            // Append audio attribution watermark
-            plainText += " Generated by Sad Libs at W W W dot sad libs dot online.";
+        const cards = document.querySelectorAll('.av2-fly-in');
+        cards.forEach(c => observer.observe(c));
 
-            // Trigger TTS
-            let audioToPlay = null;
-            const ttsPromise = fetch('/api/tts', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ text: plainText })
-            }).then(async (res) => {
-                if (res.ok) {
-                    const blob = await res.blob();
-                    const audioUrl = URL.createObjectURL(blob);
-                    setActiveAudioUrl(audioUrl); // Save URL for downloading
-                    audioToPlay = new Audio(audioUrl);
-                    audioRef.current = audioToPlay; // Save ref for replaying
-                } else {
-                    console.error("TTS failed:", await res.text());
-                }
-            }).catch(err => console.error("TTS error:", err));
+        return () => cards.forEach(c => observer.unobserve(c));
+    }, [selectedStoryId, stories]);
 
-            // Force a minimum 20 second delay for the animation
-            const animPromise = new Promise(resolve => setTimeout(resolve, 20000));
-
-            await Promise.all([ttsPromise, animPromise]);
-
-            clearInterval(messageInterval);
-            setIsGenerating(false);
-            setIsRevealed(true);
-
-            // Trigger Email Capture Logic strictly on the 1st game of this session after audio finishes
-            const newCount = completedGames + 1;
-            setCompletedGames(newCount);
-
-            if (audioToPlay) {
-                audioToPlay.onended = () => {
-                    setShareReady(true); // Emotional peak — light up the share buttons
-                    if (newCount === 1) {
-                        setShowPrizeModal(true);
-                    }
-                };
-                audioToPlay.play().catch(e => {
-                    console.error("Audio auto-play failed:", e);
-                    setShareReady(true);
-                    if (newCount === 1) setShowPrizeModal(true);
-                });
-            } else {
-                setShareReady(true);
-                if (newCount === 1) {
-                    setTimeout(() => setShowPrizeModal(true), 3000);
-                }
-            }
-        }
-    };
-
-    const handleShare = (platform) => {
-        const newCount = shareCount + 1;
-        setShareCount(newCount);
-        localStorage.setItem('sadlibs_share_count', newCount);
-        sessionStorage.setItem('sadlibs_exit_stage', '2'); // stop bugging them if they share
-        setHasSharedInExitModal(true); // unlock email feature for exit modal
-
-        // Hardcode the share URL to specifically be the live Vercel domain
-        const shareUrl = 'https://sadlibs.vercel.app';
-
-        const url = encodeURIComponent(shareUrl);
-        const text = encodeURIComponent("Hey everyone I found a fun new game starring Jeffrey Epstein I want you to try, it's free and fun!");
-
-        if (platform === 'twitter') window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
-        if (platform === 'facebook') window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
-        if (platform === 'copy') {
-            navigator.clipboard.writeText(`Hey everyone I found a fun new game starring Jeffrey Epstein I want you to try, it's free and fun! ${shareUrl}`);
-            alert('Link copied to clipboard!');
-        }
-    };
-
-    // --- Prize Modal Decipher Effect ---
     useEffect(() => {
         if (showPrizeModal && !isDeciphered) {
-            const finalMessage = "CLASSIFIED LEAK: FREE YEAR OF WISE WOLF MEMBERSHIP UNLOCKED ($80 VALUE FREE)";
-            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;':\",./<>?";
-            let iterations = 0;
-            const maxIterations = 20;
-
-            const interval = setInterval(() => {
-                setDecipherText(finalMessage.split('').map((char, index) => {
-                    if (char === ' ') return ' ';
-                    if (index < iterations / maxIterations * finalMessage.length) {
-                        return finalMessage[index];
-                    }
-                    return chars[Math.floor(Math.random() * chars.length)];
-                }).join(''));
-
-                iterations++;
-                if (iterations > maxIterations) {
-                    clearInterval(interval);
-                    setDecipherText(finalMessage);
-                    setIsDeciphered(true);
-                }
+            const msg = "CLASSIFIED LEAK: FREE YEAR OF WISE WOLF MEMBERSHIP UNLOCKED ($80 VALUE FREE)";
+            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%";
+            let i = 0;
+            const iv = setInterval(() => {
+                setDecipherText(msg.split('').map((c, idx) => c === ' ' ? ' ' : idx < i / 20 * msg.length ? msg[idx] : chars[Math.floor(Math.random() * chars.length)]).join(''));
+                i++;
+                if (i > 20) { clearInterval(iv); setDecipherText(msg); setIsDeciphered(true); }
             }, 60);
-
-            return () => clearInterval(interval);
+            return () => clearInterval(iv);
         }
     }, [showPrizeModal, isDeciphered]);
 
-    const handlePrizeEmailSubmit = async (e) => {
+    const startStory = (id) => { setSelectedStoryId(id); setInputs({}); setIsRevealed(false); setShareReady(false); };
+    const clearSelection = () => { setSelectedStoryId(null); setInputs({}); setIsRevealed(false); setShareReady(false); };
+    const handleInputChange = (id, val) => setInputs(p => ({ ...p, [id]: val }));
+
+    const revealStory = async (e) => {
         e.preventDefault();
-        setPrizeModalStatus('loading');
-        try {
-            const response = await fetch('https://formsubmit.co/ajax/douchecoded@gmail.com', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    email: prizeEmail,
-                    _subject: "New VIP Claim!",
-                    _captcha: "false"
-                })
-            });
-            if (response.ok) {
-                setPrizeModalStatus('success');
-                setTimeout(() => setShowPrizeModal(false), 3000);
-            } else {
-                setPrizeModalStatus('error');
-            }
-        } catch (err) {
-            setPrizeModalStatus('error');
-        }
+        if (!allFilled) return;
+        setIsGenerating(true); setIsRevealed(false);
+        const messages = [
+            "Cross-referencing with classified island guest lists...",
+            "Encrypting connection...",
+            "Parsing FBI file...",
+            "Redacting names so powerful people don't sue us...",
+            "Decrypting Maxwell files...",
+            "Translating from 'billionaire' to 'English'...",
+            "Consulting lawyers...",
+            "Contacting our legal team. They said 'publish it and run.'...",
+            "Loading sad truths...",
+            "Generating audio...",
+            "Preparing evidence. Try not to make eye contact with the names."
+        ];
+        let idx = 0; setLoadingMessage(messages[0]);
+        const iv = setInterval(() => { idx++; if (idx < messages.length) setLoadingMessage(messages[idx]); }, 3330);
+        let plain = activeStory.text;
+        placeholders.forEach(p => { plain = plain.replace(p.original, inputs[p.id]); });
+        plain += " Generated by Sad Libs at W W W dot sad libs dot online.";
+        let audioToPlay = null;
+        const tts = fetch('/api/tts', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: plain }) })
+            .then(async r => { if (r.ok) { const b = await r.blob(); const u = URL.createObjectURL(b); setActiveAudioUrl(u); audioToPlay = new Audio(u); audioRef.current = audioToPlay; } })
+            .catch(console.error);
+        await Promise.all([tts, new Promise(res => setTimeout(res, 20000))]);
+        clearInterval(iv); setIsGenerating(false); setIsRevealed(true);
+        const nc = completedGames + 1; setCompletedGames(nc);
+        if (audioToPlay) {
+            audioToPlay.onended = () => { setShareReady(true); if (nc === 1) setShowPrizeModal(true); };
+            audioToPlay.play().catch(() => { setShareReady(true); if (nc === 1) setShowPrizeModal(true); });
+        } else { setShareReady(true); if (nc === 1) setTimeout(() => setShowPrizeModal(true), 3000); }
     };
 
-    const handleExitEmailSubmit = async (e) => {
-        e.preventDefault();
-        setExitModalStatus('loading');
-        try {
-            const response = await fetch('https://formsubmit.co/ajax/douchecoded@gmail.com', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    email: exitEmail,
-                    _subject: "New VIP Claim!",
-                    _captcha: "false"
-                })
-            });
-            if (response.ok) {
-                setExitModalStatus('success');
-                setTimeout(() => setShowExitModal(false), 3000);
-            } else {
-                setExitModalStatus('error');
-            }
-        } catch (err) {
-            setExitModalStatus('error');
-        }
+    const handleShare = (platform) => {
+        const nc = shareCount + 1; setShareCount(nc); localStorage.setItem('sadlibs_share_count', nc); setHasSharedInExitModal(true);
+        const url = 'https://sadlibs.vercel.app';
+        const t = encodeURIComponent("I just found this Epstein files Mad Libs game and I need someone to suffer with me:");
+        if (platform === 'twitter') window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${t}`, '_blank');
+        if (platform === 'facebook') window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+        if (platform === 'copy') { navigator.clipboard.writeText(`I just found this Epstein files Mad Libs game and I need someone to suffer with me: ${url}`); alert('Copied.'); }
     };
 
     const handleShareStory = async (platform) => {
         if (!storyRevealRef.current || isProcessingMeme) return;
         setIsProcessingMeme(true);
-
-        // Open popup BEFORE any awaits — browsers block window.open() called after async work
-        let twitterWindow = null;
-        if (platform === 'twitter') {
-            twitterWindow = window.open('', '_blank');
-            if (twitterWindow) twitterWindow.document.write('<p style="font-family:sans-serif;padding:2rem">Preparing your story image, one moment...</p>');
-        }
-
+        let tw = null;
+        if (platform === 'twitter') { tw = window.open('', '_blank'); if (tw) tw.document.write('<p style="font-family:monospace;padding:2rem">Preparing your story image...</p>'); }
         try {
-            // 1. Generate image from DOM (only the story card, ugly truth excluded via export-ignore)
-            const element = storyRevealRef.current;
-            const canvas = await html2canvas(element, {
-                backgroundColor: '#0f172a',
-                scale: 2,
-                logging: false,
-                ignoreElements: (el) => el.classList.contains('export-ignore'),
-                onclone: (clonedDoc) => {
-                    const watermark = clonedDoc.querySelector('.cta-watermark');
-                    if (watermark) watermark.style.display = 'block';
-                }
+            const canvas = await html2canvas(storyRevealRef.current, {
+                backgroundColor: '#020617', scale: 2, logging: false,
+                ignoreElements: el => el.classList.contains('export-ignore'),
+                onclone: d => { const w = d.querySelector('.cta-watermark'); if (w) w.style.display = 'block'; }
             });
-
-            // 2. Upload to ImgBB
-            const base64 = canvas.toDataURL('image/png').split(',')[1];
-            const uploadRes = await fetch('/api/upload-image', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ image: base64 })
-            });
-            const uploadData = await uploadRes.json();
-            if (!uploadRes.ok || !uploadData.url) throw new Error(uploadData.error || 'ImgBB upload failed');
-            const imageUrl = uploadData.url;
-
-            // 3. Track sharing
-            const newCount = shareCount + 1;
-            setShareCount(newCount);
-            localStorage.setItem('sadlibs_share_count', newCount);
-            sessionStorage.setItem('sadlibs_exit_stage', '2');
-            setHasSharedInExitModal(true);
-
-            // 4. Share
-            const storyName = activeStory ? activeStory.title : 'an Epstein leak';
-            const shareText = `I just found "${storyName}" in the Epstein files and now I need someone to suffer with me:`;
+            const b64 = canvas.toDataURL('image/png').split(',')[1];
+            const up = await fetch('/api/upload-image', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ image: b64 }) });
+            const ud = await up.json();
+            if (!up.ok || !ud.url) throw new Error('upload fail');
+            const imgUrl = ud.url;
+            const nc = shareCount + 1; setShareCount(nc); localStorage.setItem('sadlibs_share_count', nc); setHasSharedInExitModal(true);
+            const sn = activeStory ? activeStory.title : 'an Epstein leak';
+            const st = `I just found "${sn}" in the Epstein files and now I need someone to suffer with me:`;
             const appUrl = 'https://sadlibs.vercel.app';
-            // Share card URL — Twitter's crawler visits this, reads twitter:image meta, shows image inline in tweet
-            const shareCardUrl = `${appUrl}/api/share?img=${encodeURIComponent(imageUrl)}`;
-
+            const cardUrl = `${appUrl}/api/share?img=${encodeURIComponent(imgUrl)}`;
             if (platform === 'twitter') {
-                // Try Web Share API first (mobile — actually attaches the image as a file)
                 if (navigator.canShare) {
-                    canvas.toBlob(async (blob) => {
-                        const file = new File([blob], 'epstein-leak.png', { type: 'image/png' });
-                        if (navigator.canShare({ files: [file] })) {
-                            if (twitterWindow) twitterWindow.close();
-                            try {
-                                await navigator.share({ files: [file], title: shareText, text: `${shareText}\n${appUrl}` });
-                            } catch (e) { /* user cancelled */ }
-                            setIsProcessingMeme(false);
-                            return;
+                    canvas.toBlob(async blob => {
+                        const f = new File([blob], 'epstein-leak.png', { type: 'image/png' });
+                        if (navigator.canShare({ files: [f] })) {
+                            if (tw) tw.close();
+                            try { await navigator.share({ files: [f], text: st, url: appUrl }); } catch (e) { }
+                            setIsProcessingMeme(false); return;
                         }
-                        // canShare exists but files not supported — use share card URL so image shows as card
-                        const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareCardUrl)}`;
-                        if (twitterWindow) twitterWindow.location.href = tweetUrl;
-                        else window.open(tweetUrl, '_blank');
+                        const tu = `https://twitter.com/intent/tweet?text=${encodeURIComponent(st)}&url=${encodeURIComponent(cardUrl)}`;
+                        if (tw) tw.location.href = tu; else window.open(tu, '_blank');
                         setIsProcessingMeme(false);
-                    }, 'image/png');
-                    return; // blob callback handles the rest
+                    }, 'image/png'); return;
                 }
-                // Desktop — redirect the pre-opened window to tweet intent with share card URL
-                const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareCardUrl)}`;
-                if (twitterWindow) twitterWindow.location.href = tweetUrl;
-                else window.open(tweetUrl, '_blank');
+                const tu = `https://twitter.com/intent/tweet?text=${encodeURIComponent(st)}&url=${encodeURIComponent(cardUrl)}`;
+                if (tw) tw.location.href = tu; else window.open(tu, '_blank');
             } else if (platform === 'facebook') {
-                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareCardUrl)}`, '_blank');
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(cardUrl)}`, '_blank');
             } else if (platform === 'native') {
-                // Native OS share sheet — fires on mobile, shares the image directly to any app
-                canvas.toBlob(async (blob) => {
-                    const file = new File([blob], 'epstein-leak.png', { type: 'image/png' });
-                    try {
-                        await navigator.share({
-                            files: [file],
-                            text: shareText,
-                            url: appUrl
-                        });
-                    } catch (e) { /* user cancelled or not supported */ }
+                canvas.toBlob(async blob => {
+                    const f = new File([blob], 'epstein-leak.png', { type: 'image/png' });
+                    try { await navigator.share({ files: [f], text: st, url: appUrl }); } catch (e) { }
                     setIsProcessingMeme(false);
-                }, 'image/png');
-                return; // blob callback handles cleanup
+                }, 'image/png'); return;
             } else if (platform === 'copy') {
-                navigator.clipboard.writeText(`${shareText}\n${shareCardUrl}`);
-                alert('Link copied to clipboard!');
+                navigator.clipboard.writeText(`${st}\n${cardUrl}`); alert('Copied.');
             }
-
-        } catch (err) {
-            console.error('Failed to share story:', err);
-            if (twitterWindow) twitterWindow.close();
-            alert('Sorry, preparing the share image failed. Please try again.');
-        } finally {
-            setIsProcessingMeme(false);
-        }
+        } catch (err) { console.error(err); if (tw) tw.close(); alert('Failed to prepare image. Try again.'); }
+        finally { setIsProcessingMeme(false); }
     };
 
-    const handleReplayAudio = () => {
-        if (audioRef.current) {
-            audioRef.current.currentTime = 0;
-            audioRef.current.play();
-        }
+    const handleReplayAudio = () => { if (audioRef.current) { audioRef.current.currentTime = 0; audioRef.current.play(); } };
+
+    const handlePrizeEmail = async (e) => {
+        e.preventDefault(); setPrizeModalStatus('loading');
+        try {
+            const r = await fetch('https://formsubmit.co/ajax/douchecoded@gmail.com', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify({ email: prizeEmail, _subject: 'New VIP Claim!', _captcha: 'false' }) });
+            setPrizeModalStatus(r.ok ? 'success' : 'error');
+            if (r.ok) setTimeout(() => setShowPrizeModal(false), 3000);
+        } catch { setPrizeModalStatus('error'); }
+    };
+
+    const handleExitEmail = async (e) => {
+        e.preventDefault(); setExitModalStatus('loading');
+        try {
+            const r = await fetch('https://formsubmit.co/ajax/douchecoded@gmail.com', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify({ email: exitEmail, _subject: 'New VIP Claim!', _captcha: 'false' }) });
+            setExitModalStatus(r.ok ? 'success' : 'error');
+            if (r.ok) setTimeout(() => setShowExitModal(false), 3000);
+        } catch { setExitModalStatus('error'); }
     };
 
     const renderFinalStory = () => {
         if (!activeStory) return null;
-        let resultText = activeStory.text;
-        placeholders.forEach(p => {
-            const inserted = `<span class="inserted-word">${inputs[p.id]}</span>`;
-            resultText = resultText.replace(p.original, inserted);
-        });
-        return <p className="final-story" dangerouslySetInnerHTML={{ __html: resultText }} />;
+        let r = activeStory.text;
+        placeholders.forEach(p => { r = r.replace(p.original, `<span class="av2-inserted">${inputs[p.id]}</span>`); });
+        return <p className="av2-story-text" dangerouslySetInnerHTML={{ __html: r }} />;
     };
 
     return (
         <>
-            <audio ref={themeAudioRef} src={themeSong} loop muted={isMuted} playsInline />
-            <div className="audio-player-panel fade-in">
-                <button
-                    className="mute-btn integrated"
-                    onClick={() => setIsMuted(!isMuted)}
-                    title={isMuted ? "Unmute Music" : "Mute Music"}
-                >
-                    {isMuted ? '🔇' : '🔊'}
-                </button>
-                <div className="volume-slider-container">
-                    <input
-                        type="range"
-                        min="0"
-                        max="100"
-                        value={volume}
-                        className="volume-slider"
-                        onChange={(e) => {
-                            const newVol = e.target.value;
-                            setVolume(newVol);
-                            if (themeAudioRef.current) themeAudioRef.current.volume = newVol / 100;
-                            if (newVol > 0 && isMuted) setIsMuted(false);
-                            if (newVol == 0 && !isMuted) setIsMuted(true);
-                        }}
-                        title="Adjust Volume"
-                    />
-                </div>
-            </div>
-            <div className="logo-banner-wrapper">
-                <img src={logo} alt="SadLibs logo" className={`logo ${isGlitching ? 'glitch-effect' : ''}`} onClick={(e) => { e.stopPropagation(); handleLogoClick(); }} />
-            </div>
-            <div className={`app-container ${isDeclassified ? 'declassified-mode' : ''}`}>
-                <header className="header" onClick={clearSelection} style={{ cursor: 'pointer' }}>
+            <audio ref={themeAudioRef} src={themeSong} loop playsInline />
 
-                    <img src={heroCard} alt="Welcome to SadLibs" className="hero-card" />
-                    <div className="header-links">
-                        <button className="link-btn" onClick={() => setShowNamesModal(true)}>Read The Names on the File!</button>
-                        <a href="https://www.thewisewolf.club" target="_blank" rel="noopener noreferrer" className="link-btn outline">The Wise Wolf on Substack</a>
+            {/* Mute button — same as main site */}
+            <button className="av2-mute-btn" onClick={toggleMute}>
+                {isMuted ? '🔇' : '🔊'}
+            </button>
+
+            {/* ── HERO ─────────────────────────────────── */}
+            <section className={`av2-hero ${heroLoaded ? 'loaded' : ''}`}>
+                <div className={`av2-hero-bg ${glitching ? 'glitch-anim' : ''}`} style={{ backgroundImage: `url(${BGS[bgIndex]})` }} />
+                <div className="av2-hero-vignette" />
+                <div className="av2-hero-content">
+                    <p className="av2-hero-eyebrow">THE WISE WOLF PRESENTS</p>
+                    <img src={logo} alt="SadLibs" className="av2-hero-logo" />
+
+                    <div className="av2-play-container">
+                        <span className="av2-play-arrow">➤</span>
+                        <button className="av2-cta av2-hero-play-main" onClick={() => { startMusic(); document.getElementById('av2-stories').scrollIntoView({ behavior: 'smooth' }); }}>
+                            Play Sad Libs
+                        </button>
+                        <span className="av2-play-arrow right-arrow">➤</span>
                     </div>
 
-                    <div className="action-row">
-                        <button className="how-to-play-btn" onClick={(e) => {
-                            e.stopPropagation();
-                            setShowModal(true);
-                        }}>How to Play</button>
+                    <img src={heroCard} alt="SadLibs game" className="av2-hero-card" />
+
+                    <div className="av2-hero-btns" style={{ marginBottom: '1.5rem', marginTop: '1.5rem' }}>
+                        <a href="https://www.wisewolf.club" target="_blank" rel="noopener noreferrer" className="av2-cta av2-wisewolf-btn">
+                            <span className="ww-frame ww-1">Hate Bullshit?</span>
+                            <span className="ww-frame ww-2">Read The Wise Wolf</span>
+                        </a>
+                        <button className="av2-ghost-btn" onClick={() => setShowNamesModal(true)}>
+                            Names on the File
+                        </button>
                     </div>
 
-                </header>
-                <main className="main-content">
-
-
-                    {!selectedStoryId ? (
-                        <div className="story-selection">
-                            <h2 className="selection-title">Select a File to Decrypt:</h2>
-                            <div className="story-grid">
-                                {stories.map(story => (
-                                    <button
-                                        key={story.id}
-                                        className="story-card-btn"
-                                        onClick={() => startStory(story.id)}
-                                    >
-                                        {story.title}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-                    ) : (
-                        <div className="story-container" ref={storyContainerRef} style={{ scrollMarginTop: '20px' }}>
-                            <button className="back-btn" onClick={clearSelection}>← Back to Files</button>
-
-                            <div className={`glass-panel ${isRevealed ? 'revealed' : ''}`}>
-                                <h2>{activeStory.title}</h2>
-
-                                {!isRevealed && !isGenerating ? (
-                                    <form onSubmit={revealStory} className="input-form">
-                                        <div className="inputs-grid">
-                                            {placeholders.map((p) => (
-                                                <div key={p.id} className="input-group">
-                                                    <label>{p.type}</label>
-                                                    <input
-                                                        type="text"
-                                                        placeholder={`Enter ${p.type}...`}
-                                                        value={easterEggInputs[p.id] ? 'DID NOT KILL HIMSELF' : (inputs[p.id] || '')}
-                                                        onChange={(e) => handleInputChange(p.id, e.target.value)}
-                                                        className={easterEggInputs[p.id] ? 'easter-egg-shake' : ''}
-                                                        readOnly={easterEggInputs[p.id]}
-                                                        required
-                                                    />
-                                                </div>
-                                            ))}
-                                        </div>
-                                        <button
-                                            type="submit"
-                                            className="submit-btn"
-                                            disabled={!allFilled}
-                                        >
-                                            Reveal Story
-                                        </button>
-                                    </form>
-                                ) : isGenerating ? (
-                                    <div className="generating-container fade-in">
-                                        <div className="spinner"></div>
-                                        <h3 className="loading-message">{loadingMessage}</h3>
-                                        <div className="progress-bar-container">
-                                            <div className="progress-bar-fill"></div>
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <div className="story-reveal" ref={storyRevealRef}>
-                                        <div className="clearance-badge">
-                                            <span className="clearance-level">CLEARANCE LEVEL: TOP SECRET</span>
-                                            <span className="clearance-rarity">Only {storyRarity}% of readers accessed this file.</span>
-                                        </div>
-                                        <div className="joke-section">
-                                            <h3>The "Redacted" Version:</h3>
-                                            {renderFinalStory()}
-                                        </div>
-
-                                        <div className="avatar-container">
-                                            <img src={trumpAvatar} alt="Donald Trump reading the story" className="trump-avatar" />
-                                        </div>
-
-                                        <div className="export-watermark cta-watermark">
-                                            🔥 <span>CREATE YOUR OWN EPSTEIN LEAK</span> AT <span className="highlight">SADLIBS.VERCEL.APP</span> 🔥
-                                        </div>
-
-                                        <div className="share-proof-inline export-ignore">
-                                            {shareCount.toLocaleString()} people have shared this. Several are no longer welcome at Thanksgiving.
-                                        </div>
-                                        <div className={`action-buttons-row export-ignore${shareReady ? ' share-ready' : ''}`}>
-                                            <button onClick={handleReplayAudio} className="action-btn replay" disabled={!activeAudioUrl}>
-                                                Hear It Again (Seriously Though)
-                                            </button>
-                                            {typeof navigator !== 'undefined' && navigator.share && (
-                                                <button onClick={() => handleShareStory('native')} className="action-btn native-share" disabled={isProcessingMeme}>
-                                                    {isProcessingMeme ? 'Preparing evidence...' : 'Share Image to Any App'}
-                                                </button>
-                                            )}
-                                            <button onClick={() => handleShareStory('twitter')} className="action-btn image-export" disabled={isProcessingMeme}>
-                                                {isProcessingMeme ? 'Preparing evidence...' : 'Post to X Before It Gets Redacted'}
-                                            </button>
-                                            <button onClick={() => handleShareStory('facebook')} className="action-btn facebook" disabled={isProcessingMeme}>
-                                                {isProcessingMeme ? 'Preparing evidence...' : 'Post to Facebook (Wake Up Your Uncle)'}
-                                            </button>
-                                            <button onClick={() => handleShareStory('copy')} className="action-btn download" disabled={isProcessingMeme}>
-                                                {isProcessingMeme ? 'Copying...' : 'Copy Evidence'}
-                                            </button>
-                                        </div>
-
-                                        <hr className="divider export-ignore" />
-
-                                        <div className="truth-section export-ignore">
-                                            <h3>The Ugly Truth:</h3>
-                                            <div className="real-quote-box">
-                                                <p>{activeStory.realQuote}</p>
-                                            </div>
-                                            <div className="sources-box">
-                                                <h4>Sources:</h4>
-                                                <ul>
-                                                    {activeStory.sources.map((src, i) => (
-                                                        <li key={i}>
-                                                            <a href={src.url} target="_blank" rel="noopener noreferrer">
-                                                                {src.name}
-                                                            </a>
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-                                        </div>
-
-                                        <button onClick={clearSelection} className="submit-btn outline full-width">
-                                            Open Another File
-                                        </button>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    )}
-
-                </main>
-
-                <div className="social-share-section">
-                    <h3>{shareCount.toLocaleString()} people have shared this game. Statistically, one of them regrets it.</h3>
-                    <div className="share-buttons">
-                        <button onClick={() => handleShare('twitter')} className="share-btn twitter">Share on X</button>
-                        <button onClick={() => handleShare('facebook')} className="share-btn facebook">Share on Facebook</button>
-                        <button onClick={() => handleShare('copy')} className="share-btn copy">Copy Link</button>
+                    <div className="av2-play-container">
+                        <span className="av2-play-arrow">➤</span>
+                        <button className="av2-cta av2-red-play-main" onClick={() => { startMusic(); document.getElementById('av2-stories').scrollIntoView({ behavior: 'smooth' }); }}>
+                            I SAID PLAY SAD LIBS!
+                        </button>
+                        <span className="av2-play-arrow right-arrow">➤</span>
                     </div>
                 </div>
+                <div className="av2-scroll-hint">scroll ↓</div>
+            </section>
 
-                <div className="merch-ad-container">
-                    <a href="https://www.bonfire.com/store/the-wise-wolf-merch/" target="_blank" rel="noopener noreferrer">
-                        <img src={merchImg} alt="Buy an Epstein Island Meme T-Shirt" className="merch-ad-img" />
-                    </a>
+            {/* ── STORY SELECTION ──────────────────────── */}
+            <section id="av2-stories" className="av2-stories-section">
+                <div className="av2-section-intro">
+                    <h2 className="av2-section-title">Choose Your Depressing Adventure</h2>
+                    <p className="av2-section-desc">
+                        These are real emails from the federally unsealed Epstein document dump. The blanks are where the government put black marker over names that belong to people you definitely recognize. Fill them in with anything. <strong>Donald Trump</strong> will then read the result back to you, adding a layer of dystopian horror we frankly didn't need. Your lawyers cannot help you.
+                    </p>
                 </div>
 
-                <footer className="footer">
-                    <p>Made by The Wise Wolf &copy; {new Date().getFullYear()}</p>
-                    <p>Contact: <a href="mailto:douchecoded@gmail.com">douchecoded@gmail.com</a></p>
-                    <p className="designer-link">Website designed by <a href="http://www.acheapdesigner.com" target="_blank" rel="noopener noreferrer">www.acheapdesigner.com</a></p>
-                </footer>
+                {!selectedStoryId ? (
+                    <div className="av2-grid">
+                        {stories.map((story, i) => (
+                            <button key={story.id} className="av2-card av2-fly-in" style={{ '--av2-card-delay': `${(i % 3) * 0.15}s` }} onClick={() => startStory(story.id)}>
+                                <span className="av2-card-num">FILE {String(i + 1).padStart(3, '0')}</span>
+                                <h3 className="av2-card-title">{story.title}</h3>
+                                <p className="av2-card-hook">{story.hook}</p>
+                                <span className="av2-card-cta">Open this file →</span>
+                            </button>
+                        ))}
+                    </div>
+                ) : (
+                    <div ref={storyContainerRef} className="av2-active-story">
+                        <button className="av2-back" onClick={clearSelection}>← Back to Files</button>
 
-                {showModal && (
-                    <div className="modal-overlay" onClick={() => setShowModal(false)}>
-                        <div className="modal how-to-play-modal" onClick={e => e.stopPropagation()}>
-                            <h2>How to Play</h2>
-                            <p className="modal-desc">Fill in the blanks with whatever words come to mind. The story gets read aloud by a computer who has no idea what it's saying. This is, technically speaking, journalism.</p>
-
-                            <h3 className="grammar-title">Grammar Refresher (For the Smooth Brains):</h3>
-                            <ul className="grammar-list">
-                                <li><strong>Noun:</strong> A person, place, or thing. <em>(e.g., donkey, toilet, senator)</em></li>
-                                <li><strong>Verb:</strong> An action word. <em>(e.g., run, explode, embezzle)</em></li>
-                                <li><strong>Adjective:</strong> Describes a noun. <em>(e.g., slimy, pathetic, radioactive)</em></li>
-                                <li><strong>Adverb:</strong> Describes a verb (ends in -ly). <em>(e.g., slowly, violently)</em></li>
-                            </ul>
-
-                            <div className="pro-tip-box">
-                                <strong>Important Note:</strong><br />
-                                The filthier your words, the more historically accurate this becomes. You are performing a public service.
+                        {isGenerating ? (
+                            <div className="av2-generating">
+                                <div className="av2-spinner" />
+                                <p className="av2-loading-msg">{loadingMessage}</p>
+                                <div className="av2-bar"><div className="av2-bar-fill" /></div>
                             </div>
-
-                            <button className="close-btn full-width compact-btn" onClick={() => setShowModal(false)}>I Understand. Let's Go.</button>
-                        </div>
-                    </div>
-                )}
-
-                {showNamesModal && (
-                    <div className="modal-overlay" onClick={() => setShowNamesModal(false)}>
-                        <div className="modal names-modal" onClick={e => e.stopPropagation()}>
-                            <h2>Names on the File</h2>
-                            <div className="names-list">
-                                {NAMES_DATA.map((entry, i) => (
-                                    <a
-                                        key={i}
-                                        href={entry.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="name-tag"
-                                    >
-                                        {entry.name}
-                                    </a>
-                                ))}
-                            </div>
-                            <p className="names-disclaimer">Appearing in unsealed court documents does not constitute a criminal conviction. It does, however, constitute an interesting dinner conversation.</p>
-                            <button className="close-btn" onClick={() => setShowNamesModal(false)}>Close Archive</button>
-                        </div>
-                    </div>
-                )}
-
-                {showExitModal && (
-                    <div className="modal-overlay" onClick={() => setShowExitModal(false)}>
-                        <div className="modal exit-modal" onClick={e => e.stopPropagation()}>
-                            <h2 className="angry-heading">Hold on a second.</h2>
-                            <p className="exit-message">A woman in these files offered to procure an African baby for Jeffrey Epstein. As a gift. We are not making this up. More people need to know about this.</p>
-                            <img src={babyEmailImg} alt="Email discussing bringing back a baby" className="evidence-img" />
-
-                            {!hasSharedInExitModal ? (
-                                <>
-                                    <p className="exit-share-prompt">Share this before someone redacts it. Takes two seconds.</p>
-                                    <div className="share-buttons modal-share exit-share-big">
-                                        <button onClick={() => handleShare('twitter')} className="share-btn twitter">Post to X</button>
-                                        <button onClick={() => handleShare('facebook')} className="share-btn facebook">Post to Facebook</button>
+                        ) : !isRevealed ? (
+                            <div className="av2-form-wrap">
+                                <div className="av2-form-header">
+                                    <div className="av2-clearance-tag">
+                                        CLEARANCE LEVEL: TOP SECRET &nbsp;|&nbsp; Only {storyRarity}% of readers accessed this file.
                                     </div>
-                                    <button className="exit-skip-btn" onClick={() => setShowExitModal(false)}>No thanks, I don't care about babies.</button>
-                                </>
-                            ) : (
-                                <>
-                                    {exitModalStatus !== 'success' ? (
-                                        <>
-                                            <p className="exit-message" style={{ marginTop: '1.5rem' }}>Thanks. Leave your email and we'll give you a free year of The Wise Wolf ($80 value). We will not sell it to anyone. Probably.</p>
-                                            <form onSubmit={handleExitEmailSubmit} className="prize-form exit-inline-form">
-                                                <input
-                                                    type="email"
-                                                    name="email"
-                                                    placeholder="Enter email address..."
-                                                    value={exitEmail}
-                                                    onChange={(e) => setExitEmail(e.target.value)}
-                                                    required
-                                                    className="prize-input"
-                                                />
-                                                <button type="submit" className="submit-btn">
-                                                    {exitModalStatus === 'loading' ? 'Sending...' : 'Claim Free Year (It\'s Real)'}
-                                                </button>
-                                            </form>
-                                        </>
-                                    ) : (
-                                        <div className="prize-success fade-in" style={{ padding: '1rem', textAlign: 'center', background: 'rgba(74, 222, 128, 0.1)', borderRadius: '8px', border: '1px solid rgba(74, 222, 128, 0.2)', marginTop: '1.5rem' }}>
-                                            <h3 className="success-text" style={{ color: '#4ade80', margin: 0, fontSize: '1.2rem' }}>Done.</h3>
-                                            <p style={{ color: '#94a3b8', margin: '0.5rem 0 0 0', fontSize: '0.9rem' }}>We'll be in touch. Don't let anyone redact this email.</p>
-                                        </div>
-                                    )}
-                                    <button className="close-btn outline-close" style={{ marginTop: '1.5rem' }} onClick={() => setShowExitModal(false)}>Close</button>
-                                </>
-                            )}
-                        </div>
-                    </div>
-                )}
-
-                {/* Email Capture Prize Modal */}
-                {showPrizeModal && (
-                    <div className="modal-overlay">
-                        <div className="modal prize-modal">
-                            {isDeciphered && prizeModalStatus !== 'success' && (
-                                <>
-                                    <div className="decipher-container">
-                                        <h2 className="decipher-text locked">
-                                            {decipherText}
-                                        </h2>
-                                    </div>
-                                    <div className="prize-form-container fade-in">
-                                        {!hasSharedInExitModal ? (
-                                            <>
-                                                <p className="prize-desc" style={{ marginBottom: '1rem', color: '#fff' }}>Share the leaked document. Tell people. Your uncle who still forwards chain emails will love this. In exchange: a free year of The Wise Wolf ($80 value).</p>
-                                                <button className="share-btn twitter full-width" onClick={() => handleShare('twitter')} style={{ marginBottom: '0.5rem' }}>
-                                                    SHARE ON X
-                                                </button>
-                                                <button className="share-btn facebook full-width" onClick={() => handleShare('facebook')} style={{ marginBottom: '0.5rem' }}>
-                                                    SHARE ON FACEBOOK
-                                                </button>
-                                                <button className="share-btn copy full-width" onClick={() => handleShare('copy')}>
-                                                    COPY LINK
-                                                </button>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <p className="prize-desc">Leave your email. We will not sell it to anyone. Probably.</p>
-                                                <form onSubmit={handlePrizeEmailSubmit} className="prize-form">
-                                                    <input
-                                                        type="email"
-                                                        name="email"
-                                                        placeholder="Enter email address..."
-                                                        value={prizeEmail}
-                                                        onChange={(e) => setPrizeEmail(e.target.value)}
-                                                        required
-                                                        className="prize-input"
-                                                    />
-                                                    <button
-                                                        type="submit"
-                                                        className="share-btn twitter full-width"
-                                                    >
-                                                        CLAIM MEMBERSHIP
-                                                    </button>
-                                                </form>
-                                            </>
-                                        )}
-                                    </div>
-                                </>
-                            )}
-
-                            {prizeModalStatus === 'success' && (
-                                <div className="prize-success fade-in" style={{ padding: '2rem', textAlign: 'center' }}>
-                                    <h3 className="success-text" style={{ color: '#4ade80', marginBottom: '1rem', fontSize: '1.5rem' }}>ACCESS GRANTED</h3>
-                                    <p style={{ color: '#94a3b8' }}>Membership credentials will be transmitted shortly.</p>
+                                    <h3 className="av2-form-title">{activeStory.title}</h3>
+                                    <p className="av2-form-sub">The following was a real email. Some words have been removed by the government, which is fine because they do that. Add your own. The computer will read it back with complete sincerity. Whatever happens next is technically your fault.</p>
                                 </div>
-                            )}
-
-                            {isDeciphered && prizeModalStatus !== 'success' && (
-                                <button className="close-btn outline-close" style={{ marginTop: '1.5rem' }} onClick={() => setShowPrizeModal(false)}>Refuse Clearance</button>
-                            )}
-                        </div>
+                                <form onSubmit={revealStory}>
+                                    <div className="av2-inputs">
+                                        {placeholders.map(p => (
+                                            <div key={p.id} className="av2-field">
+                                                <label className="av2-label">{p.type}</label>
+                                                <input
+                                                    type="text"
+                                                    className="av2-input"
+                                                    value={inputs[p.id] || ''}
+                                                    onChange={e => handleInputChange(p.id, e.target.value)}
+                                                    placeholder={`enter ${p.type}...`}
+                                                    autoComplete="off"
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <button type="submit" className="av2-submit" disabled={!allFilled}>
+                                        {allFilled ? 'Declassify This Document' : 'Fill all fields to proceed'}
+                                    </button>
+                                    <p className="av2-pro-tip"><strong>Important Note:</strong> The filthier your words, the more historically accurate this becomes. You are performing a public service.</p>
+                                </form>
+                            </div>
+                        ) : (
+                            <div className="av2-reveal" ref={storyRevealRef}>
+                                <div className="av2-clearance-tag" style={{ display: 'inline-flex', marginBottom: '1.5rem' }}>
+                                    CLEARANCE LEVEL: TOP SECRET &nbsp;|&nbsp; Only {storyRarity}% of readers accessed this file.
+                                </div>
+                                <div className="av2-joke-section">
+                                    <h3 className="av2-reveal-title">THE REDACTED VERSION:</h3>
+                                    {renderFinalStory()}
+                                </div>
+                                <div className="av2-avatar-wrap">
+                                    <img src={trumpAvatar} alt="Witness testimony" className="av2-trump" />
+                                </div>
+                                <div className="av2-watermark cta-watermark">
+                                    CREATE YOUR OWN EPSTEIN LEAK AT SADLIBS.VERCEL.APP
+                                </div>
+                                {/* Share buttons */}
+                                <div className="av2-share-section export-ignore">
+                                    <p className="av2-share-proof">{shareCount.toLocaleString()} people have shared this. Statistically, at least one of them has their name in the Epstein documents.</p>
+                                    <div className={`av2-share-row${shareReady ? ' share-ready' : ''}`}>
+                                        {typeof navigator !== 'undefined' && navigator.share && (
+                                            <button onClick={() => handleShareStory('native')} className="av2-action-btn native" disabled={isProcessingMeme}>
+                                                {isProcessingMeme ? 'Preparing evidence...' : 'Share Image to Any App'}
+                                            </button>
+                                        )}
+                                        <button onClick={() => handleShareStory('twitter')} className="av2-action-btn share-x" disabled={isProcessingMeme}>
+                                            {isProcessingMeme ? 'Preparing evidence...' : 'Post to X Before It Gets Redacted'}
+                                        </button>
+                                        <button onClick={() => handleShareStory('facebook')} className="av2-action-btn share-fb" disabled={isProcessingMeme}>
+                                            {isProcessingMeme ? 'Preparing evidence...' : 'Post to Facebook (Wake Up Your Uncle)'}
+                                        </button>
+                                        <button onClick={handleReplayAudio} className="av2-action-btn replay" disabled={!activeAudioUrl}>
+                                            Hear It Again (Seriously Though)
+                                        </button>
+                                        <button onClick={() => handleShareStory('copy')} className="av2-action-btn copy-ev" disabled={isProcessingMeme}>
+                                            Copy Evidence
+                                        </button>
+                                    </div>
+                                </div>
+                                {/* Truth section */}
+                                <div className="av2-truth export-ignore">
+                                    <h4 className="av2-truth-label">The Actual Email. Which Is Real. Which Is Why We Are All Like This.</h4>
+                                    <blockquote className="av2-quote">{activeStory.realQuote}</blockquote>
+                                    <div className="av2-sources">
+                                        {activeStory.sources.map((s, i) => <a key={i} href={s.url} target="_blank" rel="noopener noreferrer" className="av2-source">→ {s.name}</a>)}
+                                    </div>
+                                </div>
+                                <button onClick={clearSelection} className="av2-next">Open Another File (There Are 13)</button>
+                            </div>
+                        )}
                     </div>
                 )}
+            </section>
 
-                {/* Corner Decals */}
-                <img src={sadGirlImg} alt="Sad Girl Mascot" className="corner-decal left" />
-                <img src={funForAllAgesImg} alt="Fun for All Ages" className="corner-decal right" />
-
+            {/* ── FOOTER SHARE ─────────────────────────── */}
+            <div className="av2-footer-share">
+                <h3>{shareCount.toLocaleString()} people have shared this. Statistically, at least one of them has their name in the Epstein documents.</h3>
+                <div className="av2-share-row" style={{ justifyContent: 'center', marginTop: '1.5rem' }}>
+                    <button onClick={() => handleShare('twitter')} className="av2-action-btn share-x">Share on X</button>
+                    <button onClick={() => handleShare('facebook')} className="av2-action-btn share-fb">Share on Facebook</button>
+                    <button onClick={() => handleShare('copy')} className="av2-action-btn copy-ev">Copy Link</button>
+                </div>
             </div>
+
+            <div className="av2-merch">
+                <a href="https://www.bonfire.com/store/the-wise-wolf-merch/" target="_blank" rel="noopener noreferrer">
+                    <img src={merchImg} alt="Get a tee" className="av2-merch-img" />
+                </a>
+            </div>
+
+            <footer className="av2-footer">
+                <p>Made by The Wise Wolf &copy; {new Date().getFullYear()} &nbsp;·&nbsp; <a href="mailto:douchecoded@gmail.com">douchecoded@gmail.com</a></p>
+                <p>Designed by <a href="http://www.acheapdesigner.com" target="_blank" rel="noopener noreferrer">acheapdesigner.com</a> &nbsp;·&nbsp; Not affiliated with the FBI. Yet.</p>
+            </footer>
+
+            {/* Corner Decals */}
+            <img src={sadGirlImg} alt="Sad Girl Mascot" className="corner-decal left" />
+            <img src={funForAllAgesImg} alt="Fun for All Ages" className="corner-decal right" />
+
+            {/* ── NAMES MODAL ───────────────────────────── */}
+            {showNamesModal && (
+                <div className="av2-overlay" onClick={() => setShowNamesModal(false)}>
+                    <div className="av2-modal" onClick={e => e.stopPropagation()}>
+                        <h2>Names on the File</h2>
+                        <p style={{ color: '#94a3b8', marginBottom: '1rem', lineHeight: 1.6 }}>People who appear in the unsealed Epstein documents. Appearing in a court file does not mean you're guilty. It just means you need better judgment about who you email.</p>
+                        <div className="av2-names">
+                            {NAMES_DATA.map((n, i) => <a key={i} href={n.url} target="_blank" rel="noopener noreferrer" className="av2-name">{n.name}</a>)}
+                        </div>
+                        <p className="av2-disclaimer">Appearing in unsealed court documents does not constitute a criminal conviction. It does, however, constitute an interesting Thanksgiving conversation.</p>
+                        <button className="av2-close" onClick={() => setShowNamesModal(false)}>Close Archive</button>
+                    </div>
+                </div>
+            )}
+
+            {/* ── EXIT MODAL ────────────────────────────── */}
+            {showExitModal && (
+                <div className="av2-overlay" onClick={() => setShowExitModal(false)}>
+                    <div className="av2-modal" onClick={e => e.stopPropagation()}>
+                        <h2>Wait. Before you go.</h2>
+                        <p style={{ color: '#94a3b8', lineHeight: 1.7, marginBottom: '1rem' }}>
+                            A prominent New York socialite offered to personally acquire Jeffrey Epstein an African baby. As a gift. She then offered to "neutralize" a journalist, also as a gift. This is one email. That she sent. From her real email address. More people need to see this.
+                        </p>
+                        <img src={babyEmailImg} alt="The baby email" style={{ width: '100%', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', marginBottom: '1.5rem' }} />
+                        {!hasSharedInExitModal ? (
+                            <>
+                                <p style={{ color: '#f1f5f9', marginBottom: '1rem', fontWeight: 600 }}>Takes two seconds. The government would prefer you didn't.</p>
+                                <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                                    <button onClick={() => handleShare('twitter')} className="av2-action-btn share-x" style={{ flex: 1 }}>Post to X</button>
+                                    <button onClick={() => handleShare('facebook')} className="av2-action-btn share-fb" style={{ flex: 1 }}>Post to Facebook</button>
+                                </div>
+                                <button style={{ display: 'block', width: '100%', marginTop: '0.75rem', background: 'none', border: 'none', color: '#cbd5e1', fontSize: '0.8rem', cursor: 'pointer', padding: '0.5rem' }} onClick={() => setShowExitModal(false)}>
+                                    No thanks, I support the cover-up.
+                                </button>
+                            </>
+                        ) : exitModalStatus !== 'success' ? (
+                            <>
+                                <p style={{ color: '#94a3b8', marginBottom: '1rem', lineHeight: 1.7 }}>
+                                    Good. Leave your email for a free year of The Wise Wolf ($80 value). We will not sell it to anyone. Probably.
+                                </p>
+                                <form onSubmit={handleExitEmail} style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                                    <input type="email" placeholder="Email address..." value={exitEmail} onChange={e => setExitEmail(e.target.value)} required className="av2-input" style={{ flex: 1 }} />
+                                    <button type="submit" className="av2-submit" style={{ width: 'auto', padding: '0.75rem 1.5rem' }}>
+                                        {exitModalStatus === 'loading' ? 'Sending...' : 'Claim Free Year'}
+                                    </button>
+                                </form>
+                                <button className="av2-close" style={{ marginTop: '1rem' }} onClick={() => setShowExitModal(false)}>Fine. Close This.</button>
+                            </>
+                        ) : (
+                            <p style={{ color: '#4ade80' }}>Done. We'll be in touch. Don't let anyone redact this email.</p>
+                        )}
+                    </div>
+                </div>
+            )}
+
+            {/* ── PRIZE MODAL ───────────────────────────── */}
+            {showPrizeModal && (
+                <div className="av2-overlay">
+                    <div className="av2-modal">
+                        {isDeciphered && prizeModalStatus !== 'success' ? (
+                            <>
+                                <h2 style={{ fontSize: '1rem', letterSpacing: '0.05em', fontFamily: 'var(--mono-family)' }}>{decipherText}</h2>
+                                {!hasSharedInExitModal ? (
+                                    <>
+                                        <p style={{ color: '#94a3b8', margin: '1rem 0', lineHeight: 1.7 }}>
+                                            Share this. Your uncle who still forwards chain emails will love it. A free year of The Wise Wolf ($80 value) is waiting. The 60,000 people who already subscribe made an excellent life decision.
+                                        </p>
+                                        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                                            <button onClick={() => handleShare('twitter')} className="av2-action-btn share-x" style={{ flex: 1 }}>SHARE ON X</button>
+                                            <button onClick={() => handleShare('facebook')} className="av2-action-btn share-fb" style={{ flex: 1 }}>SHARE ON FACEBOOK</button>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <p style={{ color: '#94a3b8', margin: '1rem 0', lineHeight: 1.7 }}>
+                                            Leave your email. We will not sell it to anyone. Probably.
+                                        </p>
+                                        <form onSubmit={handlePrizeEmail} style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                                            <input type="email" placeholder="Email address..." value={prizeEmail} onChange={e => setPrizeEmail(e.target.value)} required className="av2-input" style={{ flex: 1 }} />
+                                            <button type="submit" className="av2-submit" style={{ width: 'auto', padding: '0.75rem 1.5rem' }}>
+                                                {prizeModalStatus === 'loading' ? 'Sending...' : "Claim Free Year (It's Real)"}
+                                            </button>
+                                        </form>
+                                    </>
+                                )}
+                                <button className="av2-close" onClick={() => setShowPrizeModal(false)} style={{ marginTop: '1rem' }}>Close</button>
+                            </>
+                        ) : prizeModalStatus === 'success' ? (
+                            <p style={{ color: '#4ade80' }}>Done. We'll be in touch. Don't let anyone redact this email.</p>
+                        ) : (
+                            <p style={{ color: '#94a3b8' }}>Deciphering classified documents...</p>
+                        )}
+                    </div>
+                </div>
+            )}
         </>
     );
 }
-
-export default App;
