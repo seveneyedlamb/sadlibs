@@ -129,6 +129,24 @@ const customApiPlugin = () => ({
                         res.end(JSON.stringify({ error: 'Server error: ' + e.message }));
                     }
                 });
+            } else if (req.url === '/api/analytics' && req.method === 'GET') {
+                (async () => {
+                    try {
+                        const proxyRes = await fetch('https://sadlibs.vercel.app/api/analytics');
+                        const data = await proxyRes.json();
+                        res.statusCode = 200;
+                        res.setHeader('Content-Type', 'application/json');
+                        res.end(JSON.stringify(data));
+                    } catch (e) {
+                        res.statusCode = 500;
+                        res.end(JSON.stringify({ error: e.message }));
+                    }
+                })();
+            } else if (req.url === '/api/analytics' && req.method === 'POST') {
+                // Silently succeed locally — don't spam production analytics with dev traffic
+                res.statusCode = 201;
+                res.setHeader('Content-Type', 'application/json');
+                res.end(JSON.stringify({ ok: true }));
             } else {
                 next();
             }

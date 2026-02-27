@@ -1046,7 +1046,7 @@ export default function AppAlt() {
             {showAnalytics && (
                 <div className="av2-overlay" onClick={() => setShowAnalytics(false)}>
                     <div className="av2-modal analytics-modal" onClick={e => e.stopPropagation()}>
-                        <h2>📊 The Dashboard</h2>
+                        <h2>Yo. What are you doing looking at this? Now I have to kill you and your entire family.</h2>
                         {analyticsLoading && <p style={{ color: '#94a3b8', textAlign: 'center' }}>Loading...</p>}
                         {!analyticsLoading && analyticsData && (
                             <div className="analytics-grid">
@@ -1106,7 +1106,7 @@ export default function AppAlt() {
                                 )}
                             </div>
                         )}
-                        {!analyticsLoading && !analyticsData && <p style={{ color: '#ef4444' }}>Failed to load. Check Supabase.</p>}
+                        {!analyticsLoading && !analyticsData && <p style={{ color: '#ef4444' }}>Nothing loaded. Either Supabase is down or you broke something. Probably you.</p>}
                         <button className="av2-close" onClick={() => setShowAnalytics(false)}>Close</button>
                     </div>
                 </div>
