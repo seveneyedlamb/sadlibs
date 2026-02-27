@@ -208,6 +208,46 @@ export default function AppAlt() {
     const [terminalLines, setTerminalLines] = useState([]);
     const afkTimerRef = useRef(null);
 
+    // Comments
+    const [captchaVal, setCaptchaVal] = useState('');
+    const [commentEmail, setCommentEmail] = useState('');
+    const [commentText, setCommentText] = useState('');
+    const [comments, setComments] = useState([]);
+    const [commentStatus, setCommentStatus] = useState('idle'); // idle | loading | success | error
+    const VALID_CAPTCHAS = ['epstein is not dead', 'type epstein is not dead'];
+    const captchaOk = VALID_CAPTCHAS.includes(captchaVal.trim().toLowerCase());
+
+    useEffect(() => {
+        fetch('/api/comments')
+            .then(r => r.json())
+            .then(data => { if (Array.isArray(data)) setComments(data); })
+            .catch(() => { });
+    }, []);
+
+    const handleCommentSubmit = async (e) => {
+        e.preventDefault();
+        if (!captchaOk || !commentEmail || !commentText) return;
+        setCommentStatus('loading');
+        try {
+            const r = await fetch('/api/comments', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: commentEmail, comment: commentText }),
+            });
+            if (!r.ok) throw new Error();
+            const fresh = await fetch('/api/comments').then(x => x.json());
+            if (Array.isArray(fresh)) setComments(fresh);
+            setCommentText('');
+            setCommentEmail('');
+            setCaptchaVal('');
+            setCommentStatus('success');
+            setTimeout(() => setCommentStatus('idle'), 3000);
+        } catch {
+            setCommentStatus('error');
+            setTimeout(() => setCommentStatus('idle'), 3000);
+        }
+    };
+
     const handleWolfClick = () => {
         if (showWolfEasterEgg) return;
         setShowWolfEasterEgg(true);
@@ -703,6 +743,63 @@ export default function AppAlt() {
                     <span className="av2-play-arrow right-arrow">➤</span>
                 </div>
             </div>
+
+            {/* ── COMMENTS ─────────────────────────────── */}
+            <section className="comments-section">
+                <h3 className="comments-title">Leave a Comment</h3>
+                <p className="comments-subtitle">Your email stays private. Your comment does not.</p>
+
+                <form className="comments-form" onSubmit={handleCommentSubmit}>
+                    <div className="captcha-row">
+                        <label className="av2-label">Prove you're human — type: <span className="captcha-hint">Epstein is Not Dead</span></label>
+                        <input
+                            type="text"
+                            className={`av2-input captcha-input${captchaOk ? ' captcha-ok' : ''}`}
+                            value={captchaVal}
+                            onChange={e => setCaptchaVal(e.target.value)}
+                            placeholder="Type the phrase above..."
+                            autoComplete="off"
+                        />
+                    </div>
+                    <input
+                        type="email"
+                        className="av2-input"
+                        value={commentEmail}
+                        onChange={e => setCommentEmail(e.target.value)}
+                        placeholder="Your email (not shown publicly)"
+                        required
+                        disabled={!captchaOk}
+                    />
+                    <textarea
+                        className="av2-input comment-textarea"
+                        value={commentText}
+                        onChange={e => setCommentText(e.target.value)}
+                        placeholder="Say something. You're already on a list."
+                        rows={4}
+                        required
+                        disabled={!captchaOk}
+                    />
+                    <button
+                        type="submit"
+                        className="av2-submit"
+                        disabled={!captchaOk || !commentEmail || !commentText || commentStatus === 'loading'}
+                    >
+                        {commentStatus === 'loading' ? 'Submitting...' : commentStatus === 'success' ? 'Comment filed with the FBI ✓' : 'Submit Comment'}
+                    </button>
+                    {commentStatus === 'error' && <p className="comment-error">Something went wrong. Try again.</p>}
+                </form>
+
+                {comments.length > 0 && (
+                    <div className="comments-feed">
+                        {comments.map(c => (
+                            <div key={c.id} className="comment-card">
+                                <p className="comment-text">{c.comment}</p>
+                                <span className="comment-time">{new Date(c.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </section>
 
             <footer className="av2-footer">
                 <p>Made by <span onClick={handleWolfClick} style={{ cursor: 'pointer' }}>The Wise Wolf</span> &copy; {new Date().getFullYear()} &nbsp;·&nbsp; <a href="mailto:douchecoded@gmail.com">douchecoded@gmail.com</a></p>
