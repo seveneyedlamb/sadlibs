@@ -10,6 +10,17 @@ import merchImg from '../images/buyatee.png';
 import themeSong from '../audio/sad.mp3';
 import html2canvas from 'html2canvas';
 
+import bg1 from '../images/1.webp';
+import bg2 from '../images/2.webp';
+import bg3 from '../images/3.webp';
+import bg4 from '../images/4.webp';
+import bg5 from '../images/5.webp';
+import bg6 from '../images/6.webp';
+import bg7 from '../images/7.webp';
+import bg8 from '../images/8.webp';
+import bg9 from '../images/9.webp';
+const BGS = [bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9];
+
 const NAMES_DATA = [
     { name: 'Donald Trump', url: 'https://en.wikipedia.org/wiki/Donald_Trump' },
     { name: 'Bill Clinton', url: 'https://en.wikipedia.org/wiki/Bill_Clinton' },
@@ -164,6 +175,8 @@ export default function AppAlt() {
     const [showExitModal, setShowExitModal] = useState(false);
     const [shareCount, setShareCount] = useState(() => parseInt(localStorage.getItem('sadlibs_share_count')) || 1300);
     const [heroLoaded, setHeroLoaded] = useState(false);
+    const [bgIndex, setBgIndex] = useState(0);
+    const [glitching, setGlitching] = useState(false);
     const [isMuted, setIsMuted] = useState(false);
     const [musicStarted, setMusicStarted] = useState(false);
     const [shareReady, setShareReady] = useState(false);
@@ -193,7 +206,15 @@ export default function AppAlt() {
     const placeholders = useMemo(() => activeStory ? extractPlaceholders(activeStory.text) : [], [activeStory]);
     const allFilled = activeStory && placeholders.every(p => inputs[p.id] && inputs[p.id].trim() !== '');
 
-    useEffect(() => { const t = setTimeout(() => setHeroLoaded(true), 100); return () => clearTimeout(t); }, []);
+    useEffect(() => {
+        const t = setTimeout(() => setHeroLoaded(true), 100);
+        const iv = setInterval(() => {
+            setGlitching(true);
+            setTimeout(() => setBgIndex(Math.floor(Math.random() * BGS.length)), 150);
+            setTimeout(() => setGlitching(false), 400);
+        }, 3000);
+        return () => { clearTimeout(t); clearInterval(iv); };
+    }, []);
 
     const startMusic = () => {
         const audio = themeAudioRef.current;
@@ -371,19 +392,22 @@ export default function AppAlt() {
 
             {/* ── HERO ─────────────────────────────────── */}
             <section className={`av2-hero ${heroLoaded ? 'loaded' : ''}`}>
-                <div className="av2-hero-bg" />
+                <div className={`av2-hero-bg ${glitching ? 'glitch-anim' : ''}`} style={{ backgroundImage: `url(${BGS[bgIndex]})` }} />
                 <div className="av2-hero-vignette" />
                 <div className="av2-hero-content">
                     <p className="av2-hero-eyebrow">THE WISE WOLF PRESENTS</p>
                     <img src={logo} alt="SadLibs" className="av2-hero-logo" />
-                    <p className="av2-hero-tagline">
-                        The government released Jeffrey Epstein's emails. Then redacted so many names the documents read like Mad Libs. <strong>So we finished the goddamn job.</strong>
-                    </p>
+
+                    <button className="av2-cta av2-hero-play-main" onClick={() => { startMusic(); document.getElementById('av2-stories').scrollIntoView({ behavior: 'smooth' }); }}>
+                        Play Sad Libs
+                    </button>
+
                     <img src={heroCard} alt="SadLibs game" className="av2-hero-card" />
                     <div className="av2-hero-btns">
-                        <button className="av2-cta" onClick={() => { startMusic(); document.getElementById('av2-stories').scrollIntoView({ behavior: 'smooth' }); }}>
-                            Play Sad Libs
-                        </button>
+                        <a href="https://www.wisewolf.club" target="_blank" rel="noopener noreferrer" className="av2-cta av2-wisewolf-btn">
+                            <span className="ww-frame ww-1">Hate Bullshit?</span>
+                            <span className="ww-frame ww-2">Read The Wise Wolf</span>
+                        </a>
                         <button className="av2-ghost-btn" onClick={() => setShowNamesModal(true)}>
                             Names on the File
                         </button>
