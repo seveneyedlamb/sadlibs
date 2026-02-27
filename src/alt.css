@@ -1735,8 +1735,8 @@ body:has(.av2-fbi-terminal)::after {
 /* ── 4CHAN MODE: MIDDLE SECTION BG ──────────────────── */
 .chan4-mid-bg {
     position: relative;
-    background-size: cover;
-    background-position: center;
+    background-size: 100% auto;
+    background-position: top center;
     background-repeat: no-repeat;
 }
 
