@@ -422,7 +422,7 @@ export default function AppAlt() {
                 <div className="av2-section-intro">
                     <h2 className="av2-section-title">Choose Your Depressing Adventure</h2>
                     <p className="av2-section-desc">
-                        These are real emails from the federally unsealed Epstein document dump. The blanks are where the government put black marker over names that belong to people you definitely recognize. Fill them in with anything. <strong>An AI voice clone of Donald Trump</strong> will then read the result back to you, adding a layer of dystopian horror we frankly didn't need. Your lawyers cannot help you.
+                        These are real emails from the federally unsealed Epstein document dump. The blanks are where the government put black marker over names that belong to people you definitely recognize. Fill them in with anything. <strong>Donald Trump</strong> will then read the result back to you, adding a layer of dystopian horror we frankly didn't need. Your lawyers cannot help you.
                     </p>
                 </div>
 
