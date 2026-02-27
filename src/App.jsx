@@ -695,9 +695,13 @@ export default function AppAlt() {
             </div>
 
             <div className="av2-merch">
-                <a href="https://www.bonfire.com/store/the-wise-wolf-merch/" target="_blank" rel="noopener noreferrer">
-                    <img src={merchImg} alt="Get a tee" className="av2-merch-img" />
-                </a>
+                <div className="av2-play-container">
+                    <span className="av2-play-arrow">➤</span>
+                    <a href="https://www.bonfire.com/store/the-wise-wolf-merch/" target="_blank" rel="noopener noreferrer">
+                        <img src={merchImg} alt="Get a tee" className="av2-merch-img" />
+                    </a>
+                    <span className="av2-play-arrow right-arrow">➤</span>
+                </div>
             </div>
 
             <footer className="av2-footer">
