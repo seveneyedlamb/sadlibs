@@ -740,6 +740,7 @@ export default function AppAlt() {
             {/* ── FOOTER SHARE ─────────────────────────── */}
             <div className="av2-footer-share">
                 <div className="share-scroll-bg" style={{ backgroundImage: `url(${infscrollImg})` }} aria-hidden="true" />
+                <div className="share-scroll-bg share-scroll-bg-right" style={{ backgroundImage: `url(${infscrollImg})` }} aria-hidden="true" />
                 <h3>{shareCount.toLocaleString()} people have shared this. Statistically, at least one of them has their name in the Epstein documents.</h3>
                 <div className="av2-share-row" style={{ justifyContent: 'center', marginTop: '1.5rem' }}>
                     <button onClick={() => handleShare('twitter')} className="av2-action-btn share-x">Share on X</button>

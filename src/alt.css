@@ -924,6 +924,21 @@ button.av2-red-play-main:hover {
     }
 }
 
+.share-scroll-bg-right {
+    animation-name: infScrollRight;
+    opacity: 0.25;
+}
+
+@keyframes infScrollRight {
+    from {
+        transform: translateX(-50%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
 .av2-share-proof {
     text-align: center;
     font-family: var(--font-family);
