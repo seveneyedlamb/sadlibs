@@ -660,7 +660,11 @@ export default function AppAlt() {
                 <div className="av2-hero-vignette" />
                 <p className="av2-hero-eyebrow av2-hero-eyebrow-fixed">THE WISE WOLF PRESENTS</p>
                 <div className="av2-hero-content">
-                    <img src={logo} alt="SadLibs" className="av2-hero-logo" />
+                    <div className="av2-logo-scroll-wrapper">
+                        <div className="hero-logo-scroll-bg" style={{ backgroundImage: `url(${logo})` }} aria-hidden="true" />
+                        <div className="hero-logo-scroll-bg hero-logo-scroll-bg-right" style={{ backgroundImage: `url(${logo})` }} aria-hidden="true" />
+                        <img src={logo} alt="SadLibs" className="av2-hero-logo" />
+                    </div>
 
                     <div className="av2-play-container">
                         <span className="av2-play-arrow">➤</span>

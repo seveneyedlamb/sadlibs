@@ -189,6 +189,41 @@
     transform: scale(1);
 }
 
+/* Two-way scrolling logo wrapper */
+.av2-logo-scroll-wrapper {
+    position: relative;
+    width: min(90%, 540px);
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.hero-logo-scroll-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background-repeat: repeat-x;
+    background-size: auto 80%;
+    background-position: center;
+    animation: infScrollLeft 25s linear infinite;
+    opacity: 0.18;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.hero-logo-scroll-bg-right {
+    animation-name: infScrollRight;
+    opacity: 0.12;
+}
+
+.av2-logo-scroll-wrapper .av2-hero-logo {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 100%;
+}
+
 /* Enlarged, pulsating play button taking up massive space */
 .av2-play-container {
     display: flex;
