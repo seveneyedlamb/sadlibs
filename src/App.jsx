@@ -510,10 +510,10 @@ export default function AppAlt() {
     const handleShare = (platform) => {
         const nc = shareCount + 1; setShareCount(nc); localStorage.setItem('sadlibs_share_count', nc); setHasSharedInExitModal(true);
         const url = 'https://sadlibs.vercel.app';
-        const t = encodeURIComponent("The DOJ gave us 900 pages of Epstein files with the names redacted. I filled in the blanks. Then made Trump read them back. Your turn. #EpsteinFiles #EpsteinClientList");
+        const t = encodeURIComponent("The government hid 900 pages of Epstein files. We turned them into a party game. America is doing great. #EpsteinFiles #EpsteinClientList");
         if (platform === 'twitter') window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${t}`, '_blank');
         if (platform === 'facebook') window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
-        if (platform === 'copy') { navigator.clipboard.writeText(`The DOJ gave us 900 pages of Epstein files with the names redacted. I filled in the blanks. Then made Trump read them back: ${url}`); alert('Copied.'); }
+        if (platform === 'copy') { navigator.clipboard.writeText(`The government hid 900 pages of Epstein files. We turned them into a party game: ${url}`); alert('Copied.'); }
     };
 
     const handleShareStory = async (platform) => {
@@ -530,8 +530,8 @@ export default function AppAlt() {
             const imgUrl = appDomain + staticImg;
             const nc = shareCount + 1; setShareCount(nc); localStorage.setItem('sadlibs_share_count', nc); setHasSharedInExitModal(true);
             const st = is4ChanMode
-                ? `The government redacted 900 pages of Epstein files. I filled in the blanks on "${sn}" and made Trump read it back. Your turn. #EpsteinFiles #Epstein`
-                : `The DOJ buried "${sn}" in Epstein's files. I filled in their redactions. Then made Trump read it back. Your turn. #EpsteinFiles #EpsteinClientList`;
+                ? `anon made trump narrate epstein's sex trafficking files on "${sn}". this site is not a bit. unfortunately. #EpsteinFiles`
+                : `I made Donald Trump read actual Jeffrey Epstein court documents out loud. For fun. It is somehow legal. Play "${sn}" yourself. #EpsteinFiles #EpsteinClientList`;
             const cardUrl = `${appDomain}/api/share?img=${encodeURIComponent(imgUrl)}`;
             if (platform === 'twitter') window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(st)}&url=${encodeURIComponent(cardUrl)}`, '_blank');
             else if (platform === 'facebook') window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(cardUrl)}`, '_blank');
@@ -556,7 +556,7 @@ export default function AppAlt() {
             if (!up.ok || !ud.url) throw new Error('upload fail');
             const imgUrl = ud.url;
             const nc = shareCount + 1; setShareCount(nc); localStorage.setItem('sadlibs_share_count', nc); setHasSharedInExitModal(true);
-            const st = `The DOJ buried "${sn}" in Epstein's files. I filled in their redactions. Then made Trump read it back. Your turn. #EpsteinFiles #EpsteinClientList`;
+            const st = `I made Donald Trump read actual Jeffrey Epstein court documents out loud on "${sn}". For fun. It is somehow legal. Now it's your turn. #EpsteinFiles #EpsteinClientList`;
             const cardUrl = `${appDomain}/api/share?img=${encodeURIComponent(imgUrl)}`;
             if (platform === 'twitter') {
                 if (navigator.canShare) {

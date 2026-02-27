@@ -18,15 +18,15 @@ export default function handler(req, res) {
   <!-- Twitter Card (summary_large_image shows the full image inline in the tweet) -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@sadlibs" />
-  <meta name="twitter:title" content="The government redacted the Epstein files. Someone filled in the blanks." />
-  <meta name="twitter:description" content="900 pages. Redacted. Until now. I filled in who the DOJ didn't want you to know about. Then made Trump read it back. Play it." />
+  <meta name="twitter:title" content="We turned the Epstein files into a game. The DOJ is not happy about this." />
+  <meta name="twitter:description" content="900 pages. Redacted. We let you fill in the blanks, then made Donald Trump read them back out loud. This is a real website. Play it." />
   <meta name="twitter:image" content="${imageUrl}" />
 
   <!-- Open Graph (Facebook / general) -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="${appUrl}" />
-  <meta property="og:title" content="The government redacted the Epstein files. Someone filled in the blanks." />
-  <meta property="og:description" content="900 pages. Redacted. Until now. I filled in who the DOJ didn't want you to know about. Then made Trump read it back. Play it." />
+  <meta property="og:title" content="We turned the Epstein files into a game. The DOJ is not happy about this." />
+  <meta property="og:description" content="900 pages. Redacted. We let you fill in the blanks, then made Donald Trump read them back out loud. This is a real website. Play it." />
   <meta property="og:image" content="${imageUrl}" />
 
   <!-- Redirect humans to the app immediately -->
