@@ -106,15 +106,10 @@
 }
 
 .av2-hero-tagline {
-    font-size: clamp(1rem, 2.5vw, 1.2rem);
-    line-height: 1.7;
-    color: #94a3b8;
-    max-width: 560px;
-}
-
-.av2-hero-tagline em {
-    color: #cbd5e1;
-    font-style: normal;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: #f1f5f9;
+    max-width: 600px;
 }
 
 /* Hero card image — slides up */
@@ -248,10 +243,6 @@
     font-size: 1.05rem;
     line-height: 1.8;
     color: #e2e8f0;
-}
-
-.av2-section-desc strong {
-    color: var(--danger-accent);
 }
 
 /* ── STORY GRID ─────────────────────────────────────── */
