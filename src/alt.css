@@ -1204,51 +1204,80 @@ button.av2-red-play-main:hover {
     border-color: rgba(255, 255, 255, 0.3);
 }
 
-/* ── ANIMATIONS ─────────────────────────────────────── */
-.corner-decal {
-    animation: featherFall 4s cubic-bezier(0.25, 0.1, 0.25, 1) forwards, subtleSway 8s ease-in-out infinite alternate;
-    animation-delay: 0s, 4s;
-    /* Start swaying after fall finishes */
-    transform-origin: center;
-    /* Ensure they don't break flex layout during fall */
+/* ── WATERFALL ANIMATION ────────────────────────────── */
+.av2-waterfall {
     position: fixed;
-    z-index: 100;
+    top: 0;
+    bottom: 0;
+    width: 140px;
+    z-index: 50;
+    /* Behind main content, above background */
+    pointer-events: none;
+    overflow: hidden;
+    opacity: 0.85;
+    /* Slightly faded so it isn't too distracting */
 }
 
-.corner-decal.left {
-    animation-delay: -0.5s, 3.5s;
+.av2-waterfall.left {
+    left: 2%;
 }
 
-@keyframes featherFall {
+.av2-waterfall.right {
+    right: 2%;
+}
+
+.av2-waterfall-track {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /* We animate this entire column down forever */
+    animation: waterfallScroll 30s linear infinite;
+}
+
+.wf-item {
+    width: 100%;
+    padding: 2rem 0;
+    /* Space between falling images */
+    display: flex;
+    justify-content: center;
+}
+
+.wf-item img {
+    width: 100%;
+    max-width: 120px;
+    height: auto;
+    object-fit: contain;
+    /* Give each image a subtle sway as they fall */
+    animation: wfSway 4s ease-in-out infinite alternate;
+    transform-origin: center;
+}
+
+/* Reverse the sway for odd items to look more chaotic */
+.wf-item:nth-child(odd) img {
+    animation-direction: alternate-reverse;
+}
+
+/* The infinite scrolling keyframes */
+@keyframes waterfallScroll {
     0% {
-        transform: translateY(-120vh) rotate(-15deg);
-    }
-
-    25% {
-        transform: translateY(-90vh) rotate(10deg);
-    }
-
-    50% {
-        transform: translateY(-60vh) rotate(-5deg);
-    }
-
-    75% {
-        transform: translateY(-30vh) rotate(5deg);
+        transform: translateY(-50%);
+        /* Starts halfway up so we scroll through the first full set */
     }
 
     100% {
-        /* Final resting position in translateY */
-        transform: translateY(0) rotate(0deg);
+        transform: translateY(0%);
+        /* Scrolls down fully */
     }
 }
 
-@keyframes subtleSway {
+/* The subtle rotating sway */
+@keyframes wfSway {
     0% {
-        transform: translateY(0) rotate(-10deg);
+        transform: rotate(-12deg);
     }
 
     100% {
-        transform: translateY(0) rotate(10deg);
+        transform: rotate(12deg);
     }
 }
 
@@ -1280,5 +1309,13 @@ button.av2-red-play-main:hover {
 
     .av2-modal h2 {
         font-size: 1.4rem;
+    }
+
+    .av2-waterfall {
+        width: 60px;
+    }
+
+    .wf-item img {
+        max-width: 50px;
     }
 }
