@@ -873,7 +873,7 @@ export default function AppAlt() {
                     <div className="av2-modal" onClick={e => e.stopPropagation()}>
                         <h2>Wait. Before you go.</h2>
                         <p style={{ color: '#94a3b8', lineHeight: 1.7, marginBottom: '1rem' }}>
-                            Peggy Siegal — a well-connected New York PR socialite — emailed Jeffrey Epstein offering to procure him African babies. "Or two, if you'd like." In the same email, she offered to have journalist Tina Brown murdered on his behalf. She called it "neutralizing" her. This is a real email. Sent from her real address. To a convicted sex trafficker. More people need to read it.
+                            Peggy Siegal is a New York socialite. She emailed Jeffrey Epstein and offered to bring him African babies to sexually abuse. She offered one. Then said she could bring two. In that same email she offered to have journalist Tina Brown murdered because Tina Brown was writing about Epstein. She called murdering her "neutralizing" her. Peggy Siegal sent this from her real email address. She is still free. Nobody is talking about this.
                         </p>
                         <img src={babyEmailImg} alt="The baby email" style={{ width: '100%', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', marginBottom: '1.5rem' }} />
                         {!hasSharedInExitModal ? (
