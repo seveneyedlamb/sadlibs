@@ -602,7 +602,7 @@ export default function AppAlt() {
                             <span className="ww-frame ww-1">Hate Bullshit?</span>
                             <span className="ww-frame ww-2">Read The Wise Wolf</span>
                         </a>
-                        <button className="av2-ghost-btn" onClick={() => setShowNamesModal(true)}>
+                        <button className="av2-cta" onClick={() => setShowNamesModal(true)}>
                             Names on the File
                         </button>
                     </div>
