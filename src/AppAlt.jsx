@@ -421,6 +421,14 @@ export default function AppAlt() {
                     <p className="av2-hero-eyebrow">THE WISE WOLF PRESENTS</p>
                     <img src={logo} alt="SadLibs" className="av2-hero-logo" />
 
+                    <div className="av2-play-container">
+                        <span className="av2-play-arrow">➤</span>
+                        <button className="av2-cta av2-hero-play-main" onClick={() => { startMusic(); document.getElementById('av2-stories').scrollIntoView({ behavior: 'smooth' }); }}>
+                            Play Sad Libs
+                        </button>
+                        <span className="av2-play-arrow right-arrow">➤</span>
+                    </div>
+
                     <img src={heroCard} alt="SadLibs game" className="av2-hero-card" />
 
                     <div className="av2-hero-btns" style={{ marginBottom: '1.5rem', marginTop: '1.5rem' }}>
