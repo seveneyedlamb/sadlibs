@@ -485,9 +485,11 @@ button.av2-red-play-main:hover {
 .av2-section-title {
     font-size: clamp(2rem, 5vw, 3rem);
     font-weight: 800;
-    color: var(--text-color);
+    color: #ef4444;
     margin-bottom: 1rem;
     letter-spacing: -0.02em;
+    -webkit-text-stroke: 1.5px #93c5fd;
+    paint-order: stroke fill;
 }
 
 .av2-section-desc {
