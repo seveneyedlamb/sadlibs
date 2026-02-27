@@ -575,7 +575,7 @@ export default function AppAlt() {
                 <div className="av2-section-intro">
                     <h2 className="av2-section-title">Choose Your Depressing Adventure</h2>
                     <p className="av2-section-desc">
-                        These are real emails from the federally unsealed Epstein document dump. The blanks are where the government put black marker over names that belong to people you definitely recognize. Fill them in with anything. <strong>Donald Trump</strong> will then read the result back to you, adding a layer of dystopian horror we frankly didn't need. Your lawyers cannot help you.
+                        Have YOU ever wanted to play Mad Libs with evidence from an international child trafficking operation? Well NOW YOU CAN. Simply insert names into the blanks the DOJ left behind when they decided some pedophiles matter more than others. Then sit back and let <strong>Donald Trump</strong> read your answers out loud like the world's worst audiobook. But wait, there's more! Order now and we'll throw in the complete psychological destruction of whatever faith in humanity you had left. FREE.
                     </p>
                 </div>
 
