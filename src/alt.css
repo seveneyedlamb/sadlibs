@@ -679,11 +679,13 @@ button.av2-red-play-main:hover {
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--danger-accent);
-    border: 1px solid rgba(239, 68, 68, 0.35);
-    background: rgba(239, 68, 68, 0.07);
-    padding: 0.3rem 0.75rem;
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    background: rgba(15, 23, 42, 0.95);
+    padding: 0.4rem 0.85rem;
     border-radius: 4px;
     margin-bottom: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
 }
 
 .av2-form-title {
@@ -1204,21 +1206,49 @@ button.av2-red-play-main:hover {
 
 /* ── ANIMATIONS ─────────────────────────────────────── */
 .corner-decal {
-    animation: subtleSway 8s ease-in-out infinite alternate;
+    animation: featherFall 4s cubic-bezier(0.25, 0.1, 0.25, 1) forwards, subtleSway 8s ease-in-out infinite alternate;
+    animation-delay: 0s, 4s;
+    /* Start swaying after fall finishes */
     transform-origin: center;
+    /* Ensure they don't break flex layout during fall */
+    position: fixed;
+    z-index: 100;
 }
 
 .corner-decal.left {
-    animation-delay: -3s;
+    animation-delay: -0.5s, 3.5s;
+}
+
+@keyframes featherFall {
+    0% {
+        transform: translateY(-120vh) rotate(-15deg);
+    }
+
+    25% {
+        transform: translateY(-90vh) rotate(10deg);
+    }
+
+    50% {
+        transform: translateY(-60vh) rotate(-5deg);
+    }
+
+    75% {
+        transform: translateY(-30vh) rotate(5deg);
+    }
+
+    100% {
+        /* Final resting position in translateY */
+        transform: translateY(0) rotate(0deg);
+    }
 }
 
 @keyframes subtleSway {
     0% {
-        transform: rotate(-10deg);
+        transform: translateY(0) rotate(-10deg);
     }
 
     100% {
-        transform: rotate(10deg);
+        transform: translateY(0) rotate(10deg);
     }
 }
 
