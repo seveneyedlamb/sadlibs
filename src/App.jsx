@@ -873,7 +873,7 @@ export default function AppAlt() {
                     <div className="av2-modal" onClick={e => e.stopPropagation()}>
                         <h2>Wait. Before you go.</h2>
                         <p style={{ color: '#94a3b8', lineHeight: 1.7, marginBottom: '1rem' }}>
-                            A prominent New York socialite offered to personally acquire Jeffrey Epstein an African baby. As a gift. She then offered to "neutralize" a journalist, also as a gift. This is one email. That she sent. From her real email address. More people need to see this.
+                            Peggy Siegal — a well-connected New York PR socialite — emailed Jeffrey Epstein offering to procure him African babies. "Or two, if you'd like." In the same email, she offered to have journalist Tina Brown murdered on his behalf. She called it "neutralizing" her. This is a real email. Sent from her real address. To a convicted sex trafficker. More people need to read it.
                         </p>
                         <img src={babyEmailImg} alt="The baby email" style={{ width: '100%', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', marginBottom: '1.5rem' }} />
                         {!hasSharedInExitModal ? (
