@@ -289,39 +289,38 @@ export default function AppAlt() {
     }, [isAFK]);
 
     useEffect(() => {
-        let overscrollDelta = 0;
-        let lastTouchY = 0;
+        let scrollAttempts = 0;
+        let lastScrollTime = 0;
 
-        const checkGlitch = () => {
-            if (overscrollDelta > 80 && !isGlitchScrolling) {
-                setIsGlitchScrolling(true);
-                setTimeout(() => setIsGlitchScrolling(false), 2000);
-                overscrollDelta = 0;
+        const handleScrollAttempt = () => {
+            const isBottom = Math.ceil(window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 10);
+            if (!isBottom) {
+                scrollAttempts = 0;
+                return;
+            }
+
+            const now = Date.now();
+            if (now - lastScrollTime > 400) {
+                scrollAttempts++;
+                lastScrollTime = now;
+
+                if (scrollAttempts >= 3 && !isGlitchScrolling) {
+                    setIsGlitchScrolling(true);
+                    setTimeout(() => setIsGlitchScrolling(false), 2000);
+                    scrollAttempts = 0;
+                }
             }
         };
 
         const handleWheel = (e) => {
-            if (!document.body || isGlitchScrolling) return;
-            const isBottom = Math.ceil(window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 10);
-            if (isBottom && e.deltaY > 0) {
-                overscrollDelta += e.deltaY;
-                checkGlitch();
-            } else {
-                overscrollDelta = 0;
-            }
+            if (e.deltaY > 0) handleScrollAttempt();
         };
 
-        const handleTouchStart = (e) => { lastTouchY = e.touches[0].clientY; overscrollDelta = 0; };
+        let lastTouchY = 0;
+        const handleTouchStart = (e) => { lastTouchY = e.touches[0].clientY; };
         const handleTouchMove = (e) => {
-            if (!document.body || isGlitchScrolling) return;
             const currentY = e.touches[0].clientY;
-            const isBottom = Math.ceil(window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 10);
-            if (isBottom && currentY < lastTouchY) {
-                overscrollDelta += (lastTouchY - currentY);
-                checkGlitch();
-            } else {
-                overscrollDelta = 0;
-            }
+            if (currentY < lastTouchY - 10) handleScrollAttempt();
             lastTouchY = currentY;
         };
 
@@ -535,7 +534,7 @@ export default function AppAlt() {
 
             {/* ── HERO ─────────────────────────────────── */}
             <section className={`av2-hero ${heroLoaded ? 'loaded' : ''}`}>
-                <div className={`av2-hero-bg ${glitching ? 'glitch-anim' : ''}`} style={{ backgroundImage: `url(${BGS[bgIndex]})` }} />
+                <div className={`av2-hero-bg ${glitching && !isAFK ? 'glitch-anim' : ''}`} style={{ backgroundImage: `url(${BGS[bgIndex]})` }} />
                 <div className="av2-hero-vignette" />
                 <p className="av2-hero-eyebrow av2-hero-eyebrow-fixed">THE WISE WOLF PRESENTS</p>
                 <div className="av2-hero-content">
