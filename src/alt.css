@@ -284,6 +284,27 @@
     color: #fff;
 }
 
+.av2-red-play-btn {
+    background: var(--danger-accent);
+    color: #fff;
+    border: none;
+    padding: 0.9rem 2.5rem;
+    border-radius: 50px;
+    font-family: var(--font-family);
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.av2-red-play-btn:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 8px 25px rgba(239, 68, 68, 0.6);
+    background: #ef4444;
+    /* Brighter red on hover */
+}
+
 .av2-wisewolf-btn {
     position: relative;
     overflow: hidden;

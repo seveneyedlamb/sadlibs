@@ -436,8 +436,8 @@ export default function AppAlt() {
                             <span className="ww-frame ww-1">Hate Bullshit?</span>
                             <span className="ww-frame ww-2">Read The Wise Wolf</span>
                         </a>
-                        <button className="av2-ghost-btn" onClick={() => setShowNamesModal(true)}>
-                            Names on the File
+                        <button className="av2-cta av2-red-play-btn" onClick={() => { startMusic(); document.getElementById('av2-stories').scrollIntoView({ behavior: 'smooth' }); }}>
+                            I SAID PLAY SAD LIBS!
                         </button>
                     </div>
 
