@@ -542,18 +542,24 @@ export default function AppAlt() {
     const handlePrizeEmail = async (e) => {
         e.preventDefault(); setPrizeModalStatus('loading');
         try {
-            const r = await fetch('/api/save-email', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: prizeEmail, source: 'prize-modal' }) });
+            const r = await fetch('https://formsubmit.co/ajax/douchecoded@gmail.com', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify({ email: prizeEmail, _subject: 'New VIP Claim!', _captcha: 'false' }) });
             setPrizeModalStatus(r.ok ? 'success' : 'error');
-            if (r.ok) setTimeout(() => setShowPrizeModal(false), 3000);
+            if (r.ok) {
+                fetch('/api/backup-email', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: prizeEmail, source: 'prize-modal' }) }).catch(() => { });
+                setTimeout(() => setShowPrizeModal(false), 3000);
+            }
         } catch { setPrizeModalStatus('error'); }
     };
 
     const handleExitEmail = async (e) => {
         e.preventDefault(); setExitModalStatus('loading');
         try {
-            const r = await fetch('/api/save-email', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: exitEmail, source: 'exit-modal' }) });
+            const r = await fetch('https://formsubmit.co/ajax/douchecoded@gmail.com', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify({ email: exitEmail, _subject: 'New VIP Claim!', _captcha: 'false' }) });
             setExitModalStatus(r.ok ? 'success' : 'error');
-            if (r.ok) setTimeout(() => setShowExitModal(false), 3000);
+            if (r.ok) {
+                fetch('/api/backup-email', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: exitEmail, source: 'exit-modal' }) }).catch(() => { });
+                setTimeout(() => setShowExitModal(false), 3000);
+            }
         } catch { setExitModalStatus('error'); }
     };
 
