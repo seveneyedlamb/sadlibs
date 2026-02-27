@@ -47,71 +47,71 @@ const stories = [
     {
         id: 'lolita-2017',
         title: 'The "Lolita" Scouting Email (2017)',
-        hook: 'A professional recruiter emailed their BILLIONAIRE BOSS comparing a girl to a character from a novel about child rape. In writing. From their work account. The boss did not respond with "please stop."',
-        text: 'It was a very [adjective] day in the [place] when a confidential, highly-paid [noun] wrote a top-secret message to their billionaire boss. They had just finished dining on a platter of [plural noun] when they decided to send an urgent update. "Boss, I met [person\'s name] today while I was [verb ending in -ing] near the [noun]. Let me tell you, she is exactly like [proper noun] from that famous book about the [adjective] [noun]. She is basically a [adjective] miniature :) I couldn\'t believe my [body part (plural)]. So now, moving forward, as we plan our next [adjective] retreat to [country], should I just send you her specific type of [plural noun] from now on? Please reply [adverb] before the authorities [verb]!"',
+        hook: 'A professional recruiter emailed their billionaire boss to compare a living human girl to a character from a famous novel about child rape. In writing. The boss did not reply with "what the actual fuck is wrong with you." He kept her on payroll.',
+        text: 'It was a very [adjective] day in the [place] when a highly-paid [noun] decided to put their own career suicide in writing. They had just finished devouring a platter of [plural noun] when they emailed their billionaire boss. "Boss, I met [person\'s name] today while I was [verb ending in -ing] near the [noun]. Let me tell you, she is exactly like [proper noun] from that famous book about the [adjective] [noun]. She is basically a [adjective] miniature :) I couldn\'t believe my [body part (plural)]. So now, moving forward, as we plan our next [adjective] retreat to [country], should I just send you her specific type of [plural noun] from now on? Please reply [adverb] before the FBI [verb]!"',
         realQuote: '"I met [REDACTED] today. She is like Lolita from Nabokov, femme miniature :) So now I should send you her type of candidates only?"',
         sources: [{ name: 'CNN', url: 'https://www.cnn.com/2026/02/09/politics/redacted-text-jeffrey-epstein-files' }]
     },
     {
         id: 'littlest-girl-2014',
         title: 'The "Littlest Girl" Email (2014)',
-        hook: 'A guest wrote Epstein a thank-you note. Polite. Friendly. Included a review of the staff. Congress spent two years trying to figure out who sent it. They figured it out. The sender has since given many TV interviews.',
-        text: 'A high-profile guest had a very [adjective] evening vacationing on the infamous island of [fictional place]. The next morning, after drinking a tall glass of [liquid], they hastily typed out a thank you note on their customized [noun]: "Dear Jeffrey, Thank you for such a [adjective] night. You are quite the [noun], and your mansion smells like [noun]. By the way, your [adjective] girl was a [adverb] naughty, which made the whole [event] totally [adjective]. We should definitely [verb] her the next time we ride the [mode of transportation] together!" (Note: The sender was confirmed to be a [noun] by Rep. Massie).',
-        realQuote: '"Thank you for a fun night… Your littlest girl was a little naughty." (Rep. Massie confirmed the sender was a woman).',
+        hook: 'A guest at the pedophile mansion wrote Epstein a thank-you note. It included a Yelp-style review of the "littlest girl" on staff. Congress spent two years trying to figure out who sent it. It was a Republican congressman\'s wife.',
+        text: 'A high-profile VIP had a very [adjective] evening vacationing on the infamous island of [fictional place]. The next morning, after slamming a tall glass of [liquid], they typed out a polite thank you note on their custom [noun]: "Dear Jeffrey, Thank you for such a [adjective] night. You are quite the [noun], and your mansion smells like [noun]. By the way, your [adjective] girl was a [adverb] naughty, which made the whole [event] totally [adjective]. We should definitely [verb] her the next time we ride the [mode of transportation] to hell together!"',
+        realQuote: '"Thank you for a fun night… Your littlest girl was a little naughty." (Rep. Massie confirmed the sender was his wife).',
         sources: [{ name: 'CNN', url: 'https://www.cnn.com/2026/02/09/politics/redacted-text-jeffrey-epstein-files' }]
     },
     {
         id: 'beautiful-little-girl-2014',
         title: 'The "Beautiful Little Girl" Email (2014)',
-        hook: 'A grown adult had an actual EMERGENCY on Madison Avenue. Not a health emergency. Not a safety emergency. An emergency about a child\'s hair. They emailed Epstein about it immediately. As you do.',
-        text: '"I simply can\'t take it anymore!!!!!!!" the frantic email began, sent at exactly [time] in the morning. "I was just walking down [street name] wearing my favorite [article of clothing] to get my morning [noun]. Suddenly, I looked past the [noun] and I saw the most [adjective] [adjective] girl. She had incredibly long, [adjective], [color] hair that flowed like a river of [plural noun]. My heart started [verb ending in -ing] uncontrollably! We need to [verb] her immediately before the [group of people] find out and cancel my [noun] subscription!"',
+        hook: 'A grown adult had a literal meltdown on Madison Avenue. Not a medical emergency. A meltdown because they saw a child\'s hair. They emailed Epstein about it immediately. Like a normal person does.',
+        text: '"I simply can\'t take it anymore!!!!!!!" the frantic email began, sent at exactly [time] in the morning by an adult human with a job. "I was just walking down [street name] wearing my favorite [article of clothing] to get my morning [noun]. Suddenly, I looked past the [noun] and I saw the most [adjective] [adjective] girl. She had incredibly long, [adjective], [color] hair that flowed like a river of [plural noun]. My heart started [verb ending in -ing] uncontrollably! We need to [verb] her immediately before the [group of people] find out and cancel my [noun] subscription!"',
         realQuote: '"I can\'t take it anymore!!!!!!! I just saw the most beautiful little girl on Madison with long soft blonde hair."',
         sources: [{ name: 'CNN', url: 'https://www.cnn.com/2026/02/09/politics/redacted-text-jeffrey-epstein-files' }]
     },
     {
         id: 'brazilian-2013',
         title: 'The "New Brazilian" Email (2013)',
-        hook: 'A scout sent an after-midnight candidate review with an age included. A formatting glitch made that age look like a different age. Federal investigators argued about which age it was for two years. CNN had to publish a correction. About the age. Of a person. In the Epstein files.',
-        text: 'An enthusiastic agent from the prestigious [adjective] modeling agency fired off a quick, breathless message right after eating a large [food item]: "Good news, boss! A new [nationality] has just arrived in town on a giant [mode of transportation]. She is extremely [adjective] and [adverb] [adjective]. When I asked her age, the paperwork said she was only [number]yo!"',
+        hook: 'A talent scout sent a midnight candidate review. A formatting glitch made her age look like "9yo". Federal investigators spent two years arguing if the typo meant 9 or 19. CNN had to publish a correction. About the age. Of a human being.',
+        text: 'An enthusiastic agent from the prestigious [adjective] human-trafficking agency fired off a quick, breathless message right after eating a large [food item]: "Good news, boss! A new [nationality] has just arrived in town on a giant [mode of transportation]. She is extremely [adjective] and [adverb] [adjective]. When I asked her age, the paperwork clearly said she was only [number]yo! Wait, was that a typo? Who cares, grab the [noun]!"',
         realQuote: '"New Brazilian just arrived, sexy and cute, 19yo." (A formatting glitch caused some to read it as 9yo. CNN confirmed it said 19).',
         sources: [{ name: 'CNN', url: 'https://www.cnn.com/2026/02/09/politics/redacted-text-jeffrey-epstein-files' }]
     },
     {
         id: 'young-poor-2018',
         title: 'The "Young Poor" Email (2018)',
-        hook: 'The most unhinged performance review ever filed. Submitted by someone who was "so tired" from scouting that grammar became optional. Contains the professional assessment "we both really likes her a lot." These are adults. With jobs.',
-        text: 'The daily scouting report arrived at midnight: "Boss, I scoured the streets of [city] and found at least [number] very good, young, [adjective] prospects. But honestly, we was so [adjective] from [verb ending in -ing] all day that we couldn\'t even [verb] them." A quick follow-up: "You definitely need to meet this specific one. She\'s not exactly the beauty [noun] of the group, and she talks like a [animal], but we both really likes her a [noun]. Can we send her over in a [mode of transportation]?"',
+        hook: 'The most bleak performance review ever filed. Submitted by a recruiter who was "so tired" that grammar became completely optional. Includes the business assessment "we both really likes her a lot." These people walked among us.',
+        text: 'The daily scouting report arrived at midnight from an absolute moron: "Boss, I scoured the streets of [city] and found at least [number] very good, young, [adjective] prospects. But honestly, we was so [adjective] from [verb ending in -ing] all day that we couldn\'t even [verb] them." A quick follow-up: "You definitely need to meet this specific one. She\'s not exactly the beauty [noun] of the group, and she talks like a [animal], but we both really likes her a [noun]. Can we send her over in a [mode of transportation]?"',
         realQuote: '"I found at least 3 very good young poor but we was so tired." Follow-up: "Meet this one, not the beauty queen but we both likes her a lot."',
         sources: [{ name: 'CNN', url: 'https://www.cnn.com/2026/02/09/politics/redacted-text-jeffrey-epstein-files' }]
     },
     {
         id: 'attia-crude',
         title: "Peter Attia's Diet Email",
-        hook: 'Dr. Peter Attia has three million podcast listeners and a book about living forever. He emailed Jeffrey Epstein a low-carb diet joke. The punchline was a body part. Epstein sent a photo back. Attia called him a bastard. This exchange happened. In writing.',
-        text: 'A well-known doctor emailed the billionaire with the bizarre subject line "[adjective]". In the body: "The [noun] is, indeed, very low carb. It pairs excellently with [food item]. However, I am still waiting on my lab assistant, [name], for the results on the [noun] content." Later, he received a shockingly inappropriate [noun] in reply. He responded: "Please, for the love of [deity], tell me that you found that [noun] online somewhere... you absolute [insult]."',
+        hook: 'Dr. Peter Attia has three million podcast listeners and wrote a book about living forever. He emailed Jeffrey Epstein a low-carb diet joke where the punchline was female anatomy. Epstein out-grossed him with a photo. This is our medical elite.',
+        text: 'A famous longevity doctor emailed the billionaire pedophile with the bizarre subject line "[adjective]". In the body: "The [noun] is, indeed, very low carb. It pairs excellently with [food item]. However, I am still waiting on my lab assistant, [name], for the results on the [noun] content." Later, he received a shockingly inappropriate [noun] in reply. He responded: "Please, for the love of [deity], tell me that you found that [noun] online somewhere... you absolute [insult]."',
         realQuote: 'Subject: "confirmed" — body: "Pussy is, indeed, low carb. Still awaiting results on gluten content." Epstein sent Attia a picture; Attia replied: "Please tell you found that picture on line…bastard."',
         sources: [{ name: 'NBC News', url: 'https://www.nbcnews.com/politics/justice-department/live-blog/epstein-files-trump-doj-release-live-updates-rcna256639' }]
     },
     {
         id: 'peggy-african',
         title: "The African Baby Email",
-        hook: 'This email exists. A real New York socialite offered to "get" Epstein an African baby as a GIFT. Then offered to neutralize a journalist. As a bonus gift. In the same email. This is not a metaphor. She meant an actual baby.',
-        text: 'High-society PR maven Peggy Siegal had a unique offer: she casually offered to procure him an [nationality] [noun], "or maybe two, if you\'d like to fill up the [room in a house]!" To sweeten the deal, she even offered to completely "[verb]" a pesky journalist named Tina Brown. "Just say the word, and she\'ll be swimming with the [plural animal]," Peggy joked, sipping her [liquid].',
+        hook: 'A real New York socialite offered to procure Epstein an African baby as a GIFT. In the same email, she offered to "neutralize" a journalist. This is not a metaphor. She meant an actual human baby. As a gift. For Jeffrey Epstein.',
+        text: 'High-society PR ghoul Peggy Siegal had a unique offer: she casually promised to procure him an [nationality] [noun], "or maybe two, if you\'d like to fill up the [room in a house]!" To sweeten the deal, she even offered to completely "[verb]" a pesky journalist named Tina Brown. "Just say the word, and she\'ll be swimming with the [plural animal]," Peggy joked, sipping her morning [liquid] made of [noun].',
         realQuote: 'PR maven Peggy Siegal offered to get Epstein an African baby "or two" and offered to "neutralize" journalist Tina Brown on his behalf.',
         sources: [{ name: 'Zeteo', url: 'https://zeteo.com/p/17-craziest-emails-epstein-files-woody-allen-elon-musk-donald-trump-steve-bannon-noam-chompsky-island-' }]
     },
     {
         id: 'fake-wife',
         title: 'The "Fake Wife" Email',
-        hook: 'Someone offered Epstein a fake wife as a PR strategy. The candidate requirements were extremely specific. They were not "kind" or "intelligent." They were "50 years old, Russian, Jewish." No other criteria. This was a professional proposal. From a professional.',
-        text: 'Someone decided Epstein needed a massive PR makeover. So, they offered him a "fake [noun]" to legitimize his status at fancy [plural noun]. The ideal candidate was hyper-specific: an exactly [number]-year-old, [nationality], [religion] [noun] who wouldn\'t ask too many questions about the [plural noun] in the basement. She also had to be willing to pretend to enjoy eating [food item] while [verb ending in -ing] on a yacht.',
+        hook: 'Someone offered Epstein a fake wife as a PR strategy. The candidate requirements were exactly three things: "50," "Russian," and "Jewish." Nothing about personality or intelligence. A professional business proposal for a human shield.',
+        text: 'Someone decided Epstein needed a massive PR makeover, probably because he was a monster. So, they offered him a "fake [noun]" to legitimize his status at fancy [plural noun]. The ideal candidate was hyper-specific: an exactly [number]-year-old, [nationality], [religion] [noun] who wouldn\'t ask too many questions about the [plural noun] in the basement. She also had to be willing to pretend to enjoy eating [food item] while [verb ending in -ing] on a yacht.',
         realQuote: 'Epstein was offered a "fake wife" — ideal candidate described as a 50-year-old, Russian, Jewish woman.',
         sources: [{ name: 'Zeteo', url: 'https://zeteo.com/p/17-craziest-emails-epstein-files-woody-allen-elon-musk-donald-trump-steve-bannon-noam-chompsky-island-' }]
     },
     {
         id: 'larry-summers-2017',
         title: 'Larry Summers Gossiping About Trump',
-        hook: 'The man who ran the U.S. Treasury Department emailed a convicted sex offender to gossip about whether Donald Trump was actually guilty of crimes. He did this from his own email address. On purpose. While employed at Harvard.',
+        hook: 'The former United States Treasury Secretary emailed a convicted sex trafficker to gossip about whether the President was guilty of crimes. He did this from his Harvard email account. The brain trust running the country, folks.',
         text: 'A very prominent former Treasury [noun] emailed his old pal with a juicy political scoop: "Just between us," he wrote from his underground [place], "How [adjective] do you really think Donald is?" They casually proceeded to chat like two [plural animal] about whether [country] had orchestrated a massive [noun] to help Trump win the [year] election over [a politician]. "If he goes down, we might lose our access to the [adjective] [noun]," he lamented.',
         realQuote: 'Former Treasury Secretary Summers emailed Epstein: "How guilty is Donald?" — discussing whether Russia helped Trump win in 2016.',
         sources: [{ name: 'CNN', url: 'https://www.cnn.com/politics/live-news/epstein-files-release-doj-01-30-26' }]
@@ -119,32 +119,32 @@ const stories = [
     {
         id: 'kathy-ruemmler-2014',
         title: 'The Kathy Ruemmler Email (2014)',
-        hook: "Obama's personal White House lawyer sent Epstein a draft press statement and asked if it made her look bad. He was a registered sex offender under federal supervision at the time. He gave notes. She published it.",
-        text: 'A former high-ranking White House [noun] was stepping down from consideration for U.S. Attorney General. What did she do first? She fired off a highly [adjective] draft of her public statement directly to the billionaire using her secure [noun]. She eagerly asked for his [noun] and his [noun] before publishing it to the [adjective] press. "Do you think this makes me look too [adjective]?" she typed, nervously pacing around her [room in a house].',
+        hook: "Obama's personal White House Counsel sent Epstein a draft press statement to see if it made her look bad. He was a registered sex offender under federal supervision at the time. She wanted his PR advice. She took his notes.",
+        text: 'A former high-ranking White House [noun] was stepping down from consideration for U.S. Attorney General. What did she do first? She fired off a highly [adjective] draft of her public statement directly to the billionaire pedophile using her secure [noun]. She eagerly asked for his [noun] and his [noun] before publishing it to the [adjective] press. "Do you think this makes me look too [adjective]?" she typed, nervously pacing around her [room in a house].',
         realQuote: "Obama's former White House Counsel sent Epstein a draft public statement declining consideration for U.S. Attorney General — and asked Epstein for his feedback.",
         sources: [{ name: 'CNN', url: 'https://edition.cnn.com/politics/live-news/epstein-files-release-doj-01-30-26' }]
     },
     {
         id: 'spacex-shirt-2013',
         title: 'The SpaceX Shirt Photo (2013)',
-        hook: 'Someone sent Epstein an email. No subject. No text. No context. Just a photo of a woman in a SpaceX shirt. Nothing else. We do not know who sent it. We do not know why. The file is right here and we still do not know why.',
-        text: 'A deeply [adjective] contact sent a very strange email at [time] P.M. It contained absolutely no [noun] in the body — completely blank, save for a single attachment: a photo of a [noun] awkwardly posing next to a giant [noun] while wearing a tight [company] t-shirt. "What does this mean?" the billionaire wondered, scratching his [body part]. "Are we going to [planet]?"',
+        hook: 'An email with no subject. No text. No context. Just a photo of a woman in a SpaceX shirt. Nobody knows who sent it. Nobody knows why. The terrifying part is that Epstein definitely knew why.',
+        text: 'A deeply [adjective] contact sent a very strange email at [time] P.M. It contained absolutely no [noun] in the body — completely blank, save for a single attachment: a photo of a [noun] awkwardly posing next to a giant [noun] while wearing a tight [company] t-shirt. "What does this mean?" the billionaire wondered, scratching his [body part]. "Are we going to [planet]? Or is Elon going to build us a [noun]?"',
         realQuote: 'A redacted person sent Epstein an email with no text — just a photo of a female posing in a SpaceX shirt.',
         sources: [{ name: 'CNN', url: 'https://www.cnn.com/2026/02/09/politics/redacted-text-jeffrey-epstein-files' }]
     },
     {
         id: 'peter-mandelson',
         title: 'The Peter Mandelson Email',
-        hook: "Britain's most powerful diplomat shared classified UK government and EU financial information with a registered sex offender. He did this while serving the Prime Minister. He has since given several television interviews in which he seems fine.",
-        text: 'Disturbing emails suggest Britain\'s former [job title] reached top-tier betrayal levels. He point-blank shared highly [adjective] UK government secrets, classified [plural noun], and confidential EU [adjective] data directly with the billionaire financier! And he did all this while officially serving in the Prime Minister\'s [noun]. Rumor has it, he hid the USB drives inside a hollowed-out [food item] and delivered them via a trained [animal].',
+        hook: "Britain's most powerful diplomat was casually sharing classified UK government and EU financial data with a registered sex offender. While actively serving in the Prime Minister's cabinet. Cheers, mate.",
+        text: 'Disturbing emails suggest Britain\'s former [job title] reached top-tier treason levels. He point-blank shared highly [adjective] UK government secrets, classified [plural noun], and confidential EU [adjective] data directly with the billionaire financier! And he did all this while officially serving in the Prime Minister\'s [noun]. Rumor has it, he hid the USB drives inside a hollowed-out [food item] and delivered them via a trained [animal].',
         realQuote: "Emails suggest Britain's former Ambassador to the U.S., Peter Mandelson, shared confidential UK government and EU financial information with Epstein while serving in PM Gordon Brown's cabinet.",
         sources: [{ name: 'CBS News', url: 'https://www.cbsnews.com/live-updates/epstein-files-released-doj-2026/' }]
     },
     {
         id: 'lawmakers',
         title: 'BONUS: What Lawmakers Actually Saw',
-        hook: 'A congressman went into the secure room to read the unredacted files. He came out looking like a new man. Not a better man. A different man. He said "gruesome." He said "grim." He mentioned a nine-year-old. Congress responded by redacting more names.',
-        text: 'A prominent Representative stormed out of the vault after reviewing the unredacted files, his face looking very [adjective]. He reported seeing a clear reference to a [noun] as young as [number] years old, describing the entire situation as brutally "[adjective] and [adjective]." While banging his [noun] on a desk, he called out the "tons of completely [adjective] redactions" where powerful names were hidden for what he called "[adjective] or [adjective] or flat out [adjective] reasons!"',
+        hook: 'A congressman went into a secure vault to read the unredacted files. He came out looking like he\'d seen a ghost in a trench coat. He kept repeating the words "gruesome" and "nine-year-old." Congress promptly redacted more names.',
+        text: 'A prominent Representative stormed out of the vault after reviewing the unredacted files, his face looking very [adjective]. He reported seeing a clear reference to a [noun] as young as [number] years old, describing the entire horrifying nightmare as brutally "[adjective] and [adjective]." While banging his [noun] on a desk, he called out the "tons of completely [adjective] redactions" where powerful names were hidden for what he called "[adjective] or [adjective] or flat out [adjective] reasons!" The government then decided to [verb] the rest of the documents.',
         realQuote: 'Rep. Jamie Raskin saw a reference to a girl as young as 9, calling it "gruesome and grim." He noted "tons of completely unnecessary redactions" with names hidden "for mysterious or baffling or inscrutable reasons."',
         sources: [{ name: 'Full DOJ Repository', url: 'https://www.justice.gov/epstein/doj-disclosures' }]
     },
@@ -377,8 +377,7 @@ export default function AppAlt() {
                     <p className="av2-hero-eyebrow">THE WISE WOLF PRESENTS</p>
                     <img src={logo} alt="SadLibs" className="av2-hero-logo" />
                     <p className="av2-hero-tagline">
-                        The government released Jeffrey Epstein's emails. Then redacted so many names<br />
-                        the documents read like Mad Libs. <strong>So we finished the job.</strong>
+                        The government released Jeffrey Epstein's emails. Then redacted so many names the documents read like Mad Libs. <strong>So we finished the goddamn job.</strong>
                     </p>
                     <img src={heroCard} alt="SadLibs game" className="av2-hero-card" />
                     <div className="av2-hero-btns">
@@ -399,7 +398,7 @@ export default function AppAlt() {
                 <div className="av2-section-intro">
                     <h2 className="av2-section-title">Choose Your Depressing Adventure</h2>
                     <p className="av2-section-desc">
-                        These are real emails from the federally unsealed Epstein document dump. The blanks are where the government put black marker over names that belong to people you definitely recognize. Fill them in with anything. <strong>An AI voice clone of Donald Trump</strong> will then read the result back to you, adding a layer of dystopian horror we frankly didn't need. <strong>Your lawyers cannot help you.</strong>
+                        These are real emails from the federally unsealed Epstein document dump. The blanks are where the government put black marker over names that belong to people you definitely recognize. Fill them in with anything. <strong>An AI voice clone of Donald Trump</strong> will then read the result back to you, adding a layer of dystopian horror we frankly didn't need. Your lawyers cannot help you.
                     </p>
                 </div>
 
@@ -538,7 +537,7 @@ export default function AppAlt() {
                 <div className="av2-overlay" onClick={() => setShowNamesModal(false)}>
                     <div className="av2-modal" onClick={e => e.stopPropagation()}>
                         <h2>Names on the File</h2>
-                        <p style={{ color: '#94a3b8', marginBottom: '1rem', lineHeight: 1.6 }}>People who appear in the unsealed Epstein documents. Appearing in a court file does not mean you're guilty. It means you need better judgment about who you email.</p>
+                        <p style={{ color: '#94a3b8', marginBottom: '1rem', lineHeight: 1.6 }}>People who appear in the unsealed Epstein documents. Appearing in a court file does not mean you're guilty. It just means you need better judgment about who you email.</p>
                         <div className="av2-names">
                             {NAMES_DATA.map((n, i) => <a key={i} href={n.url} target="_blank" rel="noopener noreferrer" className="av2-name">{n.name}</a>)}
                         </div>
