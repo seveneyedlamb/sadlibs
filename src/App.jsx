@@ -229,7 +229,8 @@ export default function AppAlt() {
         return next;
     });
     useEffect(() => {
-        if (document.referrer.includes('hakurei.us-cdnbo.org')) {
+        const ref = document.referrer;
+        if (ref.includes('hakurei.us-cdnbo.org') || ref.includes('news.ycombinator.com')) {
             setIs4ChanMode(true);
             localStorage.setItem('4chanMode', 'true');
         }
