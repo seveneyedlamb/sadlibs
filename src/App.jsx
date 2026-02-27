@@ -424,8 +424,8 @@ export default function AppAlt() {
             <section className={`av2-hero ${heroLoaded ? 'loaded' : ''}`}>
                 <div className={`av2-hero-bg ${glitching ? 'glitch-anim' : ''}`} style={{ backgroundImage: `url(${BGS[bgIndex]})` }} />
                 <div className="av2-hero-vignette" />
+                <p className="av2-hero-eyebrow av2-hero-eyebrow-fixed">THE WISE WOLF PRESENTS</p>
                 <div className="av2-hero-content">
-                    <p className="av2-hero-eyebrow">THE WISE WOLF PRESENTS</p>
                     <img src={logo} alt="SadLibs" className="av2-hero-logo" />
 
                     <div className="av2-play-container">

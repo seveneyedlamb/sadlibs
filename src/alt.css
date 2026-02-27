@@ -139,6 +139,22 @@
     box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
 }
 
+.av2-hero-eyebrow-fixed {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%) translateY(24px);
+    margin-bottom: 0;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 1.2s ease 0.8s, transform 1.2s ease 0.8s;
+}
+
+.av2-hero.loaded .av2-hero-eyebrow-fixed {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
 /* Logo image — the actual sadlibs logo */
 .av2-hero-logo {
     max-width: min(90%, 540px);
