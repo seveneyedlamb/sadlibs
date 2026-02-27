@@ -3,6 +3,7 @@ export default async function handler(req, res) {
     const supabaseKey = process.env.SUPABASE_ANON_KEY;
 
     if (!supabaseUrl || !supabaseKey) {
+        console.error('Missing env vars: SUPABASE_URL or SUPABASE_ANON_KEY');
         return res.status(500).json({ error: 'Supabase not configured' });
     }
 
@@ -16,7 +17,8 @@ export default async function handler(req, res) {
     if (req.method === 'GET') {
         const r = await fetch(`${base}?select=id,comment,created_at&order=created_at.desc&limit=20`, { headers });
         const data = await r.json();
-        return res.status(r.status).json(data);
+        if (!r.ok) console.error('Supabase GET error:', r.status, JSON.stringify(data));
+        return res.status(r.ok ? 200 : r.status).json(r.ok ? data : []);
     }
 
     if (req.method === 'POST') {
@@ -28,8 +30,11 @@ export default async function handler(req, res) {
             headers: { ...headers, 'Prefer': 'return=minimal' },
             body: JSON.stringify({ email, comment }),
         });
-        return res.status(r.ok ? 201 : 500).json(r.ok ? { ok: true } : { error: 'Insert failed' });
+        const body = await r.text();
+        if (!r.ok) console.error('Supabase POST error:', r.status, body);
+        return res.status(r.ok ? 201 : 500).json(r.ok ? { ok: true } : { error: 'Insert failed', detail: body });
     }
 
     return res.status(405).json({ error: 'Method Not Allowed' });
 }
+
