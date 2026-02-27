@@ -1212,7 +1212,11 @@ button.av2-red-play-main:hover {
     /* Start swaying after fall finishes */
     transform-origin: center;
     /* Ensure they don't break flex layout during fall */
-    position: fixed;
+    position: fixed !important;
+    bottom: auto !important;
+    /* Override index.css pinning it to the bottom */
+    top: 0 !important;
+    transform: translateY(-120vh) !important;
     z-index: 100;
 }
 
@@ -1222,22 +1226,22 @@ button.av2-red-play-main:hover {
 
 @keyframes featherFall {
     0% {
-        transform: translateY(-120vh) rotate(-15deg) !important;
+        transform: translateY(-120vh) rotate(-15deg);
     }
 
     100% {
         /* Final resting position */
-        transform: translateY(0) rotate(0deg) !important;
+        transform: translateY(85vh) rotate(0deg);
     }
 }
 
 @keyframes subtleSway {
     0% {
-        transform: translateY(0) rotate(-10deg);
+        transform: translateY(85vh) rotate(-10deg);
     }
 
     100% {
-        transform: translateY(0) rotate(10deg);
+        transform: translateY(85vh) rotate(10deg);
     }
 }
 
