@@ -128,13 +128,15 @@
     font-family: var(--mono-family);
     font-size: 1.1rem;
     font-weight: 800;
-    letter-spacing: 0.3em;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: var(--accent-color);
+    color: #ffffff;
+    background-color: var(--accent-color);
+    padding: 0.4rem 1.2rem;
+    border-radius: 4px;
     margin-bottom: 2rem;
     /* Added margin back since gap is 0 */
-    text-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
-    opacity: 0.9;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
 }
 
 /* Logo image — the actual sadlibs logo */
