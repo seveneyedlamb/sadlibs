@@ -1528,8 +1528,12 @@ body:has(.av2-fbi-terminal)::after {
 
 .comments-subtitle {
     font-size: 0.92rem;
-    color: #475569;
+    color: #f1f5f9;
     margin-bottom: 2rem;
+}
+
+.comments-toggle {
+    margin-bottom: 1.5rem;
 }
 
 .comments-form {
@@ -1576,14 +1580,35 @@ body:has(.av2-fbi-terminal)::after {
 }
 
 .comment-card {
-    background: var(--dossier-card);
+    background: rgba(15, 23, 42, 0.85);
     border: 1px solid var(--panel-border);
     border-radius: 10px;
     padding: 1.1rem 1.4rem;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    backdrop-filter: blur(8px);
+}
+
+.comment-card-modal {
+    background: rgba(15, 23, 42, 0.7);
+    margin-bottom: 0;
+}
+
+.comments-read-all {
+    background: none;
+    border: none;
+    color: var(--accent-color);
+    font-family: var(--font-family);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0.5rem 0;
+    text-align: left;
+    transition: color 0.2s;
+}
+
+.comments-read-all:hover {
+    color: #93c5fd;
 }
 
 .comment-text {

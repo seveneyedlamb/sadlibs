@@ -214,6 +214,8 @@ export default function AppAlt() {
     const [commentText, setCommentText] = useState('');
     const [comments, setComments] = useState([]);
     const [commentStatus, setCommentStatus] = useState('idle'); // idle | loading | success | error
+    const [showCommentForm, setShowCommentForm] = useState(false);
+    const [showAllComments, setShowAllComments] = useState(false);
     const VALID_CAPTCHAS = ['epstein is not dead', 'type epstein is not dead'];
     const captchaOk = VALID_CAPTCHAS.includes(captchaVal.trim().toLowerCase());
 
@@ -746,60 +748,87 @@ export default function AppAlt() {
 
             {/* ── COMMENTS ─────────────────────────────── */}
             <section className="comments-section">
-                <h3 className="comments-title">Leave a Comment</h3>
-                <p className="comments-subtitle">Your email stays private. Your comment does not.</p>
 
-                <form className="comments-form" onSubmit={handleCommentSubmit}>
-                    <div className="captcha-row">
-                        <label className="av2-label">Prove you're human — type: <span className="captcha-hint">Epstein is Not Dead</span></label>
+                <button className="av2-ghost-btn comments-toggle" onClick={() => setShowCommentForm(v => !v)}>
+                    {showCommentForm ? '✕ Close' : '✎ Leave a Comment'}
+                </button>
+
+                {showCommentForm && (
+                    <form className="comments-form" onSubmit={handleCommentSubmit}>
+                        <div className="captcha-row">
+                            <label className="av2-label">Prove you're human — type: <span className="captcha-hint">Epstein is Not Dead</span></label>
+                            <input
+                                type="text"
+                                className={`av2-input captcha-input${captchaOk ? ' captcha-ok' : ''}`}
+                                value={captchaVal}
+                                onChange={e => setCaptchaVal(e.target.value)}
+                                placeholder="Type the phrase above..."
+                                autoComplete="off"
+                            />
+                        </div>
                         <input
-                            type="text"
-                            className={`av2-input captcha-input${captchaOk ? ' captcha-ok' : ''}`}
-                            value={captchaVal}
-                            onChange={e => setCaptchaVal(e.target.value)}
-                            placeholder="Type the phrase above..."
-                            autoComplete="off"
+                            type="email"
+                            className="av2-input"
+                            value={commentEmail}
+                            onChange={e => setCommentEmail(e.target.value)}
+                            placeholder="Your email (not shown publicly)"
+                            required
+                            disabled={!captchaOk}
                         />
-                    </div>
-                    <input
-                        type="email"
-                        className="av2-input"
-                        value={commentEmail}
-                        onChange={e => setCommentEmail(e.target.value)}
-                        placeholder="Your email (not shown publicly)"
-                        required
-                        disabled={!captchaOk}
-                    />
-                    <textarea
-                        className="av2-input comment-textarea"
-                        value={commentText}
-                        onChange={e => setCommentText(e.target.value)}
-                        placeholder="Say something. You're already on a list."
-                        rows={4}
-                        required
-                        disabled={!captchaOk}
-                    />
-                    <button
-                        type="submit"
-                        className="av2-submit"
-                        disabled={!captchaOk || !commentEmail || !commentText || commentStatus === 'loading'}
-                    >
-                        {commentStatus === 'loading' ? 'Submitting...' : commentStatus === 'success' ? 'Comment filed with the FBI ✓' : 'Submit Comment'}
-                    </button>
-                    {commentStatus === 'error' && <p className="comment-error">Something went wrong. Try again.</p>}
-                </form>
+                        <textarea
+                            className="av2-input comment-textarea"
+                            value={commentText}
+                            onChange={e => setCommentText(e.target.value)}
+                            placeholder="Say something. You're already on a list."
+                            rows={4}
+                            required
+                            disabled={!captchaOk}
+                        />
+                        <button
+                            type="submit"
+                            className="av2-submit"
+                            disabled={!captchaOk || !commentEmail || !commentText || commentStatus === 'loading'}
+                        >
+                            {commentStatus === 'loading' ? 'Submitting...' : commentStatus === 'success' ? 'Comment filed with the FBI ✓' : 'Submit Comment'}
+                        </button>
+                        {commentStatus === 'error' && <p className="comment-error">Something went wrong. Try again.</p>}
+                    </form>
+                )}
 
                 {comments.length > 0 && (
                     <div className="comments-feed">
-                        {comments.map(c => (
+                        {comments.slice(0, 5).map(c => (
                             <div key={c.id} className="comment-card">
                                 <p className="comment-text">{c.comment}</p>
                                 <span className="comment-time">{new Date(c.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                             </div>
                         ))}
+                        {comments.length > 5 && (
+                            <button className="comments-read-all" onClick={() => setShowAllComments(true)}>
+                                Read all {comments.length} comments →
+                            </button>
+                        )}
                     </div>
                 )}
             </section>
+
+            {/* ── ALL COMMENTS MODAL ──────────────────── */}
+            {showAllComments && (
+                <div className="av2-overlay" onClick={() => setShowAllComments(false)}>
+                    <div className="av2-modal" onClick={e => e.stopPropagation()}>
+                        <h2>All Comments</h2>
+                        <div className="av2-names" style={{ maxHeight: '60vh' }}>
+                            {comments.map(c => (
+                                <div key={c.id} className="comment-card comment-card-modal">
+                                    <p className="comment-text">{c.comment}</p>
+                                    <span className="comment-time">{new Date(c.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                                </div>
+                            ))}
+                        </div>
+                        <button className="av2-close" onClick={() => setShowAllComments(false)}>Close</button>
+                    </div>
+                </div>
+            )}
 
             <footer className="av2-footer">
                 <p>Made by <span onClick={handleWolfClick} style={{ cursor: 'pointer' }}>The Wise Wolf</span> &copy; {new Date().getFullYear()} &nbsp;·&nbsp; <a href="mailto:douchecoded@gmail.com">douchecoded@gmail.com</a></p>
