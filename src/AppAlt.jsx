@@ -421,6 +421,8 @@ export default function AppAlt() {
                     <p className="av2-hero-eyebrow">THE WISE WOLF PRESENTS</p>
                     <img src={logo} alt="SadLibs" className="av2-hero-logo" />
 
+                    <img src={heroCard} alt="SadLibs game" className="av2-hero-card" />
+
                     <div className="av2-hero-btns" style={{ marginBottom: '1.5rem', marginTop: '1.5rem' }}>
                         <a href="https://www.wisewolf.club" target="_blank" rel="noopener noreferrer" className="av2-cta av2-wisewolf-btn">
                             <span className="ww-frame ww-1">Hate Bullshit?</span>
