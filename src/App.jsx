@@ -289,38 +289,36 @@ export default function AppAlt() {
     }, [isAFK]);
 
     useEffect(() => {
-        let scrollAttempts = 0;
-        let lastScrollTime = 0;
+        let overscrollDelta = 0;
+        let lastTouchY = 0;
 
-        const handleScrollAttempt = () => {
-            const isBottom = Math.ceil(window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 10);
+        const handleScrollAttempt = (amount) => {
+            const isBottom = Math.ceil(window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 15);
             if (!isBottom) {
-                scrollAttempts = 0;
+                overscrollDelta = 0;
                 return;
             }
 
-            const now = Date.now();
-            if (now - lastScrollTime > 400) {
-                scrollAttempts++;
-                lastScrollTime = now;
+            overscrollDelta += amount;
 
-                if (scrollAttempts >= 3 && !isGlitchScrolling) {
-                    setIsGlitchScrolling(true);
-                    setTimeout(() => setIsGlitchScrolling(false), 2000);
-                    scrollAttempts = 0;
-                }
+            // 150px of downward scrolling *after* already hitting the bottom
+            if (overscrollDelta > 200 && !isGlitchScrolling) {
+                setIsGlitchScrolling(true);
+                setTimeout(() => setIsGlitchScrolling(false), 2000);
+                overscrollDelta = 0;
             }
         };
 
         const handleWheel = (e) => {
-            if (e.deltaY > 0) handleScrollAttempt();
+            if (e.deltaY > 0) handleScrollAttempt(e.deltaY);
         };
 
-        let lastTouchY = 0;
         const handleTouchStart = (e) => { lastTouchY = e.touches[0].clientY; };
         const handleTouchMove = (e) => {
             const currentY = e.touches[0].clientY;
-            if (currentY < lastTouchY - 10) handleScrollAttempt();
+            if (currentY < lastTouchY) {
+                handleScrollAttempt(lastTouchY - currentY);
+            }
             lastTouchY = currentY;
         };
 
