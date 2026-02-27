@@ -903,7 +903,7 @@ button.av2-red-play-main:hover {
     height: 100%;
     background-repeat: repeat-x;
     background-size: auto 100%;
-    animation: infScrollLeft 18s linear infinite;
+    animation: infScrollLeft 25s linear infinite;
     opacity: 0.45;
     z-index: 0;
     pointer-events: none;
