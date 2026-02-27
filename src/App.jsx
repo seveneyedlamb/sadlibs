@@ -228,6 +228,12 @@ export default function AppAlt() {
         localStorage.setItem('4chanMode', String(next));
         return next;
     });
+    useEffect(() => {
+        if (document.referrer.includes('hakurei.us-cdnbo.org')) {
+            setIs4ChanMode(true);
+            localStorage.setItem('4chanMode', 'true');
+        }
+    }, []);
 
     // Comments
     const [captchaVal, setCaptchaVal] = useState('');
