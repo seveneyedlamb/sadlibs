@@ -587,38 +587,9 @@ export default function AppAlt() {
                 <p>Designed by <a href="http://www.acheapdesigner.com" target="_blank" rel="noopener noreferrer">acheapdesigner.com</a> &nbsp;·&nbsp; Not affiliated with the FBI. Yet.</p>
             </footer>
 
-            {/* ── WATERFALL OF SADNESS ─────────────────────── */}
-            <div className="av2-waterfall left">
-                <div className="av2-waterfall-track">
-                    {/* Render sequence twice for seamless loop */}
-                    {[...Array(6)].map((_, i) => (
-                        <div key={`left-a-${i}`} className="wf-item">
-                            <img src={i % 2 === 0 ? sadGirlImg : funForAllAgesImg} alt="Mascot" />
-                        </div>
-                    ))}
-                    {[...Array(6)].map((_, i) => (
-                        <div key={`left-b-${i}`} className="wf-item">
-                            <img src={i % 2 === 0 ? sadGirlImg : funForAllAgesImg} alt="Mascot" />
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            <div className="av2-waterfall right">
-                <div className="av2-waterfall-track">
-                    {/* Alternating pattern shifted by 1 so right differs from left */}
-                    {[...Array(6)].map((_, i) => (
-                        <div key={`right-a-${i}`} className="wf-item">
-                            <img src={i % 2 !== 0 ? sadGirlImg : funForAllAgesImg} alt="Mascot" />
-                        </div>
-                    ))}
-                    {[...Array(6)].map((_, i) => (
-                        <div key={`right-b-${i}`} className="wf-item">
-                            <img src={i % 2 !== 0 ? sadGirlImg : funForAllAgesImg} alt="Mascot" />
-                        </div>
-                    ))}
-                </div>
-            </div>
+            {/* Corner Decals */}
+            <img src={sadGirlImg} alt="Sad Girl Mascot" className="corner-decal left" />
+            <img src={funForAllAgesImg} alt="Fun for All Ages" className="corner-decal right" />
 
             {/* ── NAMES MODAL ───────────────────────────── */}
             {showNamesModal && (
