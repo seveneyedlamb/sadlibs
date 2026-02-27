@@ -253,6 +253,20 @@ export default function AppAlt() {
             .catch(() => { });
     }, []);
 
+    // Analytics
+    const [showAnalytics, setShowAnalytics] = useState(false);
+    const [analyticsData, setAnalyticsData] = useState(null);
+    const [analyticsLoading, setAnalyticsLoading] = useState(false);
+    useEffect(() => {
+        fetch('/api/analytics', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event_type: 'pageview', referrer: document.referrer || '' }) }).catch(() => { });
+    }, []);
+    const trackShare = (meta) => fetch('/api/analytics', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event_type: 'share', metadata: meta }) }).catch(() => { });
+    const openAnalytics = async () => {
+        setShowAnalytics(true); setAnalyticsLoading(true);
+        try { const r = await fetch('/api/analytics'); setAnalyticsData(await r.json()); } catch { setAnalyticsData(null); }
+        setAnalyticsLoading(false);
+    };
+
     const handleCommentSubmit = async (e) => {
         e.preventDefault();
         if (!captchaOk || !commentEmail || !commentText) return;
@@ -511,9 +525,9 @@ export default function AppAlt() {
         const nc = shareCount + 1; setShareCount(nc); localStorage.setItem('sadlibs_share_count', nc); setHasSharedInExitModal(true);
         const url = 'https://sadlibs.vercel.app';
         const t = encodeURIComponent("The government hid 900 pages of Epstein files. We turned them into a party game. America is doing great. #EpsteinFiles #EpsteinClientList");
-        if (platform === 'twitter') window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${t}`, '_blank');
-        if (platform === 'facebook') window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
-        if (platform === 'copy') { navigator.clipboard.writeText(`The government hid 900 pages of Epstein files. We turned them into a party game: ${url}`); alert('Copied.'); }
+        if (platform === 'twitter') { window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${t}`, '_blank'); trackShare({ platform: 'twitter', image_type: 'none', is_4chan: is4ChanMode }); }
+        if (platform === 'facebook') { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank'); trackShare({ platform: 'facebook', image_type: 'none', is_4chan: is4ChanMode }); }
+        if (platform === 'copy') { navigator.clipboard.writeText(`The government hid 900 pages of Epstein files. We turned them into a party game: ${url}`); alert('Copied.'); trackShare({ platform: 'copy', image_type: 'none', is_4chan: is4ChanMode }); }
     };
 
     const handleShareStory = async (platform) => {
@@ -522,12 +536,14 @@ export default function AppAlt() {
         const appDomain = 'https://sadlibs.vercel.app';
         const sn = activeStory ? activeStory.title : 'an Epstein leak';
 
-        // Fast path: 4chan mode always, or 50% of normal shares — skip canvas, use static image
-        if (is4ChanMode || Math.random() < 0.5) {
-            const staticImg = is4ChanMode
+        // Fast path: 4chan mode always, or ~67% of normal shares — use static image
+        const rnd = Math.random();
+        if (is4ChanMode || rnd < 0.67) {
+            const imgSrc = is4ChanMode
                 ? CHAN_BGS[Math.floor(Math.random() * CHAN_BGS.length)]
-                : sadGirlImg;
-            const imgUrl = appDomain + staticImg;
+                : rnd < 0.33 ? sadGirlImg : heroCard;
+            const image_type = is4ChanMode ? '4chan-bg' : (rnd < 0.33 ? 'sadgirl' : 'herocard');
+            const imgUrl = appDomain + imgSrc;
             const nc = shareCount + 1; setShareCount(nc); localStorage.setItem('sadlibs_share_count', nc); setHasSharedInExitModal(true);
             const st = is4ChanMode
                 ? `anon made trump narrate epstein's sex trafficking files on "${sn}". this site is not a bit. unfortunately. #EpsteinFiles`
@@ -537,6 +553,7 @@ export default function AppAlt() {
             else if (platform === 'facebook') window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(cardUrl)}`, '_blank');
             else if (platform === 'native') { try { await navigator.share({ text: st, url: appDomain }); } catch (e) { } }
             else if (platform === 'copy') { navigator.clipboard.writeText(`${st}\n${cardUrl}`); alert('Copied.'); }
+            trackShare({ platform, image_type, is_4chan: is4ChanMode });
             setIsProcessingMeme(false);
             return;
         }
@@ -558,6 +575,7 @@ export default function AppAlt() {
             const nc = shareCount + 1; setShareCount(nc); localStorage.setItem('sadlibs_share_count', nc); setHasSharedInExitModal(true);
             const st = `I made Donald Trump read actual Jeffrey Epstein court documents out loud on "${sn}". For fun. It is somehow legal. Now it's your turn. #EpsteinFiles #EpsteinClientList`;
             const cardUrl = `${appDomain}/api/share?img=${encodeURIComponent(imgUrl)}`;
+            trackShare({ platform, image_type: 'canvas', is_4chan: false });
             if (platform === 'twitter') {
                 if (navigator.canShare) {
                     canvas.toBlob(async blob => {
@@ -895,7 +913,7 @@ export default function AppAlt() {
             )}
 
             <footer className="av2-footer">
-                <p>Made by <span onClick={handleWolfClick} style={{ cursor: 'pointer' }}>The Wise Wolf</span> &copy; {new Date().getFullYear()} &nbsp;·&nbsp; <a href="mailto:douchecoded@gmail.com">douchecoded@gmail.com</a></p>
+                <p>Made by <span onClick={handleWolfClick} style={{ cursor: 'pointer' }}>The Wise Wolf</span> <span onClick={openAnalytics} style={{ cursor: 'pointer', userSelect: 'none' }}>©</span> {new Date().getFullYear()} &nbsp;·&nbsp; <a href="mailto:douchecoded@gmail.com">douchecoded@gmail.com</a></p>
                 <p>Designed by <a href="http://www.acheapdesigner.com" target="_blank" rel="noopener noreferrer">acheapdesigner.com</a> &nbsp;·&nbsp; Not affiliated with the FBI. Yet.</p>
             </footer>
 
@@ -1012,6 +1030,7 @@ export default function AppAlt() {
                     THEY ARE WATCHING YOU READ THIS.
                 </div>
             )}
+            {/* ── AFK FBI TERMINAL ──────────────────────── */}
             {isAFK && createPortal(
                 <div className="av2-fbi-terminal">
                     <div className="av2-terminal-header">FEDERAL BUREAU OF INVESTIGATION - SURVEILLANCE FEED 7</div>
@@ -1021,6 +1040,76 @@ export default function AppAlt() {
                     </div>
                 </div>,
                 document.documentElement
+            )}
+
+            {/* ── ANALYTICS MODAL ───────────────────────── */}
+            {showAnalytics && (
+                <div className="av2-overlay" onClick={() => setShowAnalytics(false)}>
+                    <div className="av2-modal analytics-modal" onClick={e => e.stopPropagation()}>
+                        <h2>📊 The Dashboard</h2>
+                        {analyticsLoading && <p style={{ color: '#94a3b8', textAlign: 'center' }}>Loading...</p>}
+                        {!analyticsLoading && analyticsData && (
+                            <div className="analytics-grid">
+                                <div className="analytics-stat">
+                                    <span className="analytics-label">Total Hits</span>
+                                    <span className="analytics-value">{analyticsData.total_hits?.toLocaleString()}</span>
+                                </div>
+                                <div className="analytics-stat">
+                                    <span className="analytics-label">On Site Now</span>
+                                    <span className="analytics-value">{analyticsData.active_now}</span>
+                                </div>
+                                <div className="analytics-stat">
+                                    <span className="analytics-label">Total Shares</span>
+                                    <span className="analytics-value">{analyticsData.total_shares}</span>
+                                </div>
+                                <div className="analytics-stat">
+                                    <span className="analytics-label">4Chan Shares</span>
+                                    <span className="analytics-value">{analyticsData.shares_4chan}</span>
+                                </div>
+                                <div className="analytics-stat">
+                                    <span className="analytics-label">Normal Shares</span>
+                                    <span className="analytics-value">{analyticsData.shares_normal}</span>
+                                </div>
+                                <div className="analytics-stat">
+                                    <span className="analytics-label">Comments</span>
+                                    <span className="analytics-value">{analyticsData.comments}</span>
+                                </div>
+                                <div className="analytics-stat">
+                                    <span className="analytics-label">Emails Collected</span>
+                                    <span className="analytics-value">{analyticsData.emails}</span>
+                                </div>
+                                {analyticsData.share_breakdown?.length > 0 && (
+                                    <div className="analytics-full">
+                                        <span className="analytics-label">Share Breakdown</span>
+                                        <table className="analytics-table">
+                                            <thead><tr><th>Type</th><th>Count</th></tr></thead>
+                                            <tbody>
+                                                {analyticsData.share_breakdown.map(({ key, count }) => (
+                                                    <tr key={key}><td>{key}</td><td>{count}</td></tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                )}
+                                {analyticsData.top_referrers?.length > 0 && (
+                                    <div className="analytics-full">
+                                        <span className="analytics-label">Top Referrers</span>
+                                        <table className="analytics-table">
+                                            <thead><tr><th>Source</th><th>Visits</th></tr></thead>
+                                            <tbody>
+                                                {analyticsData.top_referrers.map(({ source, count }) => (
+                                                    <tr key={source}><td>{source}</td><td>{count}</td></tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                        {!analyticsLoading && !analyticsData && <p style={{ color: '#ef4444' }}>Failed to load. Check Supabase.</p>}
+                        <button className="av2-close" onClick={() => setShowAnalytics(false)}>Close</button>
+                    </div>
+                </div>
             )}
         </>
     );
