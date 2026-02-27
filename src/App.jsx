@@ -9,6 +9,16 @@ import funForAllAgesImg from '../images/fun4allages.png';
 import merchImg from '../images/buyatee.png';
 import wisewolfImg from '../images/wisewolf.png';
 import infscrollImg from '../images/infscroll.png';
+import chan4bg1 from '../images/4chanmode/file1.jpg';
+import chan4bg2 from '../images/4chanmode/file2.webp';
+import chan4bg3 from '../images/4chanmode/file3.jpg';
+import chan4bg4 from '../images/4chanmode/file4.jpeg';
+import chan4bg5 from '../images/4chanmode/file5.jpg';
+import chan4bg6 from '../images/4chanmode/file6.jpg';
+import chan4bg7 from '../images/4chanmode/file7.jpg';
+import chan4bg8 from '../images/4chanmode/file8.png';
+import chan4ScrollImg from '../images/4chanmode/replacebothscrollingimages.jpg';
+import chan4CornerImg from '../images/4chanmode/replaceepsteinlowerrightimage.png';
 import themeSong from '../audio/sad.mp3';
 import dialupSound from '../audio/dialup.mp3';
 import html2canvas from 'html2canvas';
@@ -23,6 +33,7 @@ import bg7 from '../images/7.webp';
 import bg8 from '../images/8.webp';
 import bg9 from '../images/9.webp';
 const BGS = [bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9];
+const CHAN_BGS = [chan4bg1, chan4bg2, chan4bg3, chan4bg4, chan4bg5, chan4bg6, chan4bg7, chan4bg8];
 
 const NAMES_DATA = [
     { name: 'Donald Trump', url: 'https://en.wikipedia.org/wiki/Donald_Trump' },
@@ -208,6 +219,14 @@ export default function AppAlt() {
     const [isAFK, setIsAFK] = useState(false);
     const [terminalLines, setTerminalLines] = useState([]);
     const afkTimerRef = useRef(null);
+
+    // 4Chan Mode
+    const [is4ChanMode, setIs4ChanMode] = useState(() => localStorage.getItem('4chanMode') === 'true');
+    const toggle4ChanMode = () => setIs4ChanMode(prev => {
+        const next = !prev;
+        localStorage.setItem('4chanMode', String(next));
+        return next;
+    });
 
     // Comments
     const [captchaVal, setCaptchaVal] = useState('');
@@ -579,14 +598,18 @@ export default function AppAlt() {
         <>
             <audio ref={themeAudioRef} src={themeSong} loop playsInline />
 
-            {/* Mute button — same as main site */}
-            <button className="av2-mute-btn" onClick={toggleMute}>
+            {/* 4CHANIFY toggle — left side */}
+            <button className="av2-mute-btn av2-4chan-btn" onClick={toggle4ChanMode} title="4CHANIFY">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/58/4chan_logo_clover.svg" alt="4chan" />
+            </button>
+            {/* Mute button — right side */}
+            <button className="av2-mute-btn" onClick={toggleMute} title="MUTE">
                 {isMuted ? '🔇' : '🔊'}
             </button>
 
             {/* ── HERO ─────────────────────────────────── */}
             <section className={`av2-hero ${heroLoaded ? 'loaded' : ''}`}>
-                <div className={`av2-hero-bg ${glitching && !isAFK ? 'glitch-anim' : ''}`} style={{ backgroundImage: `url(${BGS[bgIndex]})` }} />
+                <div className={`av2-hero-bg ${glitching && !isAFK ? 'glitch-anim' : ''} ${is4ChanMode ? 'bg-darkened' : ''}`} style={{ backgroundImage: `url(${is4ChanMode ? CHAN_BGS[bgIndex % CHAN_BGS.length] : BGS[bgIndex]})` }} />
                 <div className="av2-hero-vignette" />
                 <p className="av2-hero-eyebrow av2-hero-eyebrow-fixed">THE WISE WOLF PRESENTS</p>
                 <div className="av2-hero-content">
@@ -739,8 +762,8 @@ export default function AppAlt() {
 
             {/* ── FOOTER SHARE ─────────────────────────── */}
             <div className="av2-footer-share">
-                <div className="share-scroll-bg" style={{ backgroundImage: `url(${infscrollImg})` }} aria-hidden="true" />
-                <div className="share-scroll-bg share-scroll-bg-right" style={{ backgroundImage: `url(${infscrollImg})` }} aria-hidden="true" />
+                <div className="share-scroll-bg" style={{ backgroundImage: `url(${is4ChanMode ? chan4ScrollImg : infscrollImg})` }} aria-hidden="true" />
+                <div className="share-scroll-bg share-scroll-bg-right" style={{ backgroundImage: `url(${is4ChanMode ? chan4ScrollImg : infscrollImg})` }} aria-hidden="true" />
                 <h3>{shareCount.toLocaleString()} people have shared this. Statistically, at least one of them has their name in the Epstein documents.</h3>
                 <div className="av2-share-row" style={{ justifyContent: 'center', marginTop: '1.5rem' }}>
                     <button onClick={() => handleShare('twitter')} className="av2-action-btn share-x">Share on X</button>
@@ -850,7 +873,7 @@ export default function AppAlt() {
 
             {/* Corner Decals */}
             <img src={sadGirlImg} alt="Sad Girl Mascot" className="corner-decal left" />
-            <img src={funForAllAgesImg} alt="Fun for All Ages" className="corner-decal right" />
+            <img src={is4ChanMode ? chan4CornerImg : funForAllAgesImg} alt="Corner" className="corner-decal right" />
 
             {/* ── WISE WOLF EASTER EGG ──────────────────── */}
             {showWolfEasterEgg && (
