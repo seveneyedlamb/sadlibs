@@ -4,7 +4,7 @@ export default async function handler(req, res) {
     }
 
     try {
-        const { email } = req.body;
+        const { email, source = 'modal' } = req.body;
 
         if (!email) {
             return res.status(400).json({ error: 'Email required' });
@@ -13,7 +13,6 @@ export default async function handler(req, res) {
         console.log(`Forwarding new lead to FormSubmit: ${email}`);
 
         // Forward the captured email directly to FormSubmit
-        // FormSubmit requires x-www-form-urlencoded format for initial unverified submissions.
         const formData = new URLSearchParams();
         formData.append('_subject', 'New VIP Membership Claim Request!');
         formData.append('email', email);
@@ -36,6 +35,22 @@ export default async function handler(req, res) {
             throw new Error(data.message || 'Failed to forward email to FormSubmit');
         }
 
+        // Supabase backup — fire and forget, never blocks the response
+        const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+        const supabaseKey = process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY;
+        if (supabaseUrl && supabaseKey) {
+            fetch(`${supabaseUrl}/rest/v1/emails`, {
+                method: 'POST',
+                headers: {
+                    'apikey': supabaseKey,
+                    'Authorization': `Bearer ${supabaseKey}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=minimal',
+                },
+                body: JSON.stringify({ email, source }),
+            }).catch(err => console.error('Supabase email backup failed:', err));
+        }
+
         return res.status(200).json({ success: true, message: 'Access Granted' });
 
     } catch (error) {
@@ -43,3 +58,4 @@ export default async function handler(req, res) {
         return res.status(500).json({ error: 'Internal Server Error' });
     }
 }
+
