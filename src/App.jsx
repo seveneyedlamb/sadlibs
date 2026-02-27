@@ -1,5 +1,4 @@
 import { useState, useMemo, useEffect, useRef } from 'react'
-import './alt.css';
 import logo from '../images/logo.png';
 import babyEmailImg from '../images/babyemail.webp';
 import trumpAvatar from '../images/trumptalking.gif';
