@@ -887,6 +887,37 @@ button.av2-red-play-main:hover {
 /* ── SHARE SECTION ──────────────────────────────────── */
 .av2-share-section {
     margin: 2rem 0;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.share-scroll-bg {
+    position: absolute;
+    inset: 0;
+    width: 200%;
+    height: 100%;
+    background-repeat: repeat-x;
+    background-size: auto 100%;
+    animation: infScrollLeft 18s linear infinite;
+    opacity: 0.18;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.av2-share-section>*:not(.share-scroll-bg) {
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes infScrollLeft {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
 }
 
 .av2-share-proof {

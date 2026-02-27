@@ -8,6 +8,7 @@ import sadGirlImg from '../images/sadgirl.png';
 import funForAllAgesImg from '../images/fun4allages.png';
 import merchImg from '../images/buyatee.png';
 import wisewolfImg from '../images/wisewolf.png';
+import infscrollImg from '../images/infscroll.png';
 import themeSong from '../audio/sad.mp3';
 import dialupSound from '../audio/dialup.mp3';
 import html2canvas from 'html2canvas';
@@ -700,6 +701,7 @@ export default function AppAlt() {
                                 </div>
                                 {/* Share buttons */}
                                 <div className="av2-share-section export-ignore">
+                                    <div className="share-scroll-bg" style={{ backgroundImage: `url(${infscrollImg})` }} aria-hidden="true" />
                                     <p className="av2-share-proof">{shareCount.toLocaleString()} people have shared this. Statistically, at least one of them has their name in the Epstein documents.</p>
                                     <div className={`av2-share-row${shareReady ? ' share-ready' : ''}`}>
                                         {typeof navigator !== 'undefined' && navigator.share && (
