@@ -289,16 +289,51 @@ export default function AppAlt() {
     }, [isAFK]);
 
     useEffect(() => {
-        const handleScroll = () => {
-            if (!document.body) return;
-            const isBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 5);
-            if (isBottom && !isGlitchScrolling) {
+        let overscrollDelta = 0;
+        let lastTouchY = 0;
+
+        const checkGlitch = () => {
+            if (overscrollDelta > 80 && !isGlitchScrolling) {
                 setIsGlitchScrolling(true);
-                setTimeout(() => setIsGlitchScrolling(false), 2000); // 2 second tear event
+                setTimeout(() => setIsGlitchScrolling(false), 2000);
+                overscrollDelta = 0;
             }
         };
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => window.removeEventListener('scroll', handleScroll);
+
+        const handleWheel = (e) => {
+            if (!document.body || isGlitchScrolling) return;
+            const isBottom = Math.ceil(window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 10);
+            if (isBottom && e.deltaY > 0) {
+                overscrollDelta += e.deltaY;
+                checkGlitch();
+            } else {
+                overscrollDelta = 0;
+            }
+        };
+
+        const handleTouchStart = (e) => { lastTouchY = e.touches[0].clientY; overscrollDelta = 0; };
+        const handleTouchMove = (e) => {
+            if (!document.body || isGlitchScrolling) return;
+            const currentY = e.touches[0].clientY;
+            const isBottom = Math.ceil(window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 10);
+            if (isBottom && currentY < lastTouchY) {
+                overscrollDelta += (lastTouchY - currentY);
+                checkGlitch();
+            } else {
+                overscrollDelta = 0;
+            }
+            lastTouchY = currentY;
+        };
+
+        window.addEventListener('wheel', handleWheel, { passive: true });
+        window.addEventListener('touchstart', handleTouchStart, { passive: true });
+        window.addEventListener('touchmove', handleTouchMove, { passive: true });
+
+        return () => {
+            window.removeEventListener('wheel', handleWheel);
+            window.removeEventListener('touchstart', handleTouchStart);
+            window.removeEventListener('touchmove', handleTouchMove);
+        };
     }, [isGlitchScrolling]);
 
     const startMusic = () => {

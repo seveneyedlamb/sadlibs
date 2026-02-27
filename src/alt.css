@@ -1449,29 +1449,32 @@ body:has(.av2-glitch-scroll-msg) {
 
 .av2-terminal-header {
     color: var(--danger-accent);
-    font-size: clamp(0.9rem, 3vw, 1.2rem);
-    font-weight: 800;
+    font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+    font-weight: 900;
     margin-bottom: 2rem;
-    letter-spacing: 0.2em;
-    border-bottom: 1px solid rgba(239, 68, 68, 0.3);
+    letter-spacing: 0.15em;
+    border-bottom: 1px solid rgba(239, 68, 68, 0.4);
     padding-bottom: 1rem;
     animation: terminalBlink 4s infinite step-end;
 }
 
 .av2-terminal-logs {
     color: #4ade80;
-    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-    line-height: 1.8;
+    font-size: clamp(1.1rem, 3vw, 1.6rem);
+    line-height: 2;
+    font-weight: 700;
+    text-shadow: 0 0 8px rgba(74, 222, 128, 0.4);
 }
 
 .av2-cursor {
     animation: terminalBlink 1s step-end infinite;
     display: inline-block;
-    width: 10px;
-    height: 1.1em;
+    width: 12px;
+    height: 1.2em;
     background: #4ade80;
     vertical-align: middle;
-    margin-left: 5px;
+    margin-left: 8px;
+    box-shadow: 0 0 8px rgba(74, 222, 128, 0.6);
 }
 
 @keyframes terminalBlink {
