@@ -1206,7 +1206,8 @@ button.av2-red-play-main:hover {
 
 /* ── ANIMATIONS ─────────────────────────────────────── */
 .corner-decal {
-    animation: featherFall 6s cubic-bezier(0.25, 0.1, 0.25, 1) forwards, subtleSway 8s ease-in-out infinite alternate;
+    /* Using a smooth linear drop so it floats down continuously without jerking, while the sway gives the rock. */
+    animation: featherFall 6s cubic-bezier(0.4, 0, 0.2, 1) forwards, subtleSway 8s ease-in-out infinite alternate;
     animation-delay: 0s, 6s;
     /* Start swaying after fall finishes */
     transform-origin: center;
@@ -1224,20 +1225,8 @@ button.av2-red-play-main:hover {
         transform: translateY(-120vh) rotate(-15deg);
     }
 
-    25% {
-        transform: translateY(-90vh) rotate(10deg);
-    }
-
-    50% {
-        transform: translateY(-60vh) rotate(-5deg);
-    }
-
-    75% {
-        transform: translateY(-30vh) rotate(5deg);
-    }
-
     100% {
-        /* Final resting position in translateY */
+        /* Final resting position */
         transform: translateY(0) rotate(0deg);
     }
 }
