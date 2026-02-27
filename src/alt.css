@@ -887,6 +887,9 @@ button.av2-red-play-main:hover {
 /* ── SHARE SECTION ──────────────────────────────────── */
 .av2-share-section {
     margin: 2rem 0;
+}
+
+.av2-footer-share {
     position: relative;
     overflow: hidden;
     border-radius: 10px;
@@ -906,7 +909,7 @@ button.av2-red-play-main:hover {
     pointer-events: none;
 }
 
-.av2-share-section>*:not(.share-scroll-bg) {
+.av2-footer-share>*:not(.share-scroll-bg) {
     position: relative;
     z-index: 1;
 }
@@ -1117,12 +1120,12 @@ button.av2-red-play-main:hover {
 
 /* ── FOOTER SHARE + MERCH + FOOTER ─────────────────── */
 .av2-footer-share {
-    background: var(--dossier-card);
     border-top: 1px solid var(--panel-border);
     border-bottom: 1px solid var(--panel-border);
     padding: 4rem 2rem;
     text-align: center;
-    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
 }
 
 .av2-footer-share h3 {
