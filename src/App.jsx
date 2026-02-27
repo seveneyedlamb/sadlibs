@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import logo from '../images/logo.png';
 import babyEmailImg from '../images/babyemail.webp';
 import trumpAvatar from '../images/trumptalking.gif';
@@ -304,7 +305,7 @@ export default function AppAlt() {
             // 150px of downward scrolling *after* already hitting the bottom
             if (overscrollDelta > 200 && !isGlitchScrolling) {
                 setIsGlitchScrolling(true);
-                setTimeout(() => setIsGlitchScrolling(false), 2000);
+                setTimeout(() => setIsGlitchScrolling(false), 1200); // reduced to 1.2s
                 overscrollDelta = 0;
             }
         };
@@ -817,14 +818,15 @@ export default function AppAlt() {
                     THEY ARE WATCHING YOU READ THIS.
                 </div>
             )}
-            {isAFK && (
+            {isAFK && createPortal(
                 <div className="av2-fbi-terminal">
                     <div className="av2-terminal-header">FEDERAL BUREAU OF INVESTIGATION - SURVEILLANCE FEED 7</div>
                     <div className="av2-terminal-logs">
                         {terminalLines.map((line, i) => <div key={i}>{line}</div>)}
                         <span className="av2-cursor">_</span>
                     </div>
-                </div>
+                </div>,
+                document.documentElement
             )}
         </>
     );
