@@ -869,7 +869,7 @@ export default function AppAlt() {
 
             {/* ── EXIT MODAL ────────────────────────────── */}
             {showExitModal && (
-                <div className="av2-overlay" onClick={() => setShowExitModal(false)}>
+                <div className="av2-overlay">
                     <div className="av2-modal" onClick={e => e.stopPropagation()}>
                         <h2>Wait. Before you go.</h2>
                         <p style={{ color: '#94a3b8', lineHeight: 1.7, marginBottom: '1rem' }}>
