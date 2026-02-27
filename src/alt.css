@@ -245,9 +245,13 @@
 }
 
 .av2-section-desc {
-    font-size: 1rem;
-    line-height: 1.75;
-    color: #64748b;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #e2e8f0;
+}
+
+.av2-section-desc strong {
+    color: var(--danger-accent);
 }
 
 /* ── STORY GRID ─────────────────────────────────────── */
@@ -298,9 +302,9 @@
 }
 
 .av2-card-hook {
-    font-size: 0.9rem;
-    color: #94a3b8;
-    line-height: 1.6;
+    font-size: 0.92rem;
+    color: #cbd5e1;
+    line-height: 1.65;
     flex: 1;
 }
 
