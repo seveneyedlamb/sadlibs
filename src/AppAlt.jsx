@@ -423,8 +423,8 @@ export default function AppAlt() {
 
                     <div className="av2-play-container">
                         <span className="av2-play-arrow">➤</span>
-                        <button className="av2-cta av2-hero-play-main" onClick={() => { startMusic(); document.getElementById('av2-stories').scrollIntoView({ behavior: 'smooth' }); }}>
-                            Play Sad Libs
+                        <button className="av2-cta av2-red-play-main" onClick={() => { startMusic(); document.getElementById('av2-stories').scrollIntoView({ behavior: 'smooth' }); }}>
+                            I SAID PLAY SAD LIBS!
                         </button>
                         <span className="av2-play-arrow right-arrow">➤</span>
                     </div>
@@ -436,15 +436,15 @@ export default function AppAlt() {
                             <span className="ww-frame ww-1">Hate Bullshit?</span>
                             <span className="ww-frame ww-2">Read The Wise Wolf</span>
                         </a>
-                        <button className="av2-cta av2-red-play-btn" onClick={() => { startMusic(); document.getElementById('av2-stories').scrollIntoView({ behavior: 'smooth' }); }}>
-                            I SAID PLAY SAD LIBS!
+                        <button className="av2-ghost-btn" onClick={() => setShowNamesModal(true)}>
+                            Names on the File
                         </button>
                     </div>
 
                     <div className="av2-play-container">
                         <span className="av2-play-arrow">➤</span>
-                        <button className="av2-cta av2-hero-play-main" onClick={() => { startMusic(); document.getElementById('av2-stories').scrollIntoView({ behavior: 'smooth' }); }}>
-                            Play Sad Libs
+                        <button className="av2-cta av2-red-play-main" onClick={() => { startMusic(); document.getElementById('av2-stories').scrollIntoView({ behavior: 'smooth' }); }}>
+                            I SAID PLAY SAD LIBS!
                         </button>
                         <span className="av2-play-arrow right-arrow">➤</span>
                     </div>
