@@ -568,7 +568,7 @@ export default function AppAlt() {
 
             {/* ── FOOTER SHARE ─────────────────────────── */}
             <div className="av2-footer-share">
-                <h3>{shareCount.toLocaleString()} people have shared this. Statistically, at least one of them is currently being deposed.</h3>
+                <h3>{shareCount.toLocaleString()} people have shared this. Statistically, at least one of them has their name in the Epstein documents.</h3>
                 <div className="av2-share-row" style={{ justifyContent: 'center', marginTop: '1.5rem' }}>
                     <button onClick={() => handleShare('twitter')} className="av2-action-btn share-x">Share on X</button>
                     <button onClick={() => handleShare('facebook')} className="av2-action-btn share-fb">Share on Facebook</button>
