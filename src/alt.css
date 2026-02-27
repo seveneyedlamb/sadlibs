@@ -905,7 +905,8 @@ button.av2-red-play-main:hover {
     cursor: pointer;
     transition: all 0.25s;
     border: 1px solid;
-    background: transparent;
+    background: rgba(15, 23, 42, 0.9);
+    color: #f8fafc;
     letter-spacing: 0.02em;
 }
 
@@ -943,8 +944,9 @@ button.av2-red-play-main:hover {
 }
 
 .av2-action-btn.replay {
-    color: #94a3b8;
-    border-color: rgba(255, 255, 255, 0.15);
+    color: #e2e8f0;
+    border-color: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .av2-action-btn.replay:not(:disabled):hover {
@@ -954,8 +956,9 @@ button.av2-red-play-main:hover {
 }
 
 .av2-action-btn.copy-ev {
-    color: #64748b;
-    border-color: rgba(255, 255, 255, 0.1);
+    color: #f1f5f9;
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .av2-action-btn.copy-ev:not(:disabled):hover {
@@ -974,9 +977,9 @@ button.av2-red-play-main:hover {
 
 /* ── TRUTH SECTION ──────────────────────────────────── */
 .av2-truth {
-    background: rgba(239, 68, 68, 0.05);
-    border: 1px solid rgba(239, 68, 68, 0.2);
-    border-left: 3px solid var(--danger-accent);
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-left: 4px solid var(--danger-accent);
     border-radius: 12px;
     padding: 2rem;
     margin-top: 2rem;
@@ -1027,10 +1030,10 @@ button.av2-red-play-main:hover {
     display: block;
     width: 100%;
     margin-top: 2rem;
-    padding: 0.9rem;
-    background: transparent;
-    border: 1px solid var(--panel-border);
-    color: #475569;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #f8fafc;
     font-family: var(--font-family);
     font-size: 0.9rem;
     font-weight: 600;

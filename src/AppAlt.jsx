@@ -423,8 +423,8 @@ export default function AppAlt() {
 
                     <div className="av2-play-container">
                         <span className="av2-play-arrow">➤</span>
-                        <button className="av2-cta av2-red-play-main" onClick={() => { startMusic(); document.getElementById('av2-stories').scrollIntoView({ behavior: 'smooth' }); }}>
-                            I SAID PLAY SAD LIBS!
+                        <button className="av2-cta av2-hero-play-main" onClick={() => { startMusic(); document.getElementById('av2-stories').scrollIntoView({ behavior: 'smooth' }); }}>
+                            Play Sad Libs
                         </button>
                         <span className="av2-play-arrow right-arrow">➤</span>
                     </div>
@@ -622,7 +622,7 @@ export default function AppAlt() {
                                     <button onClick={() => handleShare('twitter')} className="av2-action-btn share-x" style={{ flex: 1 }}>Post to X</button>
                                     <button onClick={() => handleShare('facebook')} className="av2-action-btn share-fb" style={{ flex: 1 }}>Post to Facebook</button>
                                 </div>
-                                <button style={{ display: 'block', width: '100%', marginTop: '0.75rem', background: 'none', border: 'none', color: '#475569', fontSize: '0.8rem', cursor: 'pointer', padding: '0.5rem' }} onClick={() => setShowExitModal(false)}>
+                                <button style={{ display: 'block', width: '100%', marginTop: '0.75rem', background: 'none', border: 'none', color: '#cbd5e1', fontSize: '0.8rem', cursor: 'pointer', padding: '0.5rem' }} onClick={() => setShowExitModal(false)}>
                                     No thanks, I support the cover-up.
                                 </button>
                             </>
