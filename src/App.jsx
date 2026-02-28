@@ -200,6 +200,7 @@ export default function AppAlt() {
     const storyContainerRef = useRef(null);
     const storyRevealRef = useRef(null);
     const audioRef = useRef(null);
+    const modalReadyRef = useRef(false);
 
     const [isGenerating, setIsGenerating] = useState(false);
     const [loadingMessage, setLoadingMessage] = useState('');
@@ -314,12 +315,13 @@ export default function AppAlt() {
 
     useEffect(() => {
         const t = setTimeout(() => setHeroLoaded(true), 100);
+        const modalTimer = setTimeout(() => { modalReadyRef.current = true; }, 30000);
         const iv = setInterval(() => {
             setGlitching(true);
             setTimeout(() => setBgIndex(Math.floor(Math.random() * BGS.length)), 150);
             setTimeout(() => setGlitching(false), 400);
         }, 3000);
-        return () => { clearTimeout(t); clearInterval(iv); };
+        return () => { clearTimeout(t); clearTimeout(modalTimer); clearInterval(iv); };
     }, []);
 
     useEffect(() => {
@@ -440,6 +442,7 @@ export default function AppAlt() {
     useEffect(() => {
         const handler = (e) => {
             if (e.clientY <= 20 && !document.querySelector('.av2-overlay')) {
+                if (!modalReadyRef.current) return;
                 if (!sessionStorage.getItem('exit_triggered')) { setShowExitModal(true); sessionStorage.setItem('exit_triggered', '1'); }
             }
         };
@@ -517,9 +520,9 @@ export default function AppAlt() {
         clearInterval(iv); setIsGenerating(false); setIsRevealed(true);
         const nc = completedGames + 1; setCompletedGames(nc);
         if (audioToPlay) {
-            audioToPlay.onended = () => { setShareReady(true); if (nc === 1) setShowPrizeModal(true); };
-            audioToPlay.play().catch(() => { setShareReady(true); if (nc === 1) setShowPrizeModal(true); });
-        } else { setShareReady(true); if (nc === 1) setTimeout(() => setShowPrizeModal(true), 3000); }
+            audioToPlay.onended = () => { setShareReady(true); if (nc === 1 && modalReadyRef.current) setShowPrizeModal(true); };
+            audioToPlay.play().catch(() => { setShareReady(true); if (nc === 1 && modalReadyRef.current) setShowPrizeModal(true); });
+        } else { setShareReady(true); if (nc === 1 && modalReadyRef.current) setTimeout(() => setShowPrizeModal(true), 3000); }
     };
 
     const handleShare = (platform) => {
